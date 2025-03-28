@@ -1,5 +1,5 @@
 function sumar () {
-    num1 =  document.getElementById('num1').value;
+    n1 =  document.getElementById('num1').value;
     num2 =  document.getElementById('num2').value;
 
     resultado = parseInt(num1) + parseInt(num2);
