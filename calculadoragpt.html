@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora con Botones 3x3</title>
+    <script src="calculadoragpt.js" defer></script>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .calculadora {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo del display de la calculadora */
+        .pantalla {
+            width: 260px;
+            height: 50px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-size: 24px;
+            border: 1px solid #ccc;
+        }
+
+        /* Contenedor de los botones */
+        .botones {
+            display: grid;
+            grid-template-columns: repeat(4, 60px);  /* 4 columnas */
+            grid-gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Estilo de los botones */
+        .boton {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Efecto al hacer hover sobre los botones */
+        .boton:hover {
+            background-color: #ddd;
+        }
+
+        /* Estilos para los botones de operaciones */
+        .boton-operacion {
+            background-color: #ff9500;
+            color: white;
+        }
+
+        /* Estilo del botón igual */
+        .boton-igual {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        /* Estilo del botón de borrar */
+        .boton-borrar {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        /* Estilos específicos para el botón AC y +/- */
+        .boton-ac {
+            background-color: #ccc;
+            color: white;
+        }
+
+        .boton-coma {
+            background-color: #f9b422;
+            color: white;
+        }
+
+        /* Hacer que el 0 esté debajo del 2 */
+        .boton-0 {
+            grid-column: span 2;  /* El botón 0 ocupará dos columnas */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculadora">
+        <!-- Pantalla de la calculadora -->
+        <div class="pantalla" id="pantalla">0</div>
+
+        <!-- Botones -->
+        <div class="botones">
+            <!-- Fila 1 -->
+            <button class="boton boton-borrar" onclick="borrar()">C</button>
+            <button class="boton boton-ac" onclick="ac()">AC</button>
+            <button class="boton" onclick="operacion('+/-')">+/-</button>
+            <button class="boton boton-operacion" onclick="operacion('/')">/</button>
+
+            <!-- Fila 2 -->
+            <button class="boton" onclick="agregarNumero(7)">7</button>
+            <button class="boton" onclick="agregarNumero(8)">8</button>
+            <button class="boton" onclick="agregarNumero(9)">9</button>
+            <button class="boton boton-operacion" onclick="operacion('X')">X</button>
+
+            <!-- Fila 3 -->
+            <button class="boton" onclick="agregarNumero(4)">4</button>
+            <button class="boton" onclick="agregarNumero(5)">5</button>
+            <button class="boton" onclick="agregarNumero(6)">6</button>
+            <button class="boton boton-operacion" onclick="operacion('-')">-</button>
+
+            <!-- Fila 4 -->
+            <button class="boton" onclick="agregarNumero(1)">1</button>
+            <button class="boton" onclick="agregarNumero(2)">2</button>
+            <button class="boton" onclick="agregarNumero(3)">3</button>
+            <button class="boton boton-operacion" onclick="operacion('+')">+</button>
+
+            <!-- Fila 5 (0 estará en dos columnas) -->
+            <button class="boton boton-0" onclick="agregarNumero(0)">0</button>
+            <button class="boton boton-coma" onclick="agregarComa()">,</button>
+            <button class="boton boton-igual" onclick="igual()">=</button>
+        </div>
+    </div>
+</body>
+</html>
