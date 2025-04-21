@@ -7,3 +7,4 @@ Integrantes:
 # Alan Omonte, Legajo:1140952
 # Luca Alcoleas, Legajo:1165350
 # Ariel Cristiano, Legajo:1165669
+# Lucas Gima, Legajo:1174266
