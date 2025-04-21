@@ -8,4 +8,4 @@ Integrantes:
 # Luca Alcoleas, Legajo:1165350
 # Ariel Cristiano, Legajo:1165669
 # Lucas Gima, Legajo:1174266
-# Mateo Mirarchi Legajo:1172462
+# Mateo Mirarchi, Legajo:1172462
