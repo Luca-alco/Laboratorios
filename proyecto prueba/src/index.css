@@ -1,3 +1,68 @@
 :root {
-  background-color: rgb(201, 186, 160);
+  background-color: lightblue;
+}
+
+
+Header{
+  background-color: aliceblue;
+  text-align: center;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 20px;
+}
+
+.Nombre {
+  flex-grow: 1; 
+  text-align: center;
+}
+
+.Carrito{
+  position: absolute;
+  right: 3cm;
+  font-size: 2em; 
+  border-radius: 30%;
+}
+
+main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.barraNav{
+  border-color: aliceblue;
+  background-color: aliceblue;
+  width: 10cm;
+  height: 35px;
+  margin-bottom: 1cm;
+}
+
+.fotoProducto{
+  
+  position: static;
+}
+img{
+  width: 5cm;
+  height: 5cm;
+}
+
+.Descripcion{
+  margin-bottom: 1cm;
+}
+
+.BotonAgregar{
+  width: 5cm;
+  height: 2cm;
+  border-radius: 10px;
+}
+
+footer{
+  background-color: aliceblue;
+  
+}
+
+.TxtFooter{
+  text-align: center;
 }
