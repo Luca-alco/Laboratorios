@@ -1,0 +1,36 @@
+:root{
+    font-family: poppins, sans-serif;
+    background-color: lightblue;
+}
+
+.HeaderLogin{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    align-items: center; 
+    margin-bottom: 20px;
+    text-align: center;
+
+}
+
+.TituloLogin{
+    background-color: aliceblue;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.BotonRegistro{
+    color: black;
+}
+
+.TituloRegister{
+    background-color: aliceblue;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+

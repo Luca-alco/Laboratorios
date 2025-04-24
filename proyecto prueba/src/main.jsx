@@ -10,15 +10,19 @@ import { createRoot } from "react-dom/client";
 import PubliNueva from "./pages/PubliNueva";
 import "./pages/index.css";
 import Carrito from "./pages/Carrito";
+import UsersLogin from "./pages/usersLogin";
+import Register from "./pages/register";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <Carrito />
+    {/* <Carrito /> */}
     {/* <PubliNueva /> */}
     {/* <HomeScreen /> */}
     {/* <MyProfile /> */}
     {/* <Products /> */}
+    {/* <UsersLogin /> */}
+    <Register />
   </React.StrictMode>
 );
