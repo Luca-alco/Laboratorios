@@ -1,5 +1,6 @@
 :root {
   background-color: lightblue;
+  font-family: 'Poppins', sans-serif;
 }
 
 
@@ -38,6 +39,7 @@ main{
   height: 35px;
   margin-bottom: 1cm;
 }
+
 
 .fotoProducto{
   
