@@ -7,6 +7,7 @@ import Products from './pages/products';
 import { createRoot } from "react-dom/client";
 import PubliNueva from './pages/PubliNueva';
 import './pages/index.css';
+import Carrito from './pages/Carrito';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,7 +17,8 @@ root.render(
 
     {/* <MyProfile /> */}
     {/* <Products /> */}
-    <PubliNueva />
+    {/* <PubliNueva /> */}
+    <Carrito />
 
 
   </React.StrictMode>
