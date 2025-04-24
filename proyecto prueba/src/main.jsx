@@ -2,12 +2,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import MyProfile from './pages/myProfile'; // Asegúrate de que la ruta sea correcta
-import Products from './pages/products'; // Asegúrate de que la ruta sea correcta
-import Prueba from './pages/prueba'; // Asegúrate de que la ruta sea correcta
-// import { StrictMode } from "react";
+import MyProfile from './pages/myProfile'; 
+import Products from './pages/products'; 
 import { createRoot } from "react-dom/client";
-
+import PubliNueva from './pages/PubliNueva';
+import './pages/index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,7 +15,8 @@ root.render(
   <React.StrictMode>
 
     {/* <MyProfile /> */}
-    <Products />
+    {/* <Products /> */}
+    <PubliNueva />
 
 
   </React.StrictMode>

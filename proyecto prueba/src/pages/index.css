@@ -1,0 +1,30 @@
+:root {
+    background-color: lightblue;
+    font-family: 'Poppins', sans-serif;
+}
+
+Header{
+    text-align: center;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: 20px;
+
+}
+ 
+.Nombre {
+    flex-grow: 1; 
+    text-align: center;
+}
+
+.Carrito{
+    position: absolute;
+    right: 3cm;
+    font-size: 2em; 
+    border-radius: 30%;
+}
+  
+.TxtFooter{
+    background-color: aliceblue;
+    text-align: center;
+}

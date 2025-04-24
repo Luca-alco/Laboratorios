@@ -10,9 +10,14 @@ function Products() {
      </header>
 
      <main>
-       <div>
-         <input className="barraNav" type="text" name="" id="" />
-       </div>
+     <div className="barra-busqueda">
+        <input
+          type="text"
+          placeholder="Buscar productos..."
+          className="input-busqueda"
+        />
+        <button className="btn-buscar">Buscar</button>
+      </div>
 
        <div className="fotoProducto">
          <img src="https:static.hendel.com/media/catalog/product/cache/b866fd8d147dcce474dc8744e477ca66/5/4/54232_az_0.jpg" alt="producto" />

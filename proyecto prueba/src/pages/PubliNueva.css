@@ -1,0 +1,53 @@
+.PublicacionNueva{
+    background-color: aliceblue;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+p{
+    font-size: 20px;
+    color: black;
+    margin: 0;
+    padding: 10px;
+}
+.barra-escritura {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    
+}
+  
+  .input-escritura {
+    padding: 12px;
+    width: 60%;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  .categoria-container {
+    
+    width: 40%;
+    flex-direction: column;
+    background-color: aliceblue;
+    border-radius: 40px;
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+  }
+  
+  .categoria-select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+.BotonPublicar{
+    margin-left: 20px;
+    border-radius: 20px;
+}
+  
