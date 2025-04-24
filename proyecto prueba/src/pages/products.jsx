@@ -3,7 +3,7 @@ import "./products.css";
 
 function Products() {
   return ( <>
-     <header className="Header">
+     <header className="HeaderProducts">
        <h1 className="Nombre">Nombre Web</h1>
      
        <div className="Carrito">🛒</div>
