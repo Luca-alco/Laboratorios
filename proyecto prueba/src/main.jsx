@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import MyProfile from './pages/myProfile'; // Asegúrate de que la ruta sea correcta
 import Products from './pages/products'; // Asegúrate de que la ruta sea correcta
 import Prueba from './pages/prueba'; // Asegúrate de que la ruta sea correcta
+import HomeScreen from './pages/homescreen'; 
 // import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -15,8 +16,10 @@ root.render(
 
   <React.StrictMode>
 
-    {/* <MyProfile /> */}
-    <Products />
+   
+   <HomeScreen/>
+   {/*<MyProfile/>*/}
+   {/*<Products/>*/}
 
 
   </React.StrictMode>
