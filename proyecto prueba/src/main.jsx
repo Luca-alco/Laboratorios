@@ -4,6 +4,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import MyProfile from './pages/myProfile'; 
 import Products from './pages/products'; 
+import Prueba from './pages/prueba'; // Asegúrate de que la ruta sea correcta
+import HomeScreen from './pages/homescreen'; 
+// import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import PubliNueva from './pages/PubliNueva';
 import './pages/index.css';
@@ -15,10 +18,12 @@ root.render(
 
   <React.StrictMode>
 
-    {/* <MyProfile /> */}
-    {/* <Products /> */}
-    {/* <PubliNueva /> */}
-    <Carrito />
+
+   
+   <HomeScreen/>
+   {/*<MyProfile/>*/}
+   {/*<Products/>*/}
+
 
 
   </React.StrictMode>
