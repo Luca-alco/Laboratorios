@@ -1,4 +1,6 @@
 import React from "react";
+import "./myprofile.css";
+
 
 const  MyProfile = () => { 
   return (
