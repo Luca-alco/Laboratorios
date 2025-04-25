@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import MyProfile from './pages/myProfile'; 
 import Products from './pages/products'; 
+import Gstprod2 from './pages/gstprod2'; 
 import Prueba from './pages/prueba'; // Asegúrate de que la ruta sea correcta
 import HomeScreen from './pages/homescreen'; 
 // import { StrictMode } from "react";
@@ -23,7 +24,7 @@ root.render(
    <HomeScreen/>
    {/*<MyProfile/>*/}
    {/*<Products/>*/}
-
+    {/*<Gstprod2/>*/}
 
 
   </React.StrictMode>
