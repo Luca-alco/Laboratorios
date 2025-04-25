@@ -1,0 +1,28 @@
+
+
+.perfil {
+  display: flex;
+  flex-direction: column; /* Asegura que los bloques principales estén en columnas */
+  gap: 16px;
+}
+
+.infoPrincipal {
+  display: flex; /* Alinea la imagen y los datos horizontalmente */
+  align-items: center; /* Centra verticalmente la imagen y el texto */
+  gap: 16px; /* Espacio entre la imagen y el texto */
+}
+
+.fotoPerfil {
+  width: 100px; /* Ajusta el tamaño de la imagen */
+  height: 100px;
+  border-radius: 50%; /* Hace la imagen redonda */
+}
+.infoPerfil {
+  display: flex;
+  flex-direction: column; /* Alinea los datos en una columna */
+}
+
+.datosAdicionales p {
+  margin : 0;
+  padding: 0; /* Elimina el margen y el padding de los párrafos */
+}
