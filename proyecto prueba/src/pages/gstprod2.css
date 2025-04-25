@@ -1,0 +1,24 @@
+
+.fotoProducto {
+    width: 250px; /* Ajusta el tamaño de la imagen */
+    height: 250px;
+    border-radius: 0; /* Hace la imagen redonda */
+  }
+
+.large-text {
+    font-size: 1.05em; /* Cambia el tamaño de la fuente a 1.5 veces el tamaño normal */
+    color: gray; /* Cambia el color del texto a gris */
+    }
+.mb-4 {
+    margin-bottom: 4rem; /* Añade un margen inferior de 1rem */
+    
+}
+.mb-5 {
+    margin-bottom: 2rem; /* Añade un margen inferior de 1rem */
+    
+}
+.inline {
+
+    display: inline; /* Hace que el elemento se comporte como un elemento en línea */
+
+}
