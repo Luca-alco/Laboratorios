@@ -1,15 +1,19 @@
 .producto {
-    display: flex;
-    align-items: center;
-    background-color: aliceblue;
-    border-radius: 10px;
+  display: flex;
+  align-items: center;
+  background-color: aliceblue;
+  border-radius: 10px;
 }
 
 img {
-    width: 60%;
+  width: 60%;
 }
 
 .info {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+}
+
+.BotonVaciarCarro {
+  margin-top: 2cm;
 }

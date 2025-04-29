@@ -18,13 +18,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
+    <HomeScreen />
     {/* <Carrito /> */}
     {/* <PubliNueva /> */}
-    {/* <HomeScreen /> */}
     {/* <MyProfile /> */}
     {/* <Products /> */}
     {/* <UsersLogin /> */}
-    <Register />
-    {/*<Gstprod2/>*/}
+    {/* <Register /> */}
+    {/* <Gstprod2 /> */}
   </React.StrictMode>
 );
