@@ -2,18 +2,13 @@ import React from "react";
 import "./users.css";
 import { TextField, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import ResponsiveAppBar from "./ResponsiveAppBar"; 
+
 
 function usersLogin() {
   return (
     <>
-      <Link to="/" className="home-button">
-        🏠 Inicio
-      </Link>
-
-      {/* Header */}
-      <header>
-        <h1 className="Nombre">Nombre Web</h1>
-      </header>
+      <ResponsiveAppBar />
 
       {/* Título */}
       <div className="TituloLogin">

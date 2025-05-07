@@ -1,43 +1,24 @@
 import React from "react";
 import "./homescreen.css";
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "./ResponsiveAppBar";
 
 const HomeScreen = () => {
-    const navigate = useNavigate(); // Agregar esta línea
+    const navigate = useNavigate();
 
     const handleCartClick = () => {
         navigate('/carrito');
-    };    
-    
+    };
+
     return (
         <div className="homeScreen">
-            <header className="header">
-                <h1 className="Nombre">Nombre Web</h1>
-                <div className="carrito" onClick={handleCartClick}>🛒</div>
-                <button onClick={() => navigate('/perfil')}>
-              Mi Perfil
-            </button>
-            </header>
-            
-            <section className="top-bar">
-                <div className="nav-buttons">
-                    <Link to= "/productos">
-                    <button className="navbutton"> Categorias </button>
-                    </Link>
-                    <Link to="/gestion-productos">
-                    <button className="navbutton"> Vender </button>
-                    </Link>
-                    <Link to="/login">
-                        <button className="navbutton">Ingresar</button>
-                    </Link>
+            <ResponsiveAppBar />
 
-                </div>
-            </section>
+            
 
             <section className="search-bar">
-                <div class="search-bar-container">
-                    <input type="text" class="search-bar" placeholder="Buscar..."></input>
+                <div className="search-bar-container">
+                    <input type="text" className="search-bar" placeholder="Buscar..." />
                 </div>
             </section>
 
