@@ -16,11 +16,14 @@ const HomeScreen = () => {
 
             
 
-            <section className="search-bar">
-                <div className="search-bar-container">
-                    <input type="text" className="search-bar" placeholder="Buscar..." />
-                </div>
-            </section>
+            <div className="barra-busqueda">
+                <input
+                type="text"
+                placeholder="Buscar productos..."
+                className="input-busqueda"
+            />
+            <button className="btn-buscar">Buscar</button>
+            </div>
 
             <main className="categories">
                 <button className="category">Cat A</button>

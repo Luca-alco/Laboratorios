@@ -1,7 +1,4 @@
-:root {
-    background-color: lightblue;
-    font-family: 'Poppins', sans-serif;
-  }
+
 
 .homeScreen {
     display: flex;
@@ -75,12 +72,7 @@
     font-size: 16px;
 }
 
-footer {
-    margin-top: auto;
-    background-color: aliceblue;
-    padding: 5px; 
-    text-align: center;
-}
+
 
 .TxtFooter {
     text-align: center;

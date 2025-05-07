@@ -57,7 +57,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: '#0D0D0D' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -159,7 +159,7 @@ function ResponsiveAppBar() {
 
             <Tooltip title="Ir al perfil">
               <IconButton onClick={() => navigate('/perfil')} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: '#1976d2' , borderRadius:0, width:80}}>Perfil</Avatar>
+                <Avatar sx={{ backgroundColor: '#0D0D0D' , borderRadius:0, width:80}}>Perfil</Avatar>
               </IconButton>
             </Tooltip>
           </Box>
