@@ -3,13 +3,16 @@
 .perfil {
   display: flex;
   flex-direction: column; /* Asegura que los bloques principales estén en columnas */
+  margin-top: 80px;
+  padding: 0 20px;
   gap: 16px;
 }
 
 .infoPrincipal {
   display: flex; /* Alinea la imagen y los datos horizontalmente */
-  align-items: center; /* Centra verticalmente la imagen y el texto */
-  gap: 16px; /* Espacio entre la imagen y el texto */
+  flex-direction: row;
+  align-items: flex-start; /* Centra verticalmente la imagen y el texto */
+  gap: 20px; /* Espacio entre la imagen y el texto */
 }
 
 .fotoPerfil {
@@ -18,8 +21,8 @@
   border-radius: 50%; /* Hace la imagen redonda */
 }
 .infoPerfil {
-  display: flex;
-  flex-direction: column; /* Alinea los datos en una columna */
+  text-align: left; /* Alinea los datos en una columna */
+  padding-top: 10px;
 }
 
 .datosAdicionales p {

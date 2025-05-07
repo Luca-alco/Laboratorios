@@ -1,17 +1,25 @@
 import React from "react";
 import "./homescreen.css";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 
 
 const HomeScreen = () => {
+    const navigate = useNavigate(); // Agregar esta línea
+
+    const handleCartClick = () => {
+        navigate('/carrito');
+    };    
+    
     return (
         <div className="homeScreen">
             <header className="header">
-            <h1 className="Nombre">Nombre Web</h1>
-            <div className="Carrito">🛒</div>
+                <h1 className="Nombre">Nombre Web</h1>
+                <div className="carrito" onClick={handleCartClick}>🛒</div>
+                <button onClick={() => navigate('/perfil')}>
+              Mi Perfil
+            </button>
             </header>
-
+            
             <section className="top-bar">
                 <div className="nav-buttons">
                     <Link to= "/productos">
