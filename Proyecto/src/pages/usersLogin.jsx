@@ -11,8 +11,8 @@ function usersLogin() {
       </Link>
 
       {/* Header */}
-      <header className="HeaderLogin">
-        <h1>Nombre Web</h1>
+      <header>
+        <h1 className="Nombre">Nombre Web</h1>
       </header>
 
       {/* Título */}

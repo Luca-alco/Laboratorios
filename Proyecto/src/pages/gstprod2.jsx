@@ -20,6 +20,12 @@ const Gstprod2 = () => {
   };
 
   return (
+    <>
+    <header className="HeaderProducts">
+        <h1 className="Nombre">Nombre Web</h1>
+
+        <div className="Carrito">🛒</div>
+      </header>
     <div>
       <Link to="/" className="home-button">
         🏠 Inicio
@@ -82,6 +88,7 @@ const Gstprod2 = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
