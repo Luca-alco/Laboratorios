@@ -1,0 +1,86 @@
+:root {
+  background-color: lightblue;
+  font-family: "Poppins", sans-serif;
+}
+
+.HeaderProducts {
+  background-color: aliceblue;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.Nombre {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.Carrito {
+  position: absolute;
+  right: 3cm;
+  font-size: 2em;
+  border-radius: 30%;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.barraNav {
+  border-color: aliceblue;
+  background-color: aliceblue;
+  width: 10cm;
+  height: 35px;
+  margin-bottom: 1cm;
+}
+
+.fotoProducto {
+  position: static;
+}
+img {
+  width: 5cm;
+  height: 5cm;
+}
+
+.Descripcion {
+  margin-bottom: 1cm;
+}
+
+.BotonAgregar {
+  width: 5cm;
+  height: 2cm;
+  border-radius: 10px;
+}
+.barra-busqueda {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  gap: 10px;
+}
+
+.input-busqueda {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.btn-buscar {
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-buscar:hover {
+  background-color: #145ea8;
+}
