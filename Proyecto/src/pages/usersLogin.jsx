@@ -1,10 +1,15 @@
 import React from "react";
 import "./users.css";
 import { TextField, Button, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function usersLogin() {
   return (
     <>
+      <Link to="/" className="home-button">
+        🏠 Inicio
+      </Link>
+
       {/* Header */}
       <header className="HeaderLogin">
         <h1>Nombre Web</h1>
@@ -75,16 +80,18 @@ function usersLogin() {
 
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
           <p>¿No tiene un usuario creado?</p>
-          <Button
-            variant="outlined"
-            sx={{
-              color: "black",
-              borderColor: "black",
-              backgroundColor: "white",
-            }}
-          >
-            Registrese Aqui
-          </Button>
+          <Link to="/register">
+            <Button
+              variant="outlined"
+              sx={{
+                color: "black",
+                borderColor: "black",
+                backgroundColor: "white",
+              }}
+            >
+              Registrese Aqui
+            </Button>
+          </Link>
         </div>
       </Box>
 

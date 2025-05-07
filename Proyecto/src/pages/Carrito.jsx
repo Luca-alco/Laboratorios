@@ -1,9 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./carrito.css";
+import "./users.css";
 
 function Carrito() {
   return (
     <>
+      <Link to="/" className="home-button">
+        🏠 Inicio
+      </Link>
       <header className="Header">
         <h1 className="Nombre">Nombre Web</h1>
       </header>

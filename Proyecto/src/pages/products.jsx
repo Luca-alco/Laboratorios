@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./products.css";
+import "./users.css";
 
 function Products() {
   return (
@@ -11,6 +13,9 @@ function Products() {
       </header>
 
       <main>
+        <Link to="/" className="home-button">
+          🏠 Inicio
+        </Link>
         <div className="barra-busqueda">
           <input
             type="text"

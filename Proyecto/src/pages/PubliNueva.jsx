@@ -1,5 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./PubliNueva.css";
+import "./users.css";
 
 function PubliNueva() {
   return (
@@ -7,6 +9,10 @@ function PubliNueva() {
         <header>
             <h1 className="Nombre">Nombre Web</h1>
         </header>
+
+        <Link to="/" className="home-button">
+            🏠 Inicio
+        </Link>
 
         <h1 className="PublicacionNueva">Publicación Nueva</h1>
 

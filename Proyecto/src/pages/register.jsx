@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './users.css';
 import { TextField, Button, Box } from '@mui/material';
 
@@ -9,6 +10,13 @@ function register(){
     <header className="HeaderLogin">
         <h1>Nombre Web</h1>
       </header>
+
+      {/* Home Button */}
+      <div>
+        <Link to="/" className="home-button">
+          🏠 Inicio
+        </Link>
+      </div>
 
       {/* Título */}
       <div className="TituloRegister">

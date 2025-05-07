@@ -1,5 +1,8 @@
 import React from "react";
 import "./homescreen.css";
+import { Link } from "react-router-dom";
+
+
 
 const HomeScreen = () => {
     return (
@@ -11,9 +14,15 @@ const HomeScreen = () => {
 
             <section className="top-bar">
                 <div className="nav-buttons">
+                    <Link to= "/productos">
                     <button className="navbutton"> Categorias </button>
+                    </Link>
+                    <Link to="/gestion-productos">
                     <button className="navbutton"> Vender </button>
-                    <button className="navbutton"> Ingresar </button>
+                    </Link>
+                    <Link to="/login">
+                        <button className="navbutton">Ingresar</button>
+                    </Link>
 
                 </div>
             </section>
