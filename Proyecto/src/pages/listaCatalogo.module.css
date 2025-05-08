@@ -1,0 +1,50 @@
+.seccionPrincipal {
+  flex: 1;
+  background-color: white;
+  width: 80%;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  overflow-y: auto;
+}
+.tituloDiv {
+  text-align: center;
+}
+.separador {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.tarjetaProducto {
+  background-color: skyblue;
+  width: 95%;
+  border: solid;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.imagen {
+  width: 170px;
+  height: 170px;
+  border-right: 2px solid;
+}
+.descrpicion {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: center;
+}
+.comfirmar {
+  margin: 0;
+  padding: 0;
+  width: 10%;
+  display: flex;
+  justify-content: center;
+}
+.texto {
+  font-size: 17px;
+  padding: 5px;
+}
