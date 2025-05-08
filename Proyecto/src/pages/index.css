@@ -1,9 +1,30 @@
 :root {
-    background-color:grey;
+    background-color: grey;
     font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
 }
 
-Header{
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+Header {
     background-color: rgb(255, 255, 255);
     text-align: center;
     display: flex;
@@ -17,14 +38,14 @@ Header{
     text-align: center;
 }
 
-.Carrito{
+.Carrito {
     position: absolute;
     right: 3cm;
     font-size: 2em; 
     border-radius: 30%;
 }
   
-.TxtFooter{
+.TxtFooter {
     background-color: white;
     text-align: center;
 }
@@ -42,17 +63,18 @@ Header{
     font-weight: bold;
     z-index: 1000;
     transition: all 0.3s ease;
-  }
+}
   
-  .home-button:hover {
+.home-button:hover {
     background-color: #f0f0f0;
     transform: scale(1.05);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  }
+}
 
-  footer {
+footer {
     margin-top: auto;
     background-color: white;
-    padding: 5px; 
+    padding: 5px;
     text-align: center;
+    width: 100%;
 }

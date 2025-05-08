@@ -65,20 +65,24 @@ function ResponsiveAppBar() {
 
   const handlePageClick = (page) => {
     switch (page) {
-      case 'Productos':
-        navigate('/productos');
-        break;
-      case 'Vender':
-        navigate('/gestion-productos');
-        break;
-      case 'Ingresar':
-        navigate('/login');
-        break;
-      default:
-        break;
+        case 'Productos':
+            navigate('/productos');
+            break;
+        case 'Vender':
+            if (!isAuthenticated) {
+                navigate('/login'); // Redirige al registro si no está autenticado
+            } else {
+                navigate('/nueva-publicacion'); // Redirige a la página de publicación si está autenticado
+            }
+            break;
+        case 'Ingresar':
+            navigate('/login');
+            break;
+        default:
+            break;
     }
     handleCloseNavMenu();
-  };
+};
 
   const getInitials = () => {
     if (currentUser) {

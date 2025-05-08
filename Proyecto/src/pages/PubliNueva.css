@@ -2,6 +2,7 @@
     width: 100%;
     text-align: center;
     border-radius: 10px;
+    min-height: 100vh;
 }
 
 p{
@@ -28,14 +29,15 @@ p{
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
   }
   .categoria-container {
-    
+    margin-top: 30px;
     width: 40%;
     flex-direction: column;
-    background-color: aliceblue;
+    background-color: #f0f0f0;
     border-radius: 40px;
     display: flex;
     align-items: center; 
     gap: 10px; 
+    margin-bottom: 20px;
   }
   
   .categoria-select {

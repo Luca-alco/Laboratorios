@@ -3,72 +3,98 @@
     {
       "id": "1",
       "name": "Remera Clásica Negra",
+      "category": "Remera",
       "price": 29.99,
       "description": "Remera negra de algodón, perfecta para uso diario",
       "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1"
     },
     {
       "id": "2",
-      "name": "Remera Blanca con Diseño",
-      "price": 34.99,
-      "description": "Remera blanca con diseño abstracto moderno",
-      "image": null
+      "name": "Pantalón Jean Clásico",
+      "category": "Pantalón",
+      "price": 59.99,
+      "description": "Jean azul clásico de corte recto",
+      "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-1.2.1"
     },
     {
       "id": "3",
-      "name": "Polo Azul Marino",
-      "price": 39.99,
-      "description": "Polo azul marino clásico para un look casual",
-      "image": "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?ixlib=rb-1.2.1"
+      "name": "Campera de Cuero",
+      "category": "Campera",
+      "price": 129.99,
+      "description": "Campera de cuero sintético negra con cierre",
+      "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1"
     },
     {
       "id": "4",
-      "name": "Remera Vintage de Rock",
+      "name": "Bermuda Cargo",
+      "category": "Bermuda",
       "price": 45.99,
-      "description": "Remera estilo retro de banda de rock con efecto gastado",
-      "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-1.2.1"
+      "description": "Bermuda cargo con bolsillos laterales",
+      "image": "https://images.unsplash.com/photo-1565693413579-8ff3fdc1b03b?ixlib=rb-1.2.1"
     },
     {
       "id": "5",
-      "name": "Remera Rayada de Verano",
-      "price": 32.99,
-      "description": "Remera liviana de algodón rayada, perfecta para el verano",
-      "image": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1"
+      "name": "Camisa Manga Larga",
+      "category": "Camisa",
+      "price": 49.99,
+      "description": "Camisa formal blanca de manga larga",
+      "image": "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-1.2.1"
     },
     {
       "id": "6",
-      "name": "Remera Deportiva",
-      "price": 49.99,
-      "description": "Remera deportiva con tecnología anti-transpirante para estilo de vida activo",
-      "image": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1"
+      "name": "Pantalón Deportivo",
+      "category": "Pantalón",
+      "price": 39.99,
+      "description": "Pantalón deportivo negro con elástico",
+      "image": null
     },
     {
       "id": "7",
-      "name": "Remera Cuello V de Algodón Orgánico",
-      "price": 37.99,
-      "description": "Remera cuello V ecológica de algodón orgánico",
+      "name": "Remera Polo",
+      "category": "Remera",
+      "price": 34.99,
+      "description": "Remera polo azul marino de algodón peinado",
       "image": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-1.2.1"
     },
     {
       "id": "8",
-      "name": "Remera Artística Edición Limitada",
+      "name": "Buzo con Capucha",
+      "category": "Buzo",
       "price": 55.99,
-      "description": "Remera de edición limitada con diseño de artista local",
-      "image": "https://images.unsplash.com/photo-1503342394128-c104d54dba01?ixlib=rb-1.2.1"
+      "description": "Buzo gris con capucha y bolsillo canguro",
+      "image": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-1.2.1"
     },
     {
       "id": "9",
-      "name": "Remera con Logo Minimalista",
-      "price": 28.99,
-      "description": "Remera con diseño de logo simple y limpio",
-      "image": null
+      "name": "Shorts Deportivos",
+      "category": "Shorts",
+      "price": 29.99,
+      "description": "Shorts deportivos ligeros con malla interior",
+      "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?ixlib=rb-1.2.1"
     },
     {
       "id": "10",
-      "name": "Remera Premium",
-      "price": 42.99,
-      "description": "Remera de mezcla de algodón premium con confort superior",
-      "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1"
+      "name": "Remera Deportiva",
+      "category": "Remera",
+      "price": 32.99,
+      "description": "Remera deportiva transpirable de secado rápido",
+      "image": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1"
+    },
+    {
+      "id": "11",
+      "name": "Pantalón Chino",
+      "category": "Pantalón",
+      "price": 54.99,
+      "description": "Pantalón chino beige de corte slim",
+      "image": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?ixlib=rb-1.2.1"
+    },
+    {
+      "id": "12",
+      "name": "Campera Deportiva",
+      "category": "Campera",
+      "price": 69.99,
+      "description": "Campera deportiva liviana con cierre completo",
+      "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-1.2.1"
     }
   ],
   "users": [

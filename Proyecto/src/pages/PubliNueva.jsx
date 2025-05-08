@@ -6,23 +6,13 @@ import "./users.css";
 function PubliNueva() {
   return (
     <>
-        <header>
-            <h1 className="Nombre">Nombre Web</h1>
-        </header>
-
-        <Link to="/" className="home-button">
-            🏠 Inicio
-        </Link>
-
-        <h1 className="PublicacionNueva">Publicación Nueva</h1>
-
         <main style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div className="categoria-container">
             <p>Categoría del producto:</p>
             <select className="categoria-select">
-                <option value="Samsung">Samsung</option>
-                <option value="Apple">Apple</option>
-                <option value="Xiaomi">Xiaomi</option>
+                <option value="Samsung">Remera</option>
+                <option value="Apple">Pantalón</option>
+                <option value="Xiaomi">Zapatillas</option>
             </select>
             
             <div className="descripcion-container">
