@@ -1,58 +1,199 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import ResponsiveAppBar from "./ResponsiveAppBar"; 
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import ResponsiveAppBar from "./ResponsiveAppBar";
+import {
+  Avatar,
+  Box,
+  Container,
+  Typography,
+  Paper,
+  Grid,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import PersonIcon from "@mui/icons-material/Person";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import LockIcon from "@mui/icons-material/Lock";
+import SecurityIcon from "@mui/icons-material/Security";
 import "./myprofile.css";
 import "./users.css";
 
-const MyProfile = () => { 
+const MyProfile = () => {
+  const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const currentUser = localStorage.getItem("currentUser");
+
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      const user = JSON.parse(currentUser);
+      setUserData(user);
+    } catch (error) {
+      console.error("Error al obtener datos del usuario:", error);
+      navigate("/login");
+    }
+  }, [navigate]);
+
+  const getInitials = (nombre, apellido) => {
+    return `${nombre.charAt(0)}${apellido.charAt(0)}`.toUpperCase();
+  };
+
+  if (!userData) {
+    return <div>Cargando...</div>;
+  }
+
   return (
-    <div>
+    <>
       <ResponsiveAppBar />
-      
-      <div className="perfil">
-        <div className="infoPrincipal">
-          <img 
-            src="https://i.pinimg.com/280x280_RS/19/7a/3c/197a3cb00936a8b69e2aaff6bcfde1db.jpg" 
-            alt="Foto de perfil" 
-            className="fotoPerfil"
-          />
-          <div className="infoPerfil">
-            <p>Nombre: Juan Perez</p>
-            <p>Usuario: @juanperez03</p>
-            <p>Email: juan.perez@abc.com</p>
-            <p>Dirección: Calle Falsa 123</p>
-          </div>
-        </div>
-        <div className="datosAdicionales">
-          <p>Teléfono: 123456789</p> 
-          <p>Fecha de nacimiento: 01/01/1990</p> 
-          <p>Descripción: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> 
-          <p>Intereses: Tecnología, Deportes, Música</p> 
-          <p>Fecha de registro: 01/01/2022</p>
-          <p>Último inicio de sesión: 01/01/2023</p>
-          <p>Estado de la cuenta: Activa</p>
-          <p>Tipo de cuenta: Usuario</p>
-          <p>Preferencias de comunicación: Email</p>
-          <p>Suscripciones: Newsletter, Promociones</p>
-          <p>
-            Historial de compras:    
-            <ul>
-              <li>Producto 1 - Fecha: 01/01/2022</li>
-              <li>Producto 2 - Fecha: 01/02/2022</li>
-              <li>Producto 3 - Fecha: 01/03/2022</li>
-            </ul>       
-          </p>
-          <p>
-            Redes sociales: 
-            <ul>
-              <li>Facebook: facebook.com/juanperez</li>
-              <li>Twitter: twitter.com/juanperez</li>
-              <li>Instagram: instagram.com/juanperez</li>
-            </ul>
-          </p>
-        </div>
-      </div>
-    </div>
+      <Container maxWidth="md" sx={{ mt: 4, mb: 4 }} >
+        <Paper elevation={3} sx={{ p: 3, mb: 3, backgroundColor:"#f0f0f0", borderRadius:2 }}>
+          <Box display="flex" alignItems="center" mb={3} backgroundColor="lightgrey" borderRadius={2} p={2}>
+            <Avatar
+              sx={{
+                width: 100,
+                height: 100,
+                bgcolor: "black",
+                fontSize: "2.5rem",
+                mr: 3
+              }}
+            >
+              {getInitials(userData.nombre, userData.apellido)}
+            </Avatar>
+            <Box>
+              <Typography variant="h4">
+                {userData.nombre} {userData.apellido}
+              </Typography>
+              <Typography variant="subtitle1" color="textSecondary">
+                @{userData.usuario}
+              </Typography>
+            </Box>
+          </Box>
+
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Accordion defaultExpanded>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <Typography variant="h6">Datos Personales</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <List>
+                    <ListItem>
+                      <ListItemText
+                        primary="Email"
+                        secondary={userData.email}
+                      />
+                    </ListItem>
+                    <Divider />
+                    <ListItem>
+                      <ListItemText
+                        primary="Teléfono"
+                        secondary={userData.telefono}
+                      />
+                    </ListItem>
+                  </List>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <ListItemIcon>
+                    <ShoppingBasketIcon />
+                  </ListItemIcon>
+                  <Typography variant="h6">Mis Compras</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography color="textSecondary">
+                    No hay compras realizadas
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <ListItemIcon>
+                    <StorefrontIcon />
+                  </ListItemIcon>
+                  <Typography variant="h6">Mis Publicaciones</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography color="textSecondary">
+                    No hay publicaciones activas
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <ListItemIcon>
+                    <LockIcon />
+                  </ListItemIcon>
+                  <Typography variant="h6">Privacidad</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <List>
+                    <ListItem>
+                      <ListItemText
+                        primary="Visibilidad del perfil"
+                        secondary="Público"
+                      />
+                    </ListItem>
+                    <Divider />
+                    <ListItem>
+                      <ListItemText
+                        primary="Información visible"
+                        secondary="Nombre y publicaciones"
+                      />
+                    </ListItem>
+                  </List>
+                </AccordionDetails>
+              </Accordion>
+
+              <Accordion>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <ListItemIcon>
+                    <SecurityIcon />
+                  </ListItemIcon>
+                  <Typography variant="h6">Seguridad</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <List>
+                    <ListItem>
+                      <ListItemText
+                        primary="Última actualización de contraseña"
+                        secondary="Nunca"
+                      />
+                    </ListItem>
+                    <Divider />
+                    <ListItem>
+                      <ListItemText
+                        primary="Verificación en dos pasos"
+                        secondary="Desactivada"
+                      />
+                    </ListItem>
+                  </List>
+                </AccordionDetails>
+              </Accordion>
+            </Grid>
+          </Grid>
+        </Paper>
+      </Container>
+    </>
   );
 };
 

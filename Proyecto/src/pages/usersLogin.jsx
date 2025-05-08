@@ -1,20 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import "./users.css";
 import { TextField, Button, Box } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ResponsiveAppBar from "./ResponsiveAppBar"; 
 
-function usersLogin() {
+function UsersLogin() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:3000/users');
+      const users = await response.json();
+      
+      const user = users.find(u => 
+        u.email === formData.email && 
+        u.password === formData.password
+      );
+
+      if (user) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        navigate('/');
+      } else {
+        setError('Email o contraseña incorrectos');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError('Error al intentar iniciar sesión');
+    }
+  };
+
   return (
     <>
       <ResponsiveAppBar />
 
-      {/* Título */}
       <div className="TituloLogin">
         <h2>Login de Usuario</h2>
       </div>
 
-      {/* Formulario */}
       <Box
         sx={{
           maxWidth: 400,
@@ -23,10 +60,10 @@ function usersLogin() {
           padding: 3,
           boxShadow: 3,
           borderRadius: 2,
-          marginBottom: 8, // Espacio adicional para separar del footer
+          marginBottom: 8,
         }}
       >
-        <form>
+        <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: "1rem" }}>
             <label
               htmlFor="email"
@@ -40,6 +77,8 @@ function usersLogin() {
               fullWidth
               type="email"
               required
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
           <div style={{ marginBottom: "1rem" }}>
@@ -55,10 +94,19 @@ function usersLogin() {
               fullWidth
               type="password"
               required
+              value={formData.password}
+              onChange={handleChange}
             />
           </div>
 
+          {error && (
+            <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center' }}>
+              {error}
+            </div>
+          )}
+
           <Button
+            type="submit"
             variant="contained"
             color="primary"
             fullWidth
@@ -93,4 +141,4 @@ function usersLogin() {
   );
 }
 
-export default usersLogin;
+export default UsersLogin;

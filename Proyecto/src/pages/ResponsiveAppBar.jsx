@@ -15,18 +15,30 @@ import AdbIcon from '@mui/icons-material/Adb';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['Productos', 'Vender', 'Ingresar'];
-const settings = ['Perfil', 'Cuenta', 'Dashboard', 'Logout'];
-
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState(null);
 
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      setIsAuthenticated(true);
+      setCurrentUser(JSON.parse(user));
+    }
+  }, []);
+
+  // Filtrar las páginas según el estado de autenticación
+  const pages = isAuthenticated ? ['Productos', 'Vender'] : ['Productos', 'Vender', 'Ingresar'];
+  const settings = ['Perfil', 'Cerrar Sesión'];
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+  
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -37,6 +49,18 @@ function ResponsiveAppBar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleSettingClick = (setting) => {
+    handleCloseUserMenu();
+    if (setting === 'Cerrar Sesión') {
+      localStorage.removeItem('currentUser');
+      setIsAuthenticated(false);
+      setCurrentUser(null);
+      navigate('/');
+    } else if (setting === 'Perfil') {
+      navigate('/perfil');
+    }
   };
 
   const handlePageClick = (page) => {
@@ -54,6 +78,13 @@ function ResponsiveAppBar() {
         break;
     }
     handleCloseNavMenu();
+  };
+
+  const getInitials = () => {
+    if (currentUser) {
+      return `${currentUser.nombre[0]}${currentUser.apellido[0]}`.toUpperCase();
+    }
+    return '';
   };
 
   return (
@@ -157,11 +188,38 @@ function ResponsiveAppBar() {
               </IconButton>
             </Tooltip>
 
-            <Tooltip title="Ir al perfil">
-              <IconButton onClick={() => navigate('/perfil')} sx={{ p: 0 }}>
-                <Avatar sx={{ backgroundColor: '#0D0D0D' , borderRadius:0, width:80}}>Perfil</Avatar>
+            <Tooltip title={isAuthenticated ? "Abrir configuración" : "Ir al perfil"}>
+              <IconButton onClick={isAuthenticated ? handleOpenUserMenu : () => navigate('/login')} sx={{ p: 0 }}>
+                <Avatar sx={{ bgcolor: isAuthenticated ? 'primary.main' : '#0D0D0D', borderRadius: isAuthenticated ? '50%' : 0, width: isAuthenticated ? 40 : 80, backgroundColor: "black" }}>
+                  {isAuthenticated ? getInitials() : 'Perfil'}
+                </Avatar>
               </IconButton>
             </Tooltip>
+            
+            {isAuthenticated && (
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem key={setting} onClick={() => handleSettingClick(setting)}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            )}
           </Box>
         </Toolbar>
       </Container>

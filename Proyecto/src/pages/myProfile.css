@@ -1,31 +1,31 @@
 
 
-.perfil {
+/* .perfil {
   display: flex;
-  flex-direction: column; /* Asegura que los bloques principales estén en columnas */
+  flex-direction: column; 
   margin-top: 80px;
   padding: 0 20px;
   gap: 16px;
 }
 
 .infoPrincipal {
-  display: flex; /* Alinea la imagen y los datos horizontalmente */
+  display: flex; 
   flex-direction: row;
-  align-items: flex-start; /* Centra verticalmente la imagen y el texto */
-  gap: 20px; /* Espacio entre la imagen y el texto */
+  align-items: flex-start; 
+  gap: 20px; 
 }
 
 .fotoPerfil {
-  width: 100px; /* Ajusta el tamaño de la imagen */
+  width: 100px; 
   height: 100px;
-  border-radius: 50%; /* Hace la imagen redonda */
+  border-radius: 50%; 
 }
 .infoPerfil {
-  text-align: left; /* Alinea los datos en una columna */
+  text-align: left; 
   padding-top: 10px;
 }
 
 .datosAdicionales p {
   margin : 0;
-  padding: 0; /* Elimina el margen y el padding de los párrafos */
-}
+  padding: 0; 
+} */
