@@ -2,22 +2,44 @@ import React, { useState, useEffect } from "react";
 import "./homescreen.css";
 import { useNavigate } from "react-router-dom";
 
-
 const HomeScreen = () => {
     const navigate = useNavigate();
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([
+        {
+            id: 1,
+            name: "Producto de Ejemplo 1",
+            description: "Descripción del producto de ejemplo 1",
+            price: 100,
+            image: "https://via.placeholder.com/150"
+        },
+        {
+            id: 2,
+            name: "Producto de Ejemplo 2",
+            description: "Descripción del producto de ejemplo 2",
+            price: 200,
+            image: "https://via.placeholder.com/150"
+        },
+        {
+            id: 3,
+            name: "Producto de Ejemplo 3",
+            description: "Descripción del producto de ejemplo 3",
+            price: 300,
+            image: "https://via.placeholder.com/150"
+        }
+    ]);
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const response = await fetch('http://localhost:3000/products');
                 const data = await response.json();
+                console.log("Productos obtenidos:", data); 
                 setProducts(data.slice(0, 6));
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
         };
-
+    
         fetchProducts();
     }, []);
 
@@ -27,7 +49,6 @@ const HomeScreen = () => {
 
     return (
         <div className="homeScreen">
-
             <div className="barra-busqueda">
                 <input
                     type="text"

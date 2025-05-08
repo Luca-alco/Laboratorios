@@ -18,7 +18,7 @@ function App() {
       <div className="appContainer">
         <ResponsiveAppBar />
         <Routes>
-          <Route path="/homescreen" element={<HomeScreen />} />
+          <Route path="/" element={<HomeScreen />} />
           <Route path="/perfil" element={<MyProfile />} />
           <Route path="/productos" element={<ListaCatalogo />} />
           <Route path="/products/:id" element={<Products />} />
@@ -28,7 +28,7 @@ function App() {
           <Route path="/gestion-productos" element={<Gstprod2 />} />
           <Route path="/nueva-publicacion" element={<PubliNueva />} />
         </Routes>
-        <ResponsiveFooter /> 
+        <ResponsiveFooter />
       </div>
     </BrowserRouter>
   );
