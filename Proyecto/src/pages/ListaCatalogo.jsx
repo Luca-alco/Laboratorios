@@ -5,7 +5,29 @@ import { useState, useEffect } from 'react';
 
 function ListaCatalogo() {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      name: "Producto 1",
+      description: "Descripción del producto 1",
+      price: 100,
+      image: "https://via.placeholder.com/150"
+    },
+    {
+      id: 2,
+      name: "Producto 2",
+      description: "Descripción del producto 2",
+      price: 200,
+      image: null // Este producto no tiene imagen
+    },
+    {
+      id: 3,
+      name: "Producto 3",
+      description: "Descripción del producto 3",
+      price: 300,
+      image: "https://via.placeholder.com/150"
+    }
+  ]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,10 +55,14 @@ function ListaCatalogo() {
           <h2 className={styles.tituloDiv}>Productos</h2>
           <hr className={styles.separador} />
           {products.map((product) => (
-            <div key={product.id}onClick={() => handleProductClick(product.id)}>
+            <div key={product.id} onClick={() => handleProductClick(product.id)}>
               <div className={styles.tarjetaProducto}>
                 <div className={styles.imagen}>
-                  <img src={product.image} alt={product.name} />
+                  {product.image ? (
+                    <img src={product.image} alt={product.name} />
+                  ) : (
+                    <p className={styles.texto}>Imagen no disponible</p>
+                  )}
                 </div>
                 <div className={styles.descrpicion}>
                   <h4>{product.name}</h4>
@@ -51,76 +77,6 @@ function ListaCatalogo() {
             </div>
           ))}
         </section>
-          {/* <div className={styles.tarjetaProducto}>
-            <div className={styles.imagen}>aca va la imagen</div>
-            <div className={styles.descrpicion}>
-              <h4>Nombre del producto</h4>
-              <p className={styles.texto}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-                atque illo vel modi, accusamus ullam alias impedit perferendis.
-                Laborum, voluptatum.
-              </p>
-              <p className={styles.texto}>precio</p>
-            </div>
-            <div className={styles.comfirmar}>
-              <button>Agregar</button>
-            </div>
-          </div>
-          <hr className={styles.separador} />
-          <div className={styles.tarjetaProducto}>
-            <div className={styles.imagen}>aca va la imagen</div>
-            <div className={styles.descrpicion}>
-              <h4>Nombre del producto</h4>
-              <p className={styles.texto}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-                atque illo vel modi, accusamus ullam alias impedit perferendis.
-                Laborum, voluptatum.
-              </p>
-              <p className={styles.texto}>precio</p>
-            </div>
-            <div className={styles.comfirmar}>
-              <button>Agregar</button>
-            </div>
-          </div>
-          <hr className={styles.separador} />
-          <div className={styles.tarjetaProducto}>
-            <div className={styles.imagen}>aca va la imagen</div>
-            <div className={styles.descrpicion}>
-              <h4>Nombre del producto</h4>
-              <p className={styles.texto}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-                atque illo vel modi, accusamus ullam alias impedit perferendis.
-                Laborum, voluptatum.
-              </p>
-              <p className={styles.texto}>precio</p>
-            </div>
-            <div className={styles.comfirmar}>
-              <button>Agregar</button>
-            </div>
-          </div>
-          <hr className={styles.separador} />
-          <div className={styles.tarjetaProducto}>
-            <div className={styles.imagen}>aca va la imagen</div>
-            <div className={styles.descrpicion}>
-              <h4>Nombre del producto</h4>
-              <p className={styles.texto}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-                atque illo vel modi, accusamus ullam alias impedit perferendis.
-                Laborum, voluptatum.
-              </p>
-              <p className={styles.texto}>precio</p>
-            </div>
-            <div className={styles.comfirmar}>
-              <button className="navbutton">Agregar</button>
-            </div>
-          </div>
-        </section> */}
-
-        <footer>
-          <div className="TxtFooter">
-            <h1>INFO WEB</h1>
-          </div>
-        </footer>
       </div>
     </>
   );

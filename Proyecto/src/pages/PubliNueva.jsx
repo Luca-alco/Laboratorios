@@ -45,11 +45,6 @@ function PubliNueva() {
 
         </main>
 
-        <footer>
-            <div className="TxtFooter">
-                <h1>INFO WEB</h1>
-            </div>
-        </footer>
       
     </>
   );

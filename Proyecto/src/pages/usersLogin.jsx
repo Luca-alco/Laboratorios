@@ -4,7 +4,6 @@ import { TextField, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import ResponsiveAppBar from "./ResponsiveAppBar"; 
 
-
 function usersLogin() {
   return (
     <>
@@ -24,6 +23,7 @@ function usersLogin() {
           padding: 3,
           boxShadow: 3,
           borderRadius: 2,
+          marginBottom: 8, // Espacio adicional para separar del footer
         }}
       >
         <form>
@@ -89,13 +89,6 @@ function usersLogin() {
           </Link>
         </div>
       </Box>
-
-      {/* Footer */}
-      <footer>
-        <div className="TxtFooter">
-          <h1>INFO WEB</h1>
-        </div>
-      </footer>
     </>
   );
 }

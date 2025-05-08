@@ -90,11 +90,6 @@ function Carrito() {
         <button onClick={handleContinueShopping}>Continuar Compra</button>
       </main>
 
-      <footer>
-        <div className="TxtFooter">
-          <h1>INFO WEB</h1>
-        </div>
-      </footer>
     </>
   );
 }
