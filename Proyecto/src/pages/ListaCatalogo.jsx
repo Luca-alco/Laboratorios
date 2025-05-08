@@ -1,43 +1,12 @@
 import { Link, useNavigate } from "react-router";
 import styles from "./listaCatalogo.module.css";
-function ListaCatalogo() {
-  const estilo_catalogos = {
-    with: "75%",
-    bgcolor: "background.paper",
-    boxShadow: 1,
-    borderRadius: 2,
-    p: 2,
-    minWidth: 300,
-    heigth: "100%",
-  };
+import ResponsiveAppBar from "./ResponsiveAppBar";
 
+function ListaCatalogo() {
   return (
     <>
       <div className="homeScreen">
-        <header className="header">
-          <Link to="/" className="home-button">
-            🏠 Inicio
-          </Link>
-          <h1 className="Nombre">Nombre Web</h1>
-          <div className="carrito" onClick={() => useNavigate("/carrito")}>
-            🛒
-          </div>
-          <button onClick={() => useNavigate("/perfil")}>Mi Perfil</button>
-        </header>
-
-        <section className="top-bar">
-          <div className="nav-buttons">
-            <Link to="/productos">
-              <button className="navbutton"> Categorias </button>
-            </Link>
-            <Link to="/gestion-productos">
-              <button className="navbutton"> Vender </button>
-            </Link>
-            <Link to="/login">
-              <button className="navbutton">Ingresar</button>
-            </Link>
-          </div>
-        </section>
+        <ResponsiveAppBar />
         <section className={styles.seccionPrincipal}>
           <h2 className={styles.tituloDiv}>Productos</h2>
           <hr className={styles.separador} />
