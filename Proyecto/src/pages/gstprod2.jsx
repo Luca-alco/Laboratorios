@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./gstprod2.css";
 import "./users.css";
+import ResponsiveAppBar from "./ResponsiveAppBar"; 
+
 
 const Gstprod2 = () => {
   // Estado para el stock del producto
@@ -21,15 +23,10 @@ const Gstprod2 = () => {
 
   return (
     <>
-    <header className="HeaderProducts">
-        <h1 className="Nombre">Nombre Web</h1>
-
-        <div className="Carrito">🛒</div>
-      </header>
+      <ResponsiveAppBar />
+  
     <div>
-      <Link to="/" className="home-button">
-        🏠 Inicio
-      </Link>
+      
       <div className="product flex">
         <div className="mb-4"></div>
         <div className="large-text flex">

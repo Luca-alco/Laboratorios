@@ -2,20 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./products.css";
 import "./users.css";
+import ResponsiveAppBar from "./ResponsiveAppBar"; 
+
 
 function Products() {
   return (
     <>
-      <header className="HeaderProducts">
-        <h1 className="Nombre">Nombre Web</h1>
-
-        <div className="Carrito">🛒</div>
-      </header>
+      
+      <ResponsiveAppBar />
 
       <main>
-        <Link to="/" className="home-button">
-          🏠 Inicio
-        </Link>
+        
         <div className="barra-busqueda">
           <input
             type="text"

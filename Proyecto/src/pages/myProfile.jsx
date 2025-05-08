@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ResponsiveAppBar from "./ResponsiveAppBar"; 
 import "./myprofile.css";
 import "./users.css";
 
 const MyProfile = () => { 
   return (
     <div>
-      <Link to="/" className="home-button">
-        🏠 Inicio
-      </Link>
+      <ResponsiveAppBar />
+      
       <div className="perfil">
         <div className="infoPrincipal">
           <img 
@@ -24,8 +24,7 @@ const MyProfile = () => {
           </div>
         </div>
         <div className="datosAdicionales">
-          <p>
-          Teléfono: 123456789</p> 
+          <p>Teléfono: 123456789</p> 
           <p>Fecha de nacimiento: 01/01/1990</p> 
           <p>Descripción: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> 
           <p>Intereses: Tecnología, Deportes, Música</p> 
@@ -36,7 +35,7 @@ const MyProfile = () => {
           <p>Preferencias de comunicación: Email</p>
           <p>Suscripciones: Newsletter, Promociones</p>
           <p>
-          Historial de compras:    
+            Historial de compras:    
             <ul>
               <li>Producto 1 - Fecha: 01/01/2022</li>
               <li>Producto 2 - Fecha: 01/02/2022</li>
@@ -44,7 +43,7 @@ const MyProfile = () => {
             </ul>       
           </p>
           <p>
-          Redes sociales: 
+            Redes sociales: 
             <ul>
               <li>Facebook: facebook.com/juanperez</li>
               <li>Twitter: twitter.com/juanperez</li>
@@ -54,7 +53,7 @@ const MyProfile = () => {
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default MyProfile;
