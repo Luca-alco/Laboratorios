@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './users.css';
 import { TextField, Button, Box } from '@mui/material';
-import ResponsiveAppBar from "./ResponsiveAppBar"; 
+
 
 function Register() {
     const navigate = useNavigate();
@@ -70,7 +70,6 @@ function Register() {
 
     return (
         <>
-            <ResponsiveAppBar />
             <div className="TituloRegister">
                 <h2>Registro de Usuario</h2>
             </div>

@@ -18,7 +18,7 @@ function ListaCatalogo() {
       name: "Producto 2",
       description: "Descripción del producto 2",
       price: 200,
-      image: null // Este producto no tiene imagen
+      image: null 
     },
     {
       id: 3,
@@ -50,14 +50,13 @@ function ListaCatalogo() {
   return (
     <>
       <div className="homeScreen">
-        <ResponsiveAppBar />
         <section className={styles.seccionPrincipal}>
           <h2 className={styles.tituloDiv}>Productos</h2>
           <hr className={styles.separador} />
           {products.map((product) => (
             <div key={product.id} onClick={() => handleProductClick(product.id)}>
               <div className={styles.tarjetaProducto}>
-                <div className={styles.imagen}>
+                <div className={styles.imagen}> 
                   {product.image ? (
                     <img src={product.image} alt={product.name} />
                   ) : (

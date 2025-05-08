@@ -9,14 +9,16 @@ import Carrito from "./pages/Carrito";
 import UsersLogin from "./pages/usersLogin";
 import Register from "./pages/register";
 import ListaCatalogo from "./pages/ListaCatalogo";
-import ResponsiveFooter from "./pages/responsivefooter"; // Importa el footer
+import ResponsiveFooter from "./pages/responsivefooter"; 
+import ResponsiveAppBar from "./pages/ResponsiveAppBar";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="appContainer">
+        <ResponsiveAppBar />
         <Routes>
-          <Route path="/" element={<HomeScreen />} />
+          <Route path="/homescreen" element={<HomeScreen />} />
           <Route path="/perfil" element={<MyProfile />} />
           <Route path="/productos" element={<ListaCatalogo />} />
           <Route path="/products/:id" element={<Products />} />

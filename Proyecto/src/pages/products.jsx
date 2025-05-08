@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "./products.css";
 import "./users.css";
-import ResponsiveAppBar from "./ResponsiveAppBar"; 
 
 
 function Products() {
@@ -61,7 +60,6 @@ if (existingProductIndex >= 0) {
   return (
     <>
       
-      <ResponsiveAppBar />
 
       <main>
         <div className="barra-busqueda">

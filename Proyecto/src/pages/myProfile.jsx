@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ResponsiveAppBar from "./ResponsiveAppBar";
 import {
   Avatar,
   Box,
@@ -57,7 +56,6 @@ const MyProfile = () => {
 
   return (
     <>
-      <ResponsiveAppBar />
       <Container maxWidth="md" sx={{ mt: 4, mb: 4 }} >
         <Paper elevation={3} sx={{ p: 3, mb: 3, backgroundColor:"#f0f0f0", borderRadius:2 }}>
           <Box display="flex" alignItems="center" mb={3} backgroundColor="lightgrey" borderRadius={2} p={2}>

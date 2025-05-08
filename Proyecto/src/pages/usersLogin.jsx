@@ -46,11 +46,7 @@ function UsersLogin() {
 
   return (
     <>
-      <ResponsiveAppBar />
-
-      <div className="TituloLogin">
-        <h2>Login de Usuario</h2>
-      </div>
+  
 
       <Box
         sx={{

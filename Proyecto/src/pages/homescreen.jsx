@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./homescreen.css";
 import { useNavigate } from "react-router-dom";
-import ResponsiveAppBar from "./ResponsiveAppBar";
+
 
 const HomeScreen = () => {
     const navigate = useNavigate();
@@ -12,7 +12,6 @@ const HomeScreen = () => {
             try {
                 const response = await fetch('http://localhost:3000/products');
                 const data = await response.json();
-                // Solo mostrar los primeros 6 productos
                 setProducts(data.slice(0, 6));
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -28,7 +27,6 @@ const HomeScreen = () => {
 
     return (
         <div className="homeScreen">
-            <ResponsiveAppBar />
 
             <div className="barra-busqueda">
                 <input

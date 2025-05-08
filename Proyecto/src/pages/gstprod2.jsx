@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./gstprod2.css";
 import "./users.css";
-import ResponsiveAppBar from "./ResponsiveAppBar"; 
 
 
 const Gstprod2 = () => {
@@ -23,8 +22,6 @@ const Gstprod2 = () => {
 
   return (
     <>
-      <ResponsiveAppBar />
-  
     <div>
       
       <div className="product flex">
