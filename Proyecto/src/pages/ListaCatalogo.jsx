@@ -70,7 +70,7 @@ function ListaCatalogo() {
                   <p className={styles.texto}>${product.price}</p>
                 </div>
                 <div className={styles.comfirmar}>
-                  <button className="navbutton">Agregar</button>
+                  <button className={styles.botonVer}>Ver</button>
                 </div>
               </div>
               <hr className={styles.separador} />

@@ -72,13 +72,14 @@ img {
 
 .btn-buscar {
   padding: 10px 20px;
-  background-color: #1976d2;
+  background-color: black;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn-buscar:hover {
-  background-color: #145ea8;
+  background-color: #333333;
 }

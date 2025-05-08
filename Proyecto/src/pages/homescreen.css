@@ -1,10 +1,9 @@
-
-
 .homeScreen {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; 
+    min-height: 100vh;
 }
+
 .carrito {
     font-size: 1.5rem;
     cursor: pointer;
@@ -71,5 +70,122 @@
     cursor: pointer;
     font-size: 16px;
 }
+
+.barra-busqueda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    gap: 10px;
+}
+
+.input-busqueda {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.btn-buscar {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-buscar:hover {
+    background-color: #333333; /* Negro más claro al pasar el mouse */
+}
+
+.productos-section {
+    padding: 20px;
+    background-color: #f5f5f5;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.productos-titulo {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px;
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.producto-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+}
+
+.producto-imagen {
+    height: 200px;
+    overflow: hidden;
+}
+
+.producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.producto-info {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.producto-info h3 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.producto-descripcion {
+    color: #666;
+    font-size: 14px;
+    margin: 0;
+}
+
+.producto-precio {
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.btn-ver {
+    padding: 8px 16px;
+    background-color: grey;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    width: fit-content;
+    align-self: center;
+    margin-top: 10px;
+}
+
+
 
 

@@ -18,7 +18,7 @@
 }
 
 .tarjetaProducto {
-  background-color: skyblue;
+  background-color: #f0f0f0;
   width: 95%;
   border: solid;
   margin-left: auto;
@@ -59,3 +59,15 @@
   font-size: 17px;
   padding: 5px;
 }
+
+.botonVer {
+  background-color: grey;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
