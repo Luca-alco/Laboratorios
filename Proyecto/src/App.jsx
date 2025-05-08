@@ -17,6 +17,7 @@ function App() {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/perfil" element={<MyProfile />} />
         <Route path="/productos" element={<ListaCatalogo />} />
+        <Route path="/products/:id" element={<Products />} />
         <Route path="/login" element={<UsersLogin />} />
         <Route path="/register" element={<Register />} />
         <Route path="/carrito" element={<Carrito />} />

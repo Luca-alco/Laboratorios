@@ -67,12 +67,7 @@ function register(){
             </form>
         </Box>
 
-        {/* Footer */}
-      <footer>
-        <div className="TxtFooter">
-          <h1>INFO WEB</h1>
-        </div>
-      </footer>
+       
     </>
   );
 }

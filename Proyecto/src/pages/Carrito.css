@@ -17,3 +17,44 @@ img {
 .BotonVaciarCarro {
   margin-top: 2cm;
 }
+.cart-item {
+  display: flex;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.item-image img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.item-details {
+  flex: 1;
+}
+
+.quantity-control {
+  margin: 10px 0;
+}
+
+.quantity-control input {
+  width: 60px;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.remove-button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.remove-button:hover {
+  background-color: #cc0000;
+}

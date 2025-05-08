@@ -2,6 +2,7 @@ import React from "react";
 import "./homescreen.css";
 import { useNavigate } from "react-router-dom";
 import ResponsiveAppBar from "./ResponsiveAppBar";
+import ResponsiveFooter from "./responsivefooter"; 
 
 const HomeScreen = () => {
     const navigate = useNavigate();
@@ -34,11 +35,8 @@ const HomeScreen = () => {
                 <button className="category">Cat F</button>
             </main>
 
-            <footer>
-                <div className="TxtFooter">
-                    <h1>INFO WEB</h1>
-                </div>
-            </footer>
+            <ResponsiveFooter />
+            
         </div>
     );
 };
