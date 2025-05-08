@@ -1,0 +1,74 @@
+{
+    "products": [
+      {
+        "id": 1,
+        "name": "Classic Black T-Shirt",
+        "price": 29.99,
+        "description": "Basic cotton black t-shirt, perfect for everyday wear",
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1"
+      },
+      {
+        "id": 2,
+        "name": "White Graphic Tee",
+        "price": 34.99,
+        "description": "White t-shirt with modern abstract design",
+        "image": "https://images.unsplash.com/photo-1554568218-0f1715e72254?ixlib=rb-1.2.1"
+      },
+      {
+        "id": 3,
+        "name": "Navy Blue Polo",
+        "price": 39.99,
+        "description": "Classic navy blue polo shirt for a casual look",
+        "image": "https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?ixlib=rb-1.2.1"
+      },
+      {
+        "id": 4,
+        "name": "Vintage Rock Band Tee",
+        "price": 45.99,
+        "description": "Retro style rock band t-shirt with distressed print",
+        "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-1.2.1"
+      },
+      {
+        "id": 5,
+        "name": "Striped Summer T-Shirt",
+        "price": 32.99,
+        "description": "Light cotton striped t-shirt perfect for summer",
+        "image": "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?ixlib=rb-1.2.1"
+      },
+      {
+        "id": 6,
+        "name": "Sports Performance Tee",
+        "price": 49.99,
+        "description": "Moisture-wicking sports t-shirt for active lifestyle",
+        "image": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1"
+      },
+      {
+        "id": 7,
+        "name": "Organic Cotton V-Neck",
+        "price": 37.99,
+        "description": "Eco-friendly organic cotton v-neck t-shirt",
+        "image": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-1.2.1"
+      },
+      {
+        "id": 8,
+        "name": "Limited Edition Art Tee",
+        "price": 55.99,
+        "description": "Limited edition t-shirt featuring local artist design",
+        "image": "https://images.unsplash.com/photo-1503342394128-c104d54dba01?ixlib=rb-1.2.1"
+      },
+      {
+        "id": 9,
+        "name": "Minimal Logo T-Shirt",
+        "price": 28.99,
+        "description": "Clean and simple logo design t-shirt",
+        "image": "https://images.unsplash.com/photo-1574180566232-aaad1b5b8450?ixlib=rb-1.2.1"
+      },
+      {
+        "id": 10,
+        "name": "Premium Cotton Blend",
+        "price": 42.99,
+        "description": "Premium quality cotton blend t-shirt with superior comfort",
+        "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1"
+      }
+    ]
+  }
