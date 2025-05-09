@@ -30,7 +30,7 @@
       "category": "Bermuda",
       "price": 45.99,
       "description": "Bermuda cargo con bolsillos laterales",
-      "image": "https://images.unsplash.com/photo-1565693413579-8ff3fdc1b03b?ixlib=rb-1.2.1"
+      "image": "https://images.unsplash.com/photo-1547587091-507495a130c5?ixlib=rb-1.2.1"
     },
     {
       "id": "5",
@@ -46,7 +46,7 @@
       "category": "Pantalón",
       "price": 39.99,
       "description": "Pantalón deportivo negro con elástico",
-      "image": null
+      "image": "https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?ixlib=rb-1.2.1"
     },
     {
       "id": "7",
