@@ -15,6 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logo from '../img/logo.png';  // Importamos el logo
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -83,6 +84,17 @@ function ResponsiveAppBar() {
     <AppBar position="static" sx={{ backgroundColor: '#0D0D0D' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <Box
+            component="img"
+            sx={{
+              height: 40,
+              width: 40,
+              marginRight: 1,
+              display: { xs: 'none', md: 'flex' }
+            }}
+            alt="Logo"
+            src={logo}  // Usamos la imagen importada
+          />
           <Typography
             variant="h6"
             noWrap
@@ -98,7 +110,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            NombreWeb
+            Rimboket
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
