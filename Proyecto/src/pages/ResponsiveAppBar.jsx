@@ -14,24 +14,14 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
-  const [currentUser, setCurrentUser] = React.useState(null);
-
+  const { isAuthenticated, currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    const user = localStorage.getItem('currentUser');
-    if (user) {
-      setIsAuthenticated(true);
-      setCurrentUser(JSON.parse(user));
-    }
-  }, []);
-
-  // Filtrar las páginas según el estado de autenticación
   const pages = isAuthenticated ? ['Productos', 'Vender'] : ['Productos', 'Vender', 'Ingresar'];
   const settings = ['Perfil', 'Cerrar Sesión'];
 
@@ -54,9 +44,7 @@ function ResponsiveAppBar() {
   const handleSettingClick = (setting) => {
     handleCloseUserMenu();
     if (setting === 'Cerrar Sesión') {
-      localStorage.removeItem('currentUser');
-      setIsAuthenticated(false);
-      setCurrentUser(null);
+      logout();
       navigate('/');
     } else if (setting === 'Perfil') {
       navigate('/perfil');
@@ -70,9 +58,9 @@ function ResponsiveAppBar() {
             break;
         case 'Vender':
             if (!isAuthenticated) {
-                navigate('/login'); // Redirige al registro si no está autenticado
+                navigate('/login');
             } else {
-                navigate('/nueva-publicacion'); // Redirige a la página de publicación si está autenticado
+                navigate('/nueva-publicacion');
             }
             break;
         case 'Ingresar':
@@ -82,7 +70,7 @@ function ResponsiveAppBar() {
             break;
     }
     handleCloseNavMenu();
-};
+  };
 
   const getInitials = () => {
     if (currentUser) {
@@ -113,7 +101,6 @@ function ResponsiveAppBar() {
             NombreWeb
           </Typography>
 
-          {/* Menú hamburguesa móvil */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -150,7 +137,6 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
-          {/* Logo móvil */}
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -171,7 +157,6 @@ function ResponsiveAppBar() {
             LOGO
           </Typography>
 
-          {/* Botones visibles en escritorio */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -184,7 +169,6 @@ function ResponsiveAppBar() {
             ))}
           </Box>
 
-          {/* Carrito y perfil */}
           <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center', gap: 2 }}>
             <Tooltip title="Carrito de compras">
               <IconButton onClick={() => navigate('/carrito')} sx={{ color: 'white' }}>

@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import "./users.css";
 import { TextField, Button, Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import ResponsiveAppBar from "./ResponsiveAppBar"; 
+import { useAuth } from '../context/AuthContext';
 
 function UsersLogin() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -33,7 +34,7 @@ function UsersLogin() {
       );
 
       if (user) {
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        login(user); // Usar la función login del contexto
         navigate('/');
       } else {
         setError('Email o contraseña incorrectos');
@@ -45,95 +46,91 @@ function UsersLogin() {
   };
 
   return (
-    <>
-  
-
-      <Box
-        sx={{
-          maxWidth: 400,
-          margin: "auto",
-          marginTop: 4,
-          padding: 3,
-          boxShadow: 3,
-          borderRadius: 2,
-          marginBottom: 8,
-        }}
-      >
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: "1rem" }}>
-            <label
-              htmlFor="email"
-              style={{ display: "block", marginBottom: "0.5rem" }}
-            >
-              Email:
-            </label>
-            <TextField
-              id="email"
-              variant="outlined"
-              fullWidth
-              type="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div style={{ marginBottom: "1rem" }}>
-            <label
-              htmlFor="password"
-              style={{ display: "block", marginBottom: "0.5rem" }}
-            >
-              Contraseña:
-            </label>
-            <TextField
-              id="password"
-              variant="outlined"
-              fullWidth
-              type="password"
-              required
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </div>
-
-          {error && (
-            <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center' }}>
-              {error}
-            </div>
-          )}
-
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
+    <Box
+      sx={{
+        maxWidth: 400,
+        margin: "auto",
+        marginTop: 4,
+        padding: 3,
+        boxShadow: 3,
+        borderRadius: 2,
+        marginBottom: 8,
+      }}
+    >
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: "1rem" }}>
+          <label
+            htmlFor="email"
+            style={{ display: "block", marginBottom: "0.5rem" }}
+          >
+            Email:
+          </label>
+          <TextField
+            id="email"
+            variant="outlined"
             fullWidth
+            type="email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div style={{ marginBottom: "1rem" }}>
+          <label
+            htmlFor="password"
+            style={{ display: "block", marginBottom: "0.5rem" }}
+          >
+            Contraseña:
+          </label>
+          <TextField
+            id="password"
+            variant="outlined"
+            fullWidth
+            type="password"
+            required
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </div>
+
+        {error && (
+          <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center' }}>
+            {error}
+          </div>
+        )}
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{
+            mt: 2,
+            color: "black",
+            borderColor: "black",
+            backgroundColor: "white",
+          }}
+        >
+          Confirmar
+        </Button>
+      </form>
+
+      <div style={{ textAlign: "center", marginTop: "1rem" }}>
+        <p>¿No tiene un usuario creado?</p>
+        <Link to="/register">
+          <Button
+            variant="outlined"
             sx={{
-              mt: 2,
               color: "black",
               borderColor: "black",
               backgroundColor: "white",
             }}
           >
-            Confirmar
+            Registrese Aqui
           </Button>
-        </form>
-
-        <div style={{ textAlign: "center", marginTop: "1rem" }}>
-          <p>¿No tiene un usuario creado?</p>
-          <Link to="/register">
-            <Button
-              variant="outlined"
-              sx={{
-                color: "black",
-                borderColor: "black",
-                backgroundColor: "white",
-              }}
-            >
-              Registrese Aqui
-            </Button>
-          </Link>
-        </div>
-      </Box>
-    </>
+        </Link>
+      </div>
+    </Box>
   );
 }
 
