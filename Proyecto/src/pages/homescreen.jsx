@@ -95,7 +95,6 @@ const HomeScreen = () => {
                                     </div>
                                     <div className="producto-info">
                                         <h3>{product.name}</h3>
-                                        <p className="producto-descripcion">{product.description}</p>
                                         <p className="producto-precio">${product.price}</p>
                                         <button 
                                             className="btn-ver"
@@ -127,13 +126,7 @@ const HomeScreen = () => {
                                 </div>
                                 <div className="producto-info">
                                     <h3>{product.name}</h3>
-                                    <p className="producto-descripcion">{product.description}</p>
-                                    <div className="precio-container">
-                                        {product.originalPrice && (
-                                            <p className="precio-original">${product.originalPrice}</p>
-                                        )}
-                                        <p className="producto-precio">${product.price}</p>
-                                    </div>
+                                    <p className="producto-precio">${product.price}</p>
                                     <button 
                                         className="btn-ver"
                                         onClick={() => handleProductClick(product.id)}

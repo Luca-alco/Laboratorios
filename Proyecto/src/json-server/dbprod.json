@@ -143,11 +143,41 @@
       "stock": 23,
       "description": "Campera deportiva ultraligera con tecnología cortavientos. Material repelente al agua con acabado DWR duradero. Bolsillos laterales con cierre y bolsillo interno para dispositivos. Puños elásticos y dobladillo ajustable con cordón. Cuello alto con protección para mentón. Ventilación en espalda con sistema de solapa. Empacable en su propio bolsillo. Ideal para running y actividades outdoor. Reflectivos estratégicamente ubicados para mayor visibilidad.",
       "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?ixlib=rb-1.2.1"
+    },
+    {
+      "id": "1746898774110",
+      "categoria": "Campera",
+      "marca": "gstgstsgt",
+      "talle": "M",
+      "stock": "5",
+      "estado": "nuevo",
+      "imagen": "blob:http://localhost:5173/3198c8d1-c776-4292-8e1c-047e7be817f8",
+      "descripcion": "snjgfojsgiosjfg\njsifgjisfjgisjfg\nisfjgijfigjs\njijiogfqkpeorfkdrp\n",
+      "userId": "1746715071241",
+      "price": 0,
+      "brand": "gstgstsgt",
+      "name": "gstgstsgt Campera",
+      "category": "Campera"
+    },
+    {
+      "id": "1746898774114",
+      "categoria": "Campera",
+      "marca": "gstgstsgt",
+      "talle": "M",
+      "stock": 5,
+      "estado": "nuevo",
+      "imagen": "blob:http://localhost:5173/3198c8d1-c776-4292-8e1c-047e7be817f8",
+      "descripcion": "snjgfojsgiosjfg\njsifgjisfjgisjfg\nisfjgijfigjs\njijiogfqkpeorfkdrp\n",
+      "userId": "1746715071241",
+      "price": 0,
+      "brand": "gstgstsgt",
+      "name": "gstgstsgt Campera",
+      "category": "Campera"
     }
   ],
   "users": [
     {
-      "id": 1746713999719,
+      "id": "1746713999719",
       "nombre": "Juan",
       "apellido": "Dominguez",
       "email": "Juandominguez@gmail.com",
@@ -156,7 +186,7 @@
       "telefono": "1154221014"
     },
     {
-      "id": 1746715071241,
+      "id": "1746715071241",
       "nombre": "Domingo",
       "apellido": "Pereira",
       "email": "Dpereira@gmail.com",

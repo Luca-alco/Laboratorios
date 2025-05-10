@@ -214,7 +214,6 @@ function Carrito() {
                 </div>
                 <div className="item-details">
                   <h3>{item.name}</h3>
-                  <p>{item.description}</p>
                   <p>Precio: ${item.price}</p>
                   <div className="quantity-control">
                     <label>Cantidad: </label>
@@ -250,17 +249,7 @@ function Carrito() {
             <div className="summary-details">
               <div className="summary-row">
                 <span>{cartItems.length} productos</span>
-                <span>${calculateSubtotal().toFixed(2)}</span>
-              </div>
-              <div className="price-details">
-                <div className="summary-row subtotal">
-                  <span>Subtotal</span>
-                  <span>${calculateSubtotal().toFixed(2)}</span>
-                </div>
-                <div className="summary-row iva">
-                  <span>IVA (21%)</span>
-                  <span>${calculateIVA(calculateSubtotal()).toFixed(2)}</span>
-                </div>
+                <span>${calculateTotal().toFixed(2)}</span>
               </div>
               <div className="summary-row total">
                 <span>Total</span>

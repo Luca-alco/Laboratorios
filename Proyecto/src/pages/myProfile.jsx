@@ -14,7 +14,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider
+  Divider,
+  Button
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PersonIcon from "@mui/icons-material/Person";
@@ -48,6 +49,10 @@ const MyProfile = () => {
 
   const getInitials = (nombre, apellido) => {
     return `${nombre.charAt(0)}${apellido.charAt(0)}`.toUpperCase();
+  };
+
+  const handlePublicacionesClick = () => {
+    navigate('/gestion-productos');
   };
 
   if (!userData) {
@@ -129,10 +134,20 @@ const MyProfile = () => {
                   </ListItemIcon>
                   <Typography variant="h6">Mis Publicaciones</Typography>
                 </AccordionSummary>
-                <AccordionDetails>
-                  <Typography color="textSecondary">
-                    No hay publicaciones activas
-                  </Typography>
+                <AccordionDetails sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Button
+                    variant="contained"
+                    onClick={handlePublicacionesClick}
+                    sx={{
+                      backgroundColor: 'black',
+                      color: 'white',
+                      '&:hover': {
+                        backgroundColor: '#333'
+                      }
+                    }}
+                  >
+                    Ver mis publicaciones
+                  </Button>
                 </AccordionDetails>
               </Accordion>
 
