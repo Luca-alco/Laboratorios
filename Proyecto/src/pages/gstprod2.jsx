@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from "react-router-dom";
 import "./gstprod2.css";
 import "./users.css";
 
 const Gstprod2 = () => {
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -83,11 +85,24 @@ const Gstprod2 = () => {
   };
 
   if (loading) {
-    return <div>Cargando publicaciones...</div>;
+    return <div className="centered-message">Cargando publicaciones...</div>;
   }
 
   if (products.length === 0) {
-    return <div>No tienes publicaciones aún. ¡Crea una nueva!</div>;
+    return (
+      <div className="centered-container">
+        <div className="no-products-message">
+          <h2>No tienes publicaciones aún</h2>
+          <p>¡Comienza a vender tus productos!</p>
+          <button 
+            className="create-product-button"
+            onClick={() => navigate('/nueva-publicacion')}
+          >
+            Crear Nueva Publicación
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (

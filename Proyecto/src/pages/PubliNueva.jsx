@@ -58,13 +58,51 @@ function PubliNueva() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Save form data to localStorage
-    localStorage.setItem('productData', JSON.stringify({
-      ...formData,
-      imagen: formData.imagen ? URL.createObjectURL(formData.imagen) : null
-    }));
-    
-    navigate('/gestion-productos');
+    try {
+      // Obtener el usuario actual
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      if (!currentUser) {
+        alert('Debe iniciar sesión para publicar');
+        navigate('/login');
+        return;
+      }
+
+      // Crear el objeto del producto
+      const newProduct = {
+        id: Date.now().toString(), // ID único
+        categoria: formData.categoria,
+        marca: formData.marca,
+        talle: formData.talle,
+        stock: formData.stock,
+        estado: formData.estado,
+        imagen: formData.imagen ? URL.createObjectURL(formData.imagen) : null,
+        descripcion: formData.descripcion,
+        userId: currentUser.id,
+        price: 0, // Puedes agregar el precio si lo necesitas
+        brand: formData.marca,
+        name: `${formData.marca} ${formData.categoria}`,
+        category: formData.categoria
+      };
+
+      // Guardar en el servidor json-server
+      const response = await fetch('http://localhost:3000/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newProduct)
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al guardar el producto');
+      }
+
+      alert('Producto publicado exitosamente');
+      navigate('/productos');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error al publicar el producto');
+    }
   };
 
   return (
