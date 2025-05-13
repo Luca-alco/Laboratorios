@@ -173,6 +173,21 @@
       "brand": "Kongo",
       "name": "Kongo Buzo",
       "category": "Buzo"
+    },
+    {
+      "id": "1747179102487",
+      "categoria": "Remera",
+      "marca": "Adidas",
+      "talle": "M",
+      "stock": 15,
+      "estado": "nuevo",
+      "imagen": "blob:http://localhost:5173/3d2448f6-cbc3-48a4-ab2e-ec20c3fa63f3",
+      "descripcion": "Remera Negra Adidas",
+      "userId": "1746715071241",
+      "price": 13.99,
+      "brand": "Adidas",
+      "name": "Adidas Remera",
+      "category": "Remera"
     }
   ],
   "users": [

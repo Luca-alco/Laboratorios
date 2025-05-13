@@ -10,6 +10,7 @@ function PubliNueva() {
     marca: '',
     talle: '',
     stock: '',
+    precio: '',
     estado: '',
     imagen: null,
     descripcion: ''
@@ -38,8 +39,11 @@ function PubliNueva() {
         case 'stock':
           setStep(Math.max(step, 5));
           break;
-        case 'estado':
+        case 'precio':
           setStep(Math.max(step, 6));
+          break;
+        case 'estado':
+          setStep(Math.max(step, 7));
           break;
       }
     }
@@ -51,7 +55,7 @@ function PubliNueva() {
         ...prev,
         imagen: e.target.files[0]
       }));
-      setStep(Math.max(step, 7));
+      setStep(Math.max(step, 8));
     }
   };
 
@@ -69,16 +73,16 @@ function PubliNueva() {
 
       // Crear el objeto del producto
       const newProduct = {
-        id: Date.now().toString(), // ID único
+        id: Date.now().toString(),
         categoria: formData.categoria,
         marca: formData.marca,
         talle: formData.talle,
-        stock: formData.stock,
+        stock: parseInt(formData.stock),
         estado: formData.estado,
         imagen: formData.imagen ? URL.createObjectURL(formData.imagen) : null,
         descripcion: formData.descripcion,
         userId: currentUser.id,
-        price: 0, // Puedes agregar el precio si lo necesitas
+        price: parseFloat(formData.precio),
         brand: formData.marca,
         name: `${formData.marca} ${formData.categoria}`,
         category: formData.categoria
@@ -189,6 +193,25 @@ function PubliNueva() {
         {step >= 5 && (
           <div className="form-section">
             <label>
+              Precio:
+              <input
+                type="number"
+                name="precio"
+                min="0"
+                step="0.01"
+                value={formData.precio}
+                onChange={handleInputChange}
+                required
+                className="input-field-compact"
+                placeholder="0.00"
+              />
+            </label>
+          </div>
+        )}
+
+        {step >= 6 && (
+          <div className="form-section">
+            <label>
               Estado:
               <select
                 name="estado"
@@ -205,7 +228,7 @@ function PubliNueva() {
           </div>
         )}
 
-        {step >= 6 && (
+        {step >= 7 && (
           <div className="form-section">
             <label>
               Imagen del producto:
@@ -221,7 +244,7 @@ function PubliNueva() {
           </div>
         )}
 
-        {step >= 7 && (
+        {step >= 8 && (
           <div className="form-section descripcion-container">
             <label>
               Descripción del producto:
