@@ -151,14 +151,14 @@
   font-weight: 600;
 }
 
-.stock-info-section {
+.stock-info-section, .price-info-section {
   margin-top: 24px;
   padding: 16px;
   background-color: #f8f9fa;
   border-radius: 8px;
 }
 
-.stock-info-section h3 {
+.stock-info-section h3, .price-info-section h3 {
   font-size: 18px;
   color: #333;
   margin-bottom: 16px;
@@ -210,6 +210,26 @@
   cursor: not-allowed;
   transform: none;
   opacity: 0.7;
+}
+
+.price-input-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.price-input {
+  width: 120px;
+  padding: 8px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.price-input:focus {
+  outline: none;
+  border-color: #212529;
 }
 
 .centered-container {

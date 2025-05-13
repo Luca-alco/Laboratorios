@@ -84,6 +84,28 @@ const Gstprod2 = () => {
     }
   };
 
+  const updatePrice = async (productId, newPrice) => {
+    try {
+      const response = await fetch(`http://localhost:3000/products/${productId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          price: parseFloat(newPrice)
+        })
+      });
+
+      if (response.ok) {
+        setProducts(products.map(product => 
+          product.id === productId ? { ...product, price: parseFloat(newPrice) } : product
+        ));
+      }
+    } catch (error) {
+      console.error('Error updating price:', error);
+    }
+  };
+
   if (loading) {
     return <div className="centered-message">Cargando publicaciones...</div>;
   }
@@ -156,9 +178,23 @@ const Gstprod2 = () => {
 
           <div className="product-right">
             <div className="product-info-card">
-              <div className="product-condition">Gestión de Stock</div>
+              <div className="product-condition">Gestión de Producto</div>
               <h1 className="product-title">{product.name}</h1>
               
+              <div className="price-info-section">
+                <h3>Precio Actual: ${product.price}</h3>
+                <div className="price-input-section">
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={product.price}
+                    onChange={(e) => updatePrice(product.id, e.target.value)}
+                    className="price-input"
+                  />
+                </div>
+              </div>
+
               <div className="stock-info-section">
                 <h3>Stock Actual: {product.stock} unidades</h3>
                 
