@@ -29,7 +29,7 @@ const HomeScreen = () => {
                 // Aplicar descuentos fijos a los productos destacados
                 const productsWithDiscounts = data.slice(0, 6).map(product => {
                     const discount = PRODUCT_DISCOUNTS[product.id];
-                    const discountedPrice = product.price * (1 - discount/100);
+                    const discountedPrice = product.price * (1 - discount / 100);
                     return {
                         ...product,
                         originalPrice: product.price,
@@ -55,14 +55,14 @@ const HomeScreen = () => {
     };
 
     const filterProducts = (products, searchText) => {
-        if (!searchText.trim()) {
-            return [];
-        }
-        return products.filter(product => 
-            product.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            product.description.toLowerCase().includes(searchText.toLowerCase()) ||
-            product.category.toLowerCase().includes(searchText.toLowerCase())
-        );
+    if (!searchText.trim()) {
+        return []; // Si no hay texto de búsqueda, devuelve un array vacío
+    }
+    return products.filter(product => 
+        (product.name && product.name.toLowerCase().includes(searchText.toLowerCase())) ||
+        (product.description && product.description.toLowerCase().includes(searchText.toLowerCase())) ||
+        (product.category && product.category.toLowerCase().includes(searchText.toLowerCase()))
+    );
     };
 
     const searchResults = filterProducts(allProducts, searchText);
