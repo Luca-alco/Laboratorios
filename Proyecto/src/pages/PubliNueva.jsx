@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PubliNueva.css";
-import "./users.css";
+import "./Users.css";
 
 function PubliNueva() {
   const navigate = useNavigate();

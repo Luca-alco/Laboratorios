@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./homescreen.css";
+import "./Homescreen.css";
 import { useNavigate } from "react-router-dom";
 
 const HomeScreen = () => {

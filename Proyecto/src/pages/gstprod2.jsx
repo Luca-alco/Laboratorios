@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from "react-router-dom";
-import "./gstprod2.css";
-import "./users.css";
+import "./Gstprod2.css";
+import "./Users.css";
 
 const Gstprod2 = () => {
   const { currentUser } = useAuth();

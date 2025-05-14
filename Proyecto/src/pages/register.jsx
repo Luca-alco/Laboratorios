@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './users.css';
+import './Users.css';
 import { TextField, Button, Box } from '@mui/material';
 
 

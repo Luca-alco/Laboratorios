@@ -1,16 +1,16 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import HomeScreen from "./pages/homescreen";
-import MyProfile from "./pages/myProfile";
-import Products from "./pages/products";
-import Gstprod2 from "./pages/gstprod2";
+import HomeScreen from "./pages/Homescreen";
+import MyProfile from "./pages/MyProfile";
+import Products from "./pages/Products";
+import Gstprod2 from "./pages/Gstprod2";
 import PubliNueva from "./pages/PubliNueva";
 import Carrito from "./pages/Carrito";
-import UsersLogin from "./pages/usersLogin";
-import Register from "./pages/register";
+import UsersLogin from "./pages/UsersLogin";
+import Register from "./pages/Register";
 import ListaCatalogo from "./pages/ListaCatalogo";
-import ResponsiveFooter from "./pages/responsivefooter"; 
+import ResponsiveFooter from "./pages/ResponsiveFooter"; 
 import ResponsiveAppBar from "./pages/ResponsiveAppBar";
 
 function App() {
