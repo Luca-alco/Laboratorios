@@ -8,6 +8,7 @@ function ListaCatalogo() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [searchText, setSearchText] = useState(''); // Estado para la barra de búsqueda
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -37,16 +38,31 @@ function ListaCatalogo() {
     setSelectedCategory(event.target.value);
   };
 
-  const filteredProducts = selectedCategory
-    ? products.filter(product => product.category === selectedCategory)
-    : products;
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
+
+  const filteredProducts = products.filter(product => {
+    const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
+    const matchesSearch = product.name.toLowerCase().includes(searchText.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <>
       <div className="homeScreen">
         <section className={styles.seccionPrincipal}>
           <h2 className={styles.tituloDiv}>Productos</h2>
-          <div className={styles.filtroCategoria}>
+          <div className={styles.filtroBusqueda}>
+            {/* Barra de búsqueda */}
+            <input
+              type="text"
+              placeholder="Buscar productos..."
+              value={searchText}
+              onChange={handleSearchChange}
+              className={styles.inputBusqueda}
+            />
+            {/* Filtro por categoría */}
             <select 
               value={selectedCategory} 
               onChange={handleCategoryChange}

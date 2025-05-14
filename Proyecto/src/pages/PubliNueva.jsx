@@ -16,37 +16,12 @@ function PubliNueva() {
     descripcion: ''
   });
 
-  const [step, setStep] = useState(1);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-
-    if (value) {
-      switch (name) {
-        case 'categoria':
-          setStep(Math.max(step, 2));
-          break;
-        case 'marca':
-          setStep(Math.max(step, 3));
-          break;
-        case 'talle':
-          setStep(Math.max(step, 4));
-          break;
-        case 'stock':
-          setStep(Math.max(step, 5));
-          break;
-        case 'precio':
-          setStep(Math.max(step, 6));
-          break;
-        case 'estado':
-          setStep(Math.max(step, 7));
-          break;
-      }
-    }
   };
 
   const handleImageChange = (e) => {
@@ -55,7 +30,6 @@ function PubliNueva() {
         ...prev,
         imagen: e.target.files[0]
       }));
-      setStep(Math.max(step, 8));
     }
   };
 
@@ -63,7 +37,6 @@ function PubliNueva() {
     e.preventDefault();
     
     try {
-      // Obtener el usuario actual
       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       if (!currentUser) {
         alert('Debe iniciar sesión para publicar');
@@ -71,7 +44,6 @@ function PubliNueva() {
         return;
       }
 
-      // Crear el objeto del producto
       const newProduct = {
         id: Date.now().toString(),
         categoria: formData.categoria,
@@ -88,7 +60,6 @@ function PubliNueva() {
         category: formData.categoria
       };
 
-      // Guardar en el servidor json-server
       const response = await fetch('http://localhost:3000/products', {
         method: 'POST',
         headers: {
@@ -134,137 +105,122 @@ function PubliNueva() {
           </label>
         </div>
 
-        {step >= 2 && (
-          <div className="form-section">
-            <label>
-              Marca:
-              <input
-                type="text"
-                name="marca"
-                value={formData.marca}
-                onChange={handleInputChange}
-                required
-                className="input-field-compact"
-              />
-            </label>
-          </div>
-        )}
+        <div className="form-section">
+          <label>
+            Marca:
+            <input
+              type="text"
+              name="marca"
+              value={formData.marca}
+              onChange={handleInputChange}
+              required
+              className="input-field-compact"
+            />
+          </label>
+        </div>
 
-        {step >= 3 && (
-          <div className="form-section">
-            <label>
-              Talle:
-              <select
-                name="talle"
-                value={formData.talle}
-                onChange={handleInputChange}
-                required
-                className="input-field-compact"
-              >
-                <option value="">Seleccione el talle</option>
-                <option value="XS">XS</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
-                <option value="XL">XL</option>
-                <option value="XXL">XXL</option>
-              </select>
-            </label>
-          </div>
-        )}
-
-        {step >= 4 && (
-          <div className="form-section">
-            <label>
-              Stock disponible:
-              <input
-                type="number"
-                name="stock"
-                min="1"
-                value={formData.stock}
-                onChange={handleInputChange}
-                required
-                className="input-field-compact"
-              />
-            </label>
-          </div>
-        )}
-
-        {step >= 5 && (
-          <div className="form-section">
-            <label>
-              Precio:
-              <input
-                type="number"
-                name="precio"
-                min="0"
-                step="0.01"
-                value={formData.precio}
-                onChange={handleInputChange}
-                required
-                className="input-field-compact"
-                placeholder="0.00"
-              />
-            </label>
-          </div>
-        )}
-
-        {step >= 6 && (
-          <div className="form-section">
-            <label>
-              Estado:
-              <select
-                name="estado"
-                value={formData.estado}
-                onChange={handleInputChange}
-                required
-                className="input-field-compact"
-              >
-                <option value="">Seleccione el estado</option>
-                <option value="nuevo">Nuevo</option>
-                <option value="usado">Usado</option>
-              </select>
-            </label>
-          </div>
-        )}
-
-        {step >= 7 && (
-          <div className="form-section">
-            <label>
-              Imagen del producto:
-              <input
-                type="file"
-                name="imagen"
-                onChange={handleImageChange}
-                accept="image/*"
-                required
-                className="input-field-compact"
-              />
-            </label>
-          </div>
-        )}
-
-        {step >= 8 && (
-          <div className="form-section descripcion-container">
-            <label>
-              Descripción del producto:
-              <textarea
-                name="descripcion"
-                value={formData.descripcion}
-                onChange={handleInputChange}
-                className="input-descripcion"
-                required
-              />
-            </label>
-            <button 
-              type="submit" 
-              className="checkout-button"
-              disabled={!formData.descripcion}
+        <div className="form-section">
+          <label>
+            Talle:
+            <select
+              name="talle"
+              value={formData.talle}
+              onChange={handleInputChange}
+              required
+              className="input-field-compact"
             >
-              Publicar
-            </button>
-          </div>
-        )}
+              <option value="">Seleccione el talle</option>
+              <option value="XS">XS</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="form-section">
+          <label>
+            Stock disponible:
+            <input
+              type="number"
+              name="stock"
+              min="1"
+              value={formData.stock}
+              onChange={handleInputChange}
+              required
+              className="input-field-compact"
+            />
+          </label>
+        </div>
+
+        <div className="form-section">
+          <label>
+            Precio:
+            <input
+              type="number"
+              name="precio"
+              min="0"
+              step="0.01"
+              value={formData.precio}
+              onChange={handleInputChange}
+              required
+              className="input-field-compact"
+              placeholder="0.00"
+            />
+          </label>
+        </div>
+
+        <div className="form-section">
+          <label>
+            Estado:
+            <select
+              name="estado"
+              value={formData.estado}
+              onChange={handleInputChange}
+              required
+              className="input-field-compact"
+            >
+              <option value="">Seleccione el estado</option>
+              <option value="nuevo">Nuevo</option>
+              <option value="usado">Usado</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="form-section">
+          <label>
+            Imagen del producto:
+            <input
+              type="file"
+              name="imagen"
+              onChange={handleImageChange}
+              accept="image/*"
+              required
+              className="input-field-compact"
+            />
+          </label>
+        </div>
+
+        <div className="form-section descripcion-container">
+          <label>
+            Descripción del producto:
+            <textarea
+              name="descripcion"
+              value={formData.descripcion}
+              onChange={handleInputChange}
+              className="input-descripcion"
+              required
+            />
+          </label>
+          <button 
+            type="submit" 
+            className="checkout-button"
+          >
+            Publicar
+          </button>
+        </div>
       </form>
     </main>
   );

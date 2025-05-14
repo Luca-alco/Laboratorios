@@ -47,90 +47,48 @@ function UsersLogin() {
 
   return (
     <Box
-      sx={{
-        maxWidth: 400,
-        margin: "auto",
-        marginTop: 4,
-        padding: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        marginBottom: 8,
-      }}
-    >
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "1rem" }}>
-          <label
-            htmlFor="email"
-            style={{ display: "block", marginBottom: "0.5rem" }}
-          >
-            Email:
-          </label>
-          <TextField
-            id="email"
-            variant="outlined"
-            fullWidth
-            type="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div style={{ marginBottom: "1rem" }}>
-          <label
-            htmlFor="password"
-            style={{ display: "block", marginBottom: "0.5rem" }}
-          >
-            Contraseña:
-          </label>
-          <TextField
-            id="password"
-            variant="outlined"
-            fullWidth
-            type="password"
-            required
-            value={formData.password}
-            onChange={handleChange}
-          />
-        </div>
+    className="login-container"
+  >
+  <form className="login-form" onSubmit={handleSubmit}>
+    <div className="form-group">
+      <label htmlFor="email" className="login-label">E-mail o teléfono</label>
+      <input
+        type="email"
+        id="email"
+        className="login-input"
+        placeholder="Ingresa tu e-mail o teléfono"
+        value={formData.email}
+        onChange={handleChange}
+        required
+      />
+    </div>
+    <div className="form-group">
+      <label htmlFor="password" className="login-label">Contraseña</label>
+      <input
+        type="password"
+        id="password"
+        className="login-input"
+        placeholder="Ingresa tu contraseña"
+        value={formData.password}
+        onChange={handleChange}
+        required
+      />
+    </div>
 
-        {error && (
-          <div style={{ color: 'red', marginBottom: '1rem', textAlign: 'center' }}>
-            {error}
-          </div>
-        )}
-
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
-          sx={{
-            mt: 2,
-            color: "black",
-            borderColor: "black",
-            backgroundColor: "white",
-          }}
-        >
-          Confirmar
-        </Button>
-      </form>
-
-      <div style={{ textAlign: "center", marginTop: "1rem" }}>
-        <p>¿No tiene un usuario creado?</p>
-        <Link to="/register">
-          <Button
-            variant="outlined"
-            sx={{
-              color: "black",
-              borderColor: "black",
-              backgroundColor: "white",
-            }}
-          >
-            Registrese Aqui
-          </Button>
-        </Link>
+    {error && (
+      <div className="error-message">
+        {error}
       </div>
-    </Box>
+    )}
+
+    <button type="submit" className="login-button">Continuar</button>
+  </form>
+
+  <div className="register-link">
+    <p>¿No tiene un usuario creado?</p>
+    <Link to="/register">Crear cuenta</Link>
+  </div>
+</Box>
   );
 }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import HomeScreen from "./pages/Homescreen";
+import HomeScreen from "./pages/homescreen";
 import MyProfile from "./pages/MyProfile";
 import Products from "./pages/Products";
 import Gstprod2 from "./pages/Gstprod2";
