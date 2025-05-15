@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import HomeScreen from "./pages/homescreen";
+import Homescreen from "./pages/Homescreen";
 import MyProfile from "./pages/MyProfile";
 import Products from "./pages/Products";
 import Gstprod2 from "./pages/Gstprod2";
@@ -21,7 +21,7 @@ function App() {
         <div className="appContainer">
           <ResponsiveAppBar />
           <Routes>
-            <Route path="/" element={<HomeScreen />} />
+            <Route path="/" element={<Homescreen />} />
             <Route path="/perfil" element={
               <ProtectedRoute>
                 <MyProfile />
