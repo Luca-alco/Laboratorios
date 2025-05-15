@@ -1,18 +1,25 @@
+// Importación de dependencias necesarias
 import React, { useState } from "react";
 import "./Users.css";
 import { TextField, Button, Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
 
+// Componente principal de login de usuarios
 function UsersLogin() {
+  // Hook de navegación
   const navigate = useNavigate();
+  // Hook personalizado para manejar la autenticación
   const { login } = useAuth();
+
+  // Estados para manejar el formulario y errores
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
   const [error, setError] = useState('');
 
+  // Función para manejar cambios en los inputs
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -20,6 +27,7 @@ function UsersLogin() {
     });
   };
 
+  // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -45,6 +53,7 @@ function UsersLogin() {
     }
   };
 
+  // Renderizado del componente
   return (
     <Box
     className="login-container"

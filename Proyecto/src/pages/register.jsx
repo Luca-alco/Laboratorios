@@ -1,11 +1,14 @@
+// Importación de dependencias necesarias
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Users.css';
 import { TextField, Button, Box } from '@mui/material';
 
-
+// Componente principal para el registro de usuarios
 function Register() {
+    // Hook de navegación
     const navigate = useNavigate();
+    // Estado inicial del formulario
     const [formData, setFormData] = useState({
         nombre: '',
         apellido: '',
@@ -15,6 +18,7 @@ function Register() {
         telefono: ''
     });
 
+    // Función para manejar cambios en los inputs
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -22,6 +26,7 @@ function Register() {
         });
     };
 
+    // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -68,6 +73,7 @@ function Register() {
         }
     };
 
+    // Renderizado del componente
     return (
         <>
             <div className="TituloRegister">

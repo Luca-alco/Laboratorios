@@ -1,3 +1,4 @@
+// Importación de dependencias y componentes de Material-UI necesarios
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -17,15 +18,21 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import logo from '../img/logo.png';  // Importamos el logo
 
+// Componente principal de la barra de navegación
 function ResponsiveAppBar() {
+  // Estados para manejar los menús desplegables
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  
+  // Hooks para navegación y autenticación
   const { isAuthenticated, currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
+  // Configuración de las opciones de navegación según el estado de autenticación
   const pages = isAuthenticated ? ['Productos', 'Vender'] : ['Productos', 'Vender', 'Ingresar'];
   const settings = ['Perfil', 'Cerrar Sesión'];
 
+  // Funciones para manejar la apertura y cierre de menús
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -42,6 +49,7 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  // Función para manejar las acciones del menú de usuario
   const handleSettingClick = (setting) => {
     handleCloseUserMenu();
     if (setting === 'Cerrar Sesión') {
@@ -52,6 +60,7 @@ function ResponsiveAppBar() {
     }
   };
 
+  // Función para manejar la navegación según la página seleccionada
   const handlePageClick = (page) => {
     switch (page) {
         case 'Productos':
@@ -73,6 +82,7 @@ function ResponsiveAppBar() {
     handleCloseNavMenu();
   };
 
+  // Función para obtener las iniciales del usuario
   const getInitials = () => {
     if (currentUser) {
       return `${currentUser.nombre[0]}${currentUser.apellido[0]}`.toUpperCase();
@@ -80,10 +90,12 @@ function ResponsiveAppBar() {
     return '';
   };
 
+  // Renderizado del componente
   return (
     <AppBar position="static" sx={{ backgroundColor: '#0D0D0D' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* Logo y nombre de la marca */}
           <Box
             component="img"
             sx={{
@@ -113,6 +125,7 @@ function ResponsiveAppBar() {
             Rimboket
           </Typography>
 
+          {/* Menú móvil */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -149,6 +162,7 @@ function ResponsiveAppBar() {
             </Menu>
           </Box>
 
+          {/* Logo y nombre versión móvil */}
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -169,6 +183,7 @@ function ResponsiveAppBar() {
             LOGO
           </Typography>
 
+          {/* Menú de navegación desktop */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
@@ -181,6 +196,7 @@ function ResponsiveAppBar() {
             ))}
           </Box>
 
+          {/* Iconos de carrito y perfil */}
           <Box sx={{ flexGrow: 0, display: 'flex', alignItems: 'center', gap: 2 }}>
             <Tooltip title="Carrito de compras">
               <IconButton onClick={() => navigate('/carrito')} sx={{ color: 'white' }}>
@@ -196,6 +212,7 @@ function ResponsiveAppBar() {
               </IconButton>
             </Tooltip>
             
+            {/* Menú de usuario */}
             {isAuthenticated && (
               <Menu
                 sx={{ mt: '45px' }}

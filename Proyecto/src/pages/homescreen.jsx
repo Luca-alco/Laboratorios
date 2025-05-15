@@ -1,15 +1,19 @@
+// Importación de dependencias necesarias
 import React, { useState, useEffect } from "react";
 import "./Homescreen.css";
 import { useNavigate } from "react-router-dom";
 
+// Componente principal de la página de inicio
 const HomeScreen = () => {
+    // Hook para la navegación entre rutas
     const navigate = useNavigate();
-    const [searchText, setSearchText] = useState('');
-    const [featuredProducts, setFeaturedProducts] = useState([]); 
-    const [allProducts, setAllProducts] = useState([]);
-    const [showSearchResults, setShowSearchResults] = useState(false);
+    // Estados para manejar la búsqueda y productos
+    const [searchText, setSearchText] = useState(''); // Estado para el texto de búsqueda
+    const [featuredProducts, setFeaturedProducts] = useState([]); // Estado para productos destacados
+    const [allProducts, setAllProducts] = useState([]); // Estado para todos los productos
+    const [showSearchResults, setShowSearchResults] = useState(false); // Estado para mostrar/ocultar resultados
 
-    // Definir descuentos fijos para cada producto destacado
+    // Objeto con los descuentos fijos para los productos destacados
     const PRODUCT_DISCOUNTS = {
         "1": 15,  // Remera Clásica Negra: 15% descuento
         "2": 25,  // Pantalón Jean Clásico: 25% descuento
@@ -19,14 +23,16 @@ const HomeScreen = () => {
         "6": 15   // Pantalón Deportivo: 15% descuento
     };
 
+    // Hook de efecto para cargar los productos al montar el componente
     useEffect(() => {
+        // Función asíncrona para obtener los productos del servidor
         const fetchProducts = async () => {
             try {
                 const response = await fetch('http://localhost:3000/products');
                 const data = await response.json();
                 setAllProducts(data);
                 
-                // Aplicar descuentos fijos a los productos destacados
+                // Procesamiento de los primeros 6 productos para mostrarlos como destacados con descuentos
                 const productsWithDiscounts = data.slice(0, 6).map(product => {
                     const discount = PRODUCT_DISCOUNTS[product.id];
                     const discountedPrice = product.price * (1 - discount / 100);
@@ -46,30 +52,37 @@ const HomeScreen = () => {
         fetchProducts();
     }, []);
 
+    // Función para manejar el click en un producto y navegar a su detalle
     const handleProductClick = (productId) => {
         navigate(`/products/${productId}`);
     };
 
+    // Función para manejar la búsqueda de productos
     const handleSearch = () => {
         setShowSearchResults(true);
     };
 
+    // Función para filtrar productos según el texto de búsqueda
     const filterProducts = (products, searchText) => {
-    if (!searchText.trim()) {
-        return []; // Si no hay texto de búsqueda, devuelve un array vacío
-    }
-    return products.filter(product => 
-        (product.name && product.name.toLowerCase().includes(searchText.toLowerCase())) ||
-        (product.descripcion && product.descripcion.toLowerCase().includes(searchText.toLowerCase())) ||
-        (product.description && product.description.toLowerCase().includes(searchText.toLowerCase())) ||
-        (product.category && product.category.toLowerCase().includes(searchText.toLowerCase()))
-    );
+        if (!searchText.trim()) {
+            return []; // Si no hay texto de búsqueda, devuelve un array vacío
+        }
+        // Filtra productos por nombre, descripción o categoría
+        return products.filter(product => 
+            (product.name && product.name.toLowerCase().includes(searchText.toLowerCase())) ||
+            (product.descripcion && product.descripcion.toLowerCase().includes(searchText.toLowerCase())) ||
+            (product.description && product.description.toLowerCase().includes(searchText.toLowerCase())) ||
+            (product.category && product.category.toLowerCase().includes(searchText.toLowerCase()))
+        );
     };
 
+    // Obtener resultados de búsqueda filtrados
     const searchResults = filterProducts(allProducts, searchText);
 
+    // Renderizado del componente
     return (
         <div className="homeScreen">
+            {/* Barra de búsqueda */}
             <div className="barra-busqueda">
                 <input
                     type="text"
@@ -84,7 +97,9 @@ const HomeScreen = () => {
                 <button className="btn-buscar" onClick={handleSearch}>Buscar</button>
             </div>
 
+            {/* Sección condicional: Muestra resultados de búsqueda o productos destacados */}
             {showSearchResults && searchText ? (
+                // Sección de resultados de búsqueda
                 <section className="productos-section">
                     <h2 className="productos-titulo">Resultados de búsqueda para "{searchText}"</h2>
                     <div className="productos-grid">
@@ -116,6 +131,7 @@ const HomeScreen = () => {
                     </div>
                 </section>
             ) : (
+                // Sección de productos destacados
                 <section className="productos-section">
                     <h2 className="productos-titulo">Productos Destacados</h2>
                     <div className="productos-grid">

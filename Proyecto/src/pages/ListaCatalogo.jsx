@@ -3,13 +3,17 @@ import styles from "./listaCatalogo.module.css";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import { useState, useEffect } from 'react';
 
+// Componente principal que muestra el catálogo de productos
 function ListaCatalogo() {
   const navigate = useNavigate();
+  // Estado para almacenar la lista de productos
   const [products, setProducts] = useState([]);
+  // Estado para manejar errores de carga
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchText, setSearchText] = useState(''); // Estado para la barra de búsqueda
 
+  // Hook de efecto para cargar los productos al montar el componente
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -30,24 +34,29 @@ function ListaCatalogo() {
     fetchProducts();
   }, []);
 
+  // Función para manejar el clic en un producto
   const handleProductClick = (productId) => {
     navigate(`/products/${productId}`);
   };
 
+  // Función para manejar el cambio de categoría
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
 
+  // Función para manejar el cambio en la barra de búsqueda
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
 
+  // Filtrar productos según la categoría seleccionada y el texto de búsqueda
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
     const matchesSearch = product.name.toLowerCase().includes(searchText.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
+  // Renderizado del componente
   return (
     <>
       <div className="homeScreen">

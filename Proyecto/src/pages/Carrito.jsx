@@ -3,10 +3,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./Carrito.css";
 import { useAuth } from '../context/AuthContext';
 
+// Componente principal del carrito de compras
 function Carrito() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { currentUser } = useAuth();
+  const navigate = useNavigate(); 
+  const location = useLocation(); 
+  const { currentUser } = useAuth(); 
+  // Estado para almacenar los items del carrito
   const [cartItems, setCartItems] = useState([]);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [paymentData, setPaymentData] = useState({
@@ -22,8 +24,10 @@ function Carrito() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Hook de efecto para cargar los items del carrito al montar el componente
   useEffect(() => {
     const loadCartItems = async () => {
+      // Obtiene los items del carrito desde el localStorage
       const items = JSON.parse(localStorage.getItem('cart')) || [];
       
       // Verificar stock actual para cada item
@@ -52,12 +56,14 @@ function Carrito() {
     loadCartItems();
   }, [location.search]);
 
+  // Función para eliminar un producto del carrito
   const handleRemoveItem = (index) => {
     const newItems = cartItems.filter((_, i) => i !== index);
     setCartItems(newItems);
     localStorage.setItem('cart', JSON.stringify(newItems));
   };
 
+  // Función para actualizar la cantidad de un producto
   const handleQuantityChange = async (index, newQuantity) => {
     try {
       const item = cartItems[index];
@@ -87,22 +93,26 @@ function Carrito() {
     }
   };
 
+  // Función para calcular el subtotal del carrito
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => {
       return total + (item.price * (item.quantity || 1));
     }, 0);
   };
 
+  // Función para calcular el IVA del carrito
   const calculateIVA = (subtotal) => {
     return subtotal * 0.21;
   };
 
+  // Función para calcular el total del carrito
   const calculateTotal = () => {
     const subtotal = calculateSubtotal();
     const iva = calculateIVA(subtotal);
     return subtotal + iva;
   };
 
+  // Función para procesar el pago
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -178,6 +188,7 @@ function Carrito() {
     }
   };
 
+  // Función para manejar cambios en los inputs del formulario de pago
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setPaymentData(prev => ({
@@ -186,12 +197,14 @@ function Carrito() {
     }));
   };
 
+  // Función para iniciar la compra
   const handleStartShopping = () => {
     navigate('/');
   };
 
   const hasStockErrors = cartItems.some(item => item.stockError);
 
+  // Renderizado del componente
   return (
     <div className="cart-container">
       {cartItems.length === 0 ? (

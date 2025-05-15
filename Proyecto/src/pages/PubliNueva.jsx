@@ -1,10 +1,15 @@
+// Importación de dependencias necesarias
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PubliNueva.css";
 import "./Users.css";
 
+// Componente para crear una nueva publicación de producto
 function PubliNueva() {
+  // Hook de navegación
   const navigate = useNavigate();
+  
+  // Estado inicial del formulario
   const [formData, setFormData] = useState({
     categoria: '',
     marca: '',
@@ -16,6 +21,7 @@ function PubliNueva() {
     descripcion: ''
   });
 
+  // Función para manejar cambios en los inputs del formulario
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -24,6 +30,7 @@ function PubliNueva() {
     }));
   };
 
+  // Función para manejar la carga de imágenes
   const handleImageChange = (e) => {
     if (e.target.files) {
       const newImages = Array.from(e.target.files).map(file => URL.createObjectURL(file));
@@ -35,6 +42,7 @@ function PubliNueva() {
     }
   };
 
+  // Función para eliminar una imagen
   const handleRemoveImage = (indexToRemove) => {
     setFormData(prev => ({
       ...prev,
@@ -45,10 +53,12 @@ function PubliNueva() {
     }));
   };
 
+  // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     try {
+      // Verificar si hay un usuario autenticado
       const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       if (!currentUser) {
         alert('Debe iniciar sesión para publicar');
@@ -56,6 +66,7 @@ function PubliNueva() {
         return;
       }
 
+      // Preparar datos del nuevo producto
       const newProduct = {
         id: Date.now().toString(),
         categoria: formData.categoria,
@@ -73,6 +84,7 @@ function PubliNueva() {
         category: formData.categoria
       };
 
+      // Enviar petición al servidor para crear el producto
       const response = await fetch('http://localhost:3000/products', {
         method: 'POST',
         headers: {
@@ -93,9 +105,11 @@ function PubliNueva() {
     }
   };
 
+  // Renderizado del componente
   return (
     <main style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <form onSubmit={handleSubmit} className="producto-form">
+        {/* Sección de categoría */}
         <div className="form-section">
           <label>
             Categoría del producto:
@@ -118,6 +132,7 @@ function PubliNueva() {
           </label>
         </div>
 
+        {/* Sección de marca */}
         <div className="form-section">
           <label>
             Marca:
@@ -132,6 +147,7 @@ function PubliNueva() {
           </label>
         </div>
 
+        {/* Sección de talle */}
         <div className="form-section">
           <label>
             Talle:
@@ -153,6 +169,7 @@ function PubliNueva() {
           </label>
         </div>
 
+        {/* Sección de stock */}
         <div className="form-section">
           <label>
             Stock disponible:
@@ -168,6 +185,7 @@ function PubliNueva() {
           </label>
         </div>
 
+        {/* Sección de precio */}
         <div className="form-section">
           <label>
             Precio:
@@ -185,6 +203,7 @@ function PubliNueva() {
           </label>
         </div>
 
+        {/* Sección de estado */}
         <div className="form-section">
           <label>
             Estado:
@@ -202,6 +221,7 @@ function PubliNueva() {
           </label>
         </div>
 
+        {/* Sección de imágenes */}
         <div className="form-section">
           <label>
             Imágenes del producto:
@@ -237,6 +257,7 @@ function PubliNueva() {
           )}
         </div>
 
+        {/* Sección de descripción */}
         <div className="form-section descripcion-container">
           <label>
             Descripción del producto:

@@ -1,186 +1,187 @@
+// Importación de dependencias necesarias
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./Products.css";
+import { useAuth } from "../context/AuthContext";
 
-function Products() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
-  const [selectedQuantity, setSelectedQuantity] = useState(1);
+// Componente principal de detalle de producto
+const Products = () => {
+    // Hooks para navegación y parámetros
+    const { id } = useParams();
+    const navigate = useNavigate();
+    // Hook de autenticación para verificar usuario actual
+    const { currentUser } = useAuth();
 
-  const PRODUCT_DISCOUNTS = {
-    "1": 15,
-    "2": 25,
-    "3": 20,
-    "4": 30,
-    "5": 10,
-    "6": 15
-  };
+    // Estados del componente
+    const [product, setProduct] = useState(null);
+    const [quantity, setQuantity] = useState(1);
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/products/${id}`);
-        const productData = await response.json();
+    // Hook de efecto para cargar los datos del producto
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/products/${id}`);
+                if (!response.ok) {
+                    throw new Error('Producto no encontrado');
+                }
+                const data = await response.json();
+                setProduct(data);
+            } catch (error) {
+                setError('Error al cargar el producto');
+                console.error('Error:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-        if (PRODUCT_DISCOUNTS.hasOwnProperty(productData.id)) {
-          const discount = PRODUCT_DISCOUNTS[productData.id];
-          const discountedPrice = productData.price * (1 - discount / 100);
-          setProduct({
-            ...productData,
-            originalPrice: productData.price,
-            price: Number(discountedPrice.toFixed(2)),
-            discount
-          });
+        fetchProduct();
+    }, [id]);
+
+    // Función para manejar cambios en la cantidad
+    const handleQuantityChange = (e) => {
+        const value = parseInt(e.target.value);
+        if (value > 0 && value <= product.stock) {
+            setQuantity(value);
+            setError("");
         } else {
-          setProduct(productData);
+            setError(`La cantidad debe estar entre 1 y ${product.stock}`);
         }
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
     };
 
-    fetchProduct();
-  }, [id]);
-
-  const handleAddToCart = () => {
-    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingProductIndex = currentCart.findIndex(
-      (item) => item.id === product.id
-    );
-
-    let updatedCart;
-    if (existingProductIndex >= 0) {
-      updatedCart = currentCart.map((item, index) => {
-        if (index === existingProductIndex) {
-          return {
-            ...item,
-            quantity: (item.quantity || 1) + selectedQuantity
-          };
+    // Función para agregar producto al carrito
+    const handleAddToCart = () => {
+        if (!currentUser) {
+            navigate('/login');
+            return;
         }
-        return item;
-      });
-    } else {
-      const productToAdd = { ...product, quantity: selectedQuantity };
-      updatedCart = [...currentCart, productToAdd];
+
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItemIndex = cartItems.findIndex(item => item.id === product.id);
+
+        if (existingItemIndex >= 0) {
+            // Actualiza la cantidad si el producto ya está en el carrito
+            const newQuantity = cartItems[existingItemIndex].quantity + quantity;
+            if (newQuantity > product.stock) {
+                setError(`No hay suficiente stock. Stock disponible: ${product.stock}`);
+                return;
+            }
+            cartItems[existingItemIndex].quantity = newQuantity;
+        } else {
+            // Agrega nuevo item al carrito
+            cartItems.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                imagen: product.imagen,
+                quantity: quantity
+            });
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+        navigate('/cart');
+    };
+
+    // Función para comprar ahora
+    const handleBuyNow = () => {
+        if (!currentUser) {
+            navigate('/login');
+            return;
+        }
+
+        // Guarda el producto actual como único item en el carrito
+        const cartItem = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            imagen: product.imagen,
+            quantity: quantity
+        };
+
+        localStorage.setItem('cart', JSON.stringify([cartItem]));
+        navigate('/cart?showPayment=true');
+    };
+
+    // Renderizado condicional según el estado de carga
+    if (loading) {
+        return <div className="loading">Cargando...</div>;
     }
 
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-    navigate("/carrito");
-  };
+    if (error) {
+        return <div className="error">{error}</div>;
+    }
 
-  const handleBuyNow = () => {
-    const productToAdd = { ...product, quantity: selectedQuantity };
-    const cart = [productToAdd];
-    localStorage.setItem("cart", JSON.stringify(cart));
-    navigate("/carrito?showPayment=true");
-  };
+    if (!product) {
+        return <div className="error">Producto no encontrado</div>;
+    }
 
-  if (!product) return <div>Cargando...</div>;
+    // Renderizado principal del componente
+    return (
+        <div className="product-detail-container">
+            {/* Sección de imagen del producto */}
+            <div className="product-image-section">
+                <img 
+                    src={product.imagen || 'https://via.placeholder.com/400'} 
+                    alt={product.name}
+                    className="product-detail-image" 
+                />
+            </div>
 
-  return (
-    <div className="product-page">
-      <div className="product-layout">
-        <div className="product-left">
-          <div className="product-gallery">
-            <img
-              src={product.imagen}
-              alt={product.name}
-              className="main-image"
-            />
-            {product.discount && (
-              <div className="discount-badge">{product.discount}% OFF</div>
-            )}
-            {product.imagenes && product.imagenes.length > 1 && (
-              <div className="thumbnail-images">
-                {product.imagenes.map((img, index) => (
-                  <img
-                    key={index}
-                    src={img}
-                    alt={`${product.name} vista ${index + 1}`}
-                    className="thumbnail-image"
-                    onClick={() => {
-                      setProduct({ ...product, imagen: img });
-                    }}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
-          <div className="product-description">
-            <h2>Descripción</h2>
-            <p>{product.descripcion || product.description}</p>
-          </div>
-        </div>
-
-        <div className="product-right">
-          <div className="product-info-card">
-            <div className="product-condition">Nuevo | +10mil vendidos</div>
-            <h1 className="product-title">{product.name}</h1>
-            <div className="product-price-container">
-              {product.originalPrice && (
-                <div className="original-price-row">
-                  <span className="original-price">
-                    ${product.originalPrice.toLocaleString()}
-                  </span>
-                  <span className="discount-tag">
-                    {product.discount}% OFF
-                  </span>
+            {/* Sección de información del producto */}
+            <div className="product-info-section">
+                <h1>{product.name}</h1>
+                <p className="product-price">${product.price}</p>
+                <p className="product-description">{product.description}</p>
+                
+                <div className="stock-info">
+                    <p>Stock disponible: {product.stock}</p>
                 </div>
-              )}
-              <div className="price-row">
-                <span className="current-price">
-                  ${product.price.toLocaleString()}
-                </span>
-              </div>
-              <div className="installments-info">
-                en 6 cuotas de ${(product.price / 6).toFixed(2)}
-              </div>
-              <div className="shipping-info">
-                <span className="shipping-icon">📦</span>
-                <span className="free-shipping-text">Llega gratis mañana</span>
-              </div>
-            </div>
 
-            <div className="stock-selection">
-              <span>Cantidad:</span>
-              <select
-                value={selectedQuantity}
-                onChange={(e) => setSelectedQuantity(Number(e.target.value))}
-              >
-                {[...Array(Math.min(10, product.stock))].map((_, i) => (
-                  <option key={i + 1} value={i + 1}>
-                    {i + 1} unidad{i > 0 ? "es" : ""}
-                  </option>
-                ))}
-              </select>
-              <span className="stock-available">
-                ({product.stock} disponibles)
-              </span>
-            </div>
+                {/* Control de cantidad */}
+                <div className="quantity-control">
+                    <label htmlFor="quantity">Cantidad:</label>
+                    <input
+                        type="number"
+                        id="quantity"
+                        value={quantity}
+                        onChange={handleQuantityChange}
+                        min="1"
+                        max={product.stock}
+                    />
+                    {error && <p className="error-message">{error}</p>}
+                </div>
 
-            <div className="action-buttons">
-              <button
-                className="buy-now-button"
-                onClick={handleBuyNow}
-                disabled={product.stock === 0}
-              >
-                {product.stock === 0 ? "Sin stock" : "Comprar ahora"}
-              </button>
-              <button
-                className="add-to-cart-button"
-                onClick={handleAddToCart}
-                disabled={product.stock === 0}
-              >
-                {product.stock === 0 ? "Sin stock" : "Agregar al carrito"}
-              </button>
+                {/* Botones de acción */}
+                <div className="action-buttons">
+                    <button 
+                        onClick={handleAddToCart}
+                        className="add-to-cart-button"
+                        disabled={!product.stock}
+                    >
+                        Agregar al Carrito
+                    </button>
+                    <button 
+                        onClick={handleBuyNow}
+                        className="buy-now-button"
+                        disabled={!product.stock}
+                    >
+                        Comprar Ahora
+                    </button>
+                </div>
+
+                {/* Información adicional del producto */}
+                <div className="additional-info">
+                    {product.category && (
+                        <p><strong>Categoría:</strong> {product.category}</p>
+                    )}
+                    {product.brand && (
+                        <p><strong>Marca:</strong> {product.brand}</p>
+                    )}
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
-}
+    );
+};
 
 export default Products;

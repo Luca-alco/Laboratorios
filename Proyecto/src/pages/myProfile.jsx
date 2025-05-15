@@ -1,5 +1,7 @@
+// Importación de dependencias necesarias
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+// Importación de componentes de Material-UI
 import {
   Avatar,
   Box,
@@ -17,19 +19,24 @@ import {
   Divider,
   Button
 } from "@mui/material";
+// Importación de iconos de Material-UI
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import LockIcon from "@mui/icons-material/Lock";
 import SecurityIcon from "@mui/icons-material/Security";
+// Importación de estilos
 import "./myprofile.css";
 import "./users.css";
 
+// Componente del perfil de usuario
 const MyProfile = () => {
+  // Estado para almacenar los datos del usuario
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
+  // Efecto para cargar los datos del usuario del localStorage
   useEffect(() => {
     const currentUser = localStorage.getItem("currentUser");
 
@@ -47,22 +54,28 @@ const MyProfile = () => {
     }
   }, [navigate]);
 
+  // Función para obtener las iniciales del usuario para el avatar
   const getInitials = (nombre, apellido) => {
     return `${nombre.charAt(0)}${apellido.charAt(0)}`.toUpperCase();
   };
 
+  // Función para navegar a la gestión de productos
   const handlePublicacionesClick = () => {
     navigate('/gestion-productos');
   };
 
+  // Si no hay datos del usuario, muestra un mensaje de carga
   if (!userData) {
     return <div>Cargando...</div>;
   }
 
+  // Renderizado del componente
   return (
     <>
       <Container maxWidth="md" sx={{ mt: 4, mb: 4 }} >
+        {/* Panel principal del perfil */}
         <Paper elevation={3} sx={{ p: 3, mb: 3, backgroundColor:"#f0f0f0", borderRadius:2 }}>
+          {/* Cabecera con avatar y nombre */}
           <Box display="flex" alignItems="center" mb={3} backgroundColor="lightgrey" borderRadius={2} p={2}>
             <Avatar
               sx={{
@@ -85,8 +98,10 @@ const MyProfile = () => {
             </Box>
           </Box>
 
+          {/* Grid con acordeones de información */}
           <Grid container spacing={3}>
             <Grid item xs={12}>
+              {/* Acordeón de datos personales */}
               <Accordion defaultExpanded>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <ListItemIcon>
@@ -113,6 +128,7 @@ const MyProfile = () => {
                 </AccordionDetails>
               </Accordion>
 
+              {/* Acordeón de compras */}
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <ListItemIcon>
@@ -127,6 +143,7 @@ const MyProfile = () => {
                 </AccordionDetails>
               </Accordion>
 
+              {/* Acordeón de publicaciones */}
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <ListItemIcon>
@@ -151,6 +168,7 @@ const MyProfile = () => {
                 </AccordionDetails>
               </Accordion>
 
+              {/* Acordeón de privacidad */}
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <ListItemIcon>
@@ -177,6 +195,7 @@ const MyProfile = () => {
                 </AccordionDetails>
               </Accordion>
 
+              {/* Acordeón de seguridad */}
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <ListItemIcon>

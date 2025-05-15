@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 import "./Gstprod2.css";
 import "./Users.css";
 
+// Componente para la gestión de productos del usuario
 const Gstprod2 = () => {
+  // Obtiene el usuario actual del contexto de autenticación
   const { currentUser } = useAuth();
   const navigate = useNavigate();
+  // Estados para manejar los productos, carga, edición de descripción
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingDescription, setEditingDescription] = useState(null);
@@ -15,16 +18,16 @@ const Gstprod2 = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        // Get all products from the backend
+        // Obtiene todos los productos del backend
         const response = await fetch('http://localhost:3000/products');
         const allProducts = await response.json();
         
-        // Get recently created product from localStorage
+        // Obtiene el producto recientemente creado del almacenamiento local
         const newProductData = localStorage.getItem('productData');
         if (newProductData) {
           const parsedProduct = JSON.parse(newProductData);
           
-          // Create a new product in the backend
+          // Crea un nuevo producto en el backend
           const createResponse = await fetch('http://localhost:3000/products', {
             method: 'POST',
             headers: {
@@ -42,20 +45,20 @@ const Gstprod2 = () => {
           });
 
           if (createResponse.ok) {
-            // Clear localStorage after successful creation
+            // Limpia el almacenamiento local después de una creación exitosa
             localStorage.removeItem('productData');
           }
         }
 
-        // Reload products to get updated list including the new one
+        // Recarga los productos para obtener la lista actualizada incluyendo el nuevo
         const updatedResponse = await fetch('http://localhost:3000/products');
         const updatedProducts = await updatedResponse.json();
         
-        // Filter products by current user
+        // Filtra los productos por el usuario actual
         const userProducts = updatedProducts.filter(product => product.userId === currentUser.id);
         setProducts(userProducts);
       } catch (error) {
-        console.error('Error loading products:', error);
+        console.error('Error al cargar productos:', error);
       } finally {
         setLoading(false);
       }
@@ -64,6 +67,7 @@ const Gstprod2 = () => {
     loadProducts();
   }, [currentUser?.id]);
 
+  // Función para actualizar el stock de un producto
   const updateStock = async (productId, newStock) => {
     try {
       const response = await fetch(`http://localhost:3000/products/${productId}`, {
@@ -77,15 +81,17 @@ const Gstprod2 = () => {
       });
 
       if (response.ok) {
+        // Actualiza el estado local con el nuevo stock
         setProducts(products.map(product => 
           product.id === productId ? { ...product, stock: newStock } : product
         ));
       }
     } catch (error) {
-      console.error('Error updating stock:', error);
+      console.error('Error al actualizar el stock:', error);
     }
   };
 
+  // Función para actualizar el precio de un producto
   const updatePrice = async (productId, newPrice) => {
     try {
       const response = await fetch(`http://localhost:3000/products/${productId}`, {
@@ -99,15 +105,17 @@ const Gstprod2 = () => {
       });
 
       if (response.ok) {
+        // Actualiza el estado local con el nuevo precio
         setProducts(products.map(product => 
           product.id === productId ? { ...product, price: parseFloat(newPrice) } : product
         ));
       }
     } catch (error) {
-      console.error('Error updating price:', error);
+      console.error('Error al actualizar el precio:', error);
     }
   };
 
+  // Función para eliminar un producto
   const handleDeleteProduct = async (productId) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar esta publicación?')) {
       try {
@@ -116,20 +124,23 @@ const Gstprod2 = () => {
         });
 
         if (response.ok) {
+          // Elimina el producto del estado local
           setProducts(products.filter(product => product.id !== productId));
         }
       } catch (error) {
-        console.error('Error deleting product:', error);
+        console.error('Error al eliminar el producto:', error);
       }
     }
   };
 
+  // Funciones para manejar la edición de la descripción
   const handleEditDescription = (productId) => {
     const product = products.find(p => p.id === productId);
     setEditingDescription(productId);
     setNewDescription(product.descripcion || product.description || '');
   };
 
+  // Función para guardar la descripción editada
   const handleSaveDescription = async (productId) => {
     try {
       const response = await fetch(`http://localhost:3000/products/${productId}`, {
@@ -143,6 +154,7 @@ const Gstprod2 = () => {
       });
 
       if (response.ok) {
+        // Actualiza el estado local con la nueva descripción
         setProducts(products.map(product => 
           product.id === productId 
             ? { ...product, descripcion: newDescription } 
@@ -151,14 +163,16 @@ const Gstprod2 = () => {
         setEditingDescription(null);
       }
     } catch (error) {
-      console.error('Error updating description:', error);
+      console.error('Error al actualizar la descripción:', error);
     }
   };
 
+  // Muestra mensaje de carga mientras se obtienen los productos
   if (loading) {
     return <div className="centered-message">Cargando publicaciones...</div>;
   }
 
+  // Muestra mensaje cuando no hay productos y botón para crear uno nuevo
   if (products.length === 0) {
     return (
       <div className="centered-container">
@@ -176,6 +190,7 @@ const Gstprod2 = () => {
     );
   }
 
+  // Renderiza la lista de productos con sus detalles y opciones de gestión
   return (
     <div className="product-grid">
       {products.map((product) => (
