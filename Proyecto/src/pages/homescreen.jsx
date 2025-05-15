@@ -33,7 +33,7 @@ const HomeScreen = () => {
                 setAllProducts(data);
                 
                 // Procesamiento de los primeros 6 productos para mostrarlos como destacados con descuentos
-                const productsWithDiscounts = data.slice(0, 6).map(product => {
+                const productsWithDiscounts = data.slice(0, 5).map(product => {
                     const discount = PRODUCT_DISCOUNTS[product.id];
                     const discountedPrice = product.price * (1 - discount / 100);
                     return {
