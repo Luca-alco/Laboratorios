@@ -12,7 +12,7 @@ function PubliNueva() {
     stock: '',
     precio: '',
     estado: '',
-    imagen: null,
+    imagenes: [],
     descripcion: ''
   });
 
@@ -25,12 +25,24 @@ function PubliNueva() {
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files) {
+      const newImages = Array.from(e.target.files).map(file => URL.createObjectURL(file));
       setFormData(prev => ({
         ...prev,
-        imagen: e.target.files[0]
+        imagenes: [...(prev.imagenes || []), ...newImages], // Mantener imágenes existentes y agregar nuevas
+        imagen: prev.imagen || newImages[0] // Mantener la imagen principal si existe, sino usar la primera nueva
       }));
     }
+  };
+
+  const handleRemoveImage = (indexToRemove) => {
+    setFormData(prev => ({
+      ...prev,
+      imagenes: prev.imagenes.filter((_, index) => index !== indexToRemove),
+      imagen: indexToRemove === 0 && prev.imagenes.length > 1 ? 
+        prev.imagenes[1] : // Si se elimina la primera imagen y hay más, usar la segunda
+        prev.imagen // Si no, mantener la imagen actual
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -51,7 +63,8 @@ function PubliNueva() {
         talle: formData.talle,
         stock: parseInt(formData.stock),
         estado: formData.estado,
-        imagen: formData.imagen ? URL.createObjectURL(formData.imagen) : null,
+        imagenes: formData.imagenes,
+        imagen: formData.imagenes[0], // La primera imagen será la principal
         descripcion: formData.descripcion,
         userId: currentUser.id,
         price: parseFloat(formData.precio),
@@ -191,16 +204,37 @@ function PubliNueva() {
 
         <div className="form-section">
           <label>
-            Imagen del producto:
+            Imágenes del producto:
             <input
               type="file"
-              name="imagen"
+              name="imagenes"
               onChange={handleImageChange}
               accept="image/*"
-              required
+              required={formData.imagenes.length === 0}
+              multiple
               className="input-field-compact"
             />
           </label>
+          {formData.imagenes.length > 0 && (
+            <div className="preview-images">
+              {formData.imagenes.map((url, index) => (
+                <div key={index} className="image-preview-container">
+                  <img 
+                    src={url} 
+                    alt={`Vista previa ${index + 1}`} 
+                    style={{width: '100px', height: '100px', objectFit: 'cover', margin: '5px'}}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveImage(index)}
+                    className="remove-image-button"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="form-section descripcion-container">

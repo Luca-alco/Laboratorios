@@ -210,7 +210,7 @@ function Carrito() {
             {cartItems.map((item, index) => (
               <div key={index} className="cart-item">
                 <div className="item-image">
-                  <img src={item.image || 'https://via.placeholder.com/150'} alt={item.name} />
+                  <img src={item.imagen || 'https://via.placeholder.com/150'} alt={item.name} />
                 </div>
                 <div className="item-details">
                   <h3>{item.name}</h3>

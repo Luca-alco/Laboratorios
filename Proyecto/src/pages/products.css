@@ -204,6 +204,29 @@ img {
   margin: 0 auto;
 }
 
+.thumbnail-images {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.thumbnail-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.thumbnail-image:hover {
+  transform: scale(1.1);
+  border-color: #333;
+}
+
 .product-description {
   margin: 32px 0;
   padding: 24px 0;
@@ -261,7 +284,7 @@ img {
 .product-condition {
   color: #666;
   font-size: 14px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .product-title {
@@ -298,14 +321,15 @@ img {
 }
 
 .original-price {
-  color: #666;
+  color: #999;
   text-decoration: line-through;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .discount-tag {
   color: #333;
   font-weight: bold;
+  margin-left: 8px;
   font-size: 16px;
 }
 
@@ -317,12 +341,13 @@ img {
 }
 
 .current-price {
-  font-size: 36px;
+  font-size: 32px;
+  font-weight: 400;
   color: #333;
 }
 
 .discount {
-  color: #00a650;
+  color: #333;
   font-size: 16px;
 }
 
@@ -444,4 +469,29 @@ select {
 .stock-selection select:disabled {
   background-color: #f5f5f5;
   cursor: not-allowed;
+}
+
+.installments-info {
+  color: #666;
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.shipping-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 8px 0;
+  border-top: 1px solid #ededed;
+}
+
+.shipping-icon {
+  font-size: 20px;
+}
+
+.free-shipping-text {
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
 }

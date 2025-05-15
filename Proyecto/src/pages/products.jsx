@@ -84,23 +84,39 @@ function Products() {
         <div className="product-left">
           <div className="product-gallery">
             <img
-              src={product.image}
+              src={product.imagen}
               alt={product.name}
               className="main-image"
             />
             {product.discount && (
               <div className="discount-badge">{product.discount}% OFF</div>
             )}
+            {product.imagenes && product.imagenes.length > 1 && (
+              <div className="thumbnail-images">
+                {product.imagenes.map((img, index) => (
+                  <img
+                    key={index}
+                    src={img}
+                    alt={`${product.name} vista ${index + 1}`}
+                    className="thumbnail-image"
+                    onClick={() => {
+                      setProduct({ ...product, imagen: img });
+                    }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="product-description">
             <h2>Descripción</h2>
-            <p>{product.description}</p>
+            <p>{product.descripcion || product.description}</p>
           </div>
         </div>
 
         <div className="product-right">
           <div className="product-info-card">
+            <div className="product-condition">Nuevo | +10mil vendidos</div>
             <h1 className="product-title">{product.name}</h1>
             <div className="product-price-container">
               {product.originalPrice && (
@@ -117,6 +133,13 @@ function Products() {
                 <span className="current-price">
                   ${product.price.toLocaleString()}
                 </span>
+              </div>
+              <div className="installments-info">
+                en 6 cuotas de ${(product.price / 6).toFixed(2)}
+              </div>
+              <div className="shipping-info">
+                <span className="shipping-icon">📦</span>
+                <span className="free-shipping-text">Llega gratis mañana</span>
               </div>
             </div>
 

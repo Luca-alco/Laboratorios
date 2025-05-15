@@ -81,17 +81,17 @@ function ListaCatalogo() {
             <div key={product.id} onClick={() => handleProductClick(product.id)}>
               <div className={styles.tarjetaProducto}>
                 <div className={styles.imagen}> 
-                  {product.image ? (
-                    <img src={product.image} alt={product.name} />
+                  {product.imagen ? (
+                    <img src={product.imagen} alt={product.name} />
                   ) : (
                     <p className={styles.texto}>Imagen no disponible</p>
                   )}
                 </div>
                 <div className={styles.descrpicion}>
                   <h4>{product.name}</h4>
-                  <p className={styles.texto}>{product.description}</p>
+                  <p className={styles.texto}>{product.descripcion || product.description}</p>
                   <p className={styles.texto}>Categoría: {product.category}</p>
-                  <p className={styles.texto}>${product.price}</p>
+                  <p className={styles.precio}>${product.price}</p>
                 </div>
                 <div className={styles.comfirmar}>
                   <button className={styles.botonVer}>Ver</button>

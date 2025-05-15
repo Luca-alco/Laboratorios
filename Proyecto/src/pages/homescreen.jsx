@@ -60,6 +60,7 @@ const HomeScreen = () => {
     }
     return products.filter(product => 
         (product.name && product.name.toLowerCase().includes(searchText.toLowerCase())) ||
+        (product.descripcion && product.descripcion.toLowerCase().includes(searchText.toLowerCase())) ||
         (product.description && product.description.toLowerCase().includes(searchText.toLowerCase())) ||
         (product.category && product.category.toLowerCase().includes(searchText.toLowerCase()))
     );
@@ -91,7 +92,11 @@ const HomeScreen = () => {
                             searchResults.map((product) => (
                                 <div key={product.id} className="producto-card">
                                     <div className="producto-imagen">
-                                        <img src={product.image || 'https://via.placeholder.com/150'} alt={product.name} />
+                                        {product.imagen ? (
+                                            <img src={product.imagen} alt={product.name} />
+                                        ) : (
+                                            <p>Imagen no disponible</p>
+                                        )}
                                     </div>
                                     <div className="producto-info">
                                         <h3>{product.name}</h3>
@@ -117,7 +122,11 @@ const HomeScreen = () => {
                         {featuredProducts.map((product) => (
                             <div key={product.id} className="producto-card">
                                 <div className="producto-imagen">
-                                    <img src={product.image || 'https://via.placeholder.com/150'} alt={product.name} />
+                                    {product.imagen ? (
+                                        <img src={product.imagen} alt={product.name} />
+                                    ) : (
+                                        <p>Imagen no disponible</p>
+                                    )}
                                     {product.discount && (
                                         <div className="discount-badge">
                                             {product.discount}% OFF

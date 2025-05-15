@@ -9,6 +9,8 @@ const Gstprod2 = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingDescription, setEditingDescription] = useState(null);
+  const [newDescription, setNewDescription] = useState('');
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -106,6 +108,53 @@ const Gstprod2 = () => {
     }
   };
 
+  const handleDeleteProduct = async (productId) => {
+    if (window.confirm('¿Estás seguro de que deseas eliminar esta publicación?')) {
+      try {
+        const response = await fetch(`http://localhost:3000/products/${productId}`, {
+          method: 'DELETE'
+        });
+
+        if (response.ok) {
+          setProducts(products.filter(product => product.id !== productId));
+        }
+      } catch (error) {
+        console.error('Error deleting product:', error);
+      }
+    }
+  };
+
+  const handleEditDescription = (productId) => {
+    const product = products.find(p => p.id === productId);
+    setEditingDescription(productId);
+    setNewDescription(product.descripcion || product.description || '');
+  };
+
+  const handleSaveDescription = async (productId) => {
+    try {
+      const response = await fetch(`http://localhost:3000/products/${productId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          descripcion: newDescription
+        })
+      });
+
+      if (response.ok) {
+        setProducts(products.map(product => 
+          product.id === productId 
+            ? { ...product, descripcion: newDescription } 
+            : product
+        ));
+        setEditingDescription(null);
+      }
+    } catch (error) {
+      console.error('Error updating description:', error);
+    }
+  };
+
   if (loading) {
     return <div className="centered-message">Cargando publicaciones...</div>;
   }
@@ -133,6 +182,7 @@ const Gstprod2 = () => {
         <div key={product.id} className="product-card">
           <div className="product-left">
             <div className="product-gallery">
+              {/* Operador && para renderizado condicional */}
               {product.imagen && (
                 <img
                   src={product.imagen}
@@ -144,7 +194,39 @@ const Gstprod2 = () => {
             
             <div className="product-description">
               <h2>Descripción</h2>
-              <p>{product.descripcion}</p>
+              {editingDescription === product.id ? (
+                <div className="edit-description">
+                  <textarea
+                    value={newDescription}
+                    onChange={(e) => setNewDescription(e.target.value)}
+                    className="description-textarea"
+                  />
+                  <div className="description-actions">
+                    <button
+                      onClick={() => handleSaveDescription(product.id)}
+                      className="save-description-button"
+                    >
+                      Guardar
+                    </button>
+                    <button
+                      onClick={() => setEditingDescription(null)}
+                      className="cancel-edit-button"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <p>{product.descripcion || product.description}</p>
+                  <button
+                    onClick={() => handleEditDescription(product.id)}
+                    className="edit-description-button"
+                  >
+                    Editar descripción
+                  </button>
+                </>
+              )}
             </div>
 
             <div className="product-characteristics">
@@ -213,6 +295,15 @@ const Gstprod2 = () => {
                     Disminuir Stock (-1)
                   </button>
                 </div>
+              </div>
+
+              <div className="delete-section">
+                <button
+                  onClick={() => handleDeleteProduct(product.id)}
+                  className="delete-product-button"
+                >
+                  Eliminar Publicación
+                </button>
               </div>
             </div>
           </div>
