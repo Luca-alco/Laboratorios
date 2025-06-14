@@ -7,10 +7,23 @@ import { useAuth } from '../../context/AuthContext';
 // Si el usuario no está autenticado, lo redirige al login
 const ProtectedRoute = ({ children }) => {
   // Obtiene el estado de autenticación del contexto
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading, currentUser } = useAuth();
   
-  // Si no está autenticado, redirige al login
+  // Si está cargando, no hacemos nada aún
+  if (loading) {
+    return null;
+  }
+  
+  // Verificación de debugging
+  console.log('ProtectedRoute - Estado actual:', { 
+    isAuthenticated, 
+    hasCurrentUser: !!currentUser,
+    currentUser 
+  });
+  
+  // Solo redirigimos si definitivamente NO está autenticado
   if (!isAuthenticated) {
+    console.log('Redirigiendo a login - Usuario no autenticado');
     return <Navigate to="/login" replace />;
   }
 

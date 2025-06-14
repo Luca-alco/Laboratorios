@@ -1,0 +1,44 @@
+-- -- Insertar categorias
+-- INSERT INTO categorias (id, nombre) VALUES 
+-- (1, 'Remera'),
+-- (2, 'Pantalón'),
+-- (3, 'Campera'),
+-- (4, 'Buzo'),
+-- (5, 'Shorts'),
+-- (6, 'Camisa');
+
+-- -- Insertar productos
+-- INSERT INTO productos (id, nombre, precio, descripcion, stock, imagen, brand, line, model) VALUES 
+-- (1, 'Remera Clásica Blanca', 29.99, 'Remera blanca confeccionada en 100% algodón peinado de primera calidad.', 45, 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1', 'Urban Style', 'Essential Collection', 'Classic Fit 2025'),
+-- (2, 'Pantalón Jean Clásico', 59.99, 'Jean clásico de corte recto confeccionado en denim premium.', 32, 'https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-1.2.1', 'DenimCo', 'Premium Denim', 'Regular Comfort'),
+-- (3, 'Campera de Cuero', 129.99, 'Campera de cuero sintético premium con acabado mate.', 18, 'https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-1.2.1', 'Leather Elite', 'Urban Riders', 'Classic Biker'),
+-- (5, 'Camisa Manga Larga', 49.99, 'Camisa formal en poplin de algodón 100% con acabado anti-arrugas. Diseño slim fit con pinzas en espalda para mejor ajuste.', 8, 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-1.2.1', 'Executive Wear', 'Business Collection', 'Professional Fit'),
+-- (6, 'Pantalón Jean', 39.99, 'Pantalón Jean confeccionado en poliéster de alta calidad con tecnología DryFit. Material transpirable con control de humedad y secado rápido.', 53, 'https://images.unsplash.com/photo-1605518216938-7c31b7b14ad0?ixlib=rb-1.2.1', 'SportFlex', 'Performance Pro', 'Training Elite'),
+-- (7, 'Remera Polo', 34.99, 'Polo confeccionado en piqué de algodón peinado 100%. Tejido de 220g que garantiza excelente caída y durabilidad.', 41, 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-1.2.1', 'Polo Elite', 'Classic Sport', 'Premium Cotton'),
+-- (8, 'Buzo con Capucha', 55.99, 'Buzo confeccionado en felpa de algodón premium de 350g. Interior cepillado para mayor calidez y confort.', 29, 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-1.2.1', 'UrbanComfort', 'Streetwear Premium', 'Hoodie Max'),
+-- (9, 'Shorts Deportivos', 29.99, 'Shorts deportivos ultralivianos con tecnología QuickDry. Malla interior de compresión con tratamiento antibacterial.', 64, 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?ixlib=rb-1.2.1', 'SportFlex', 'Performance Pro', 'Runner Light'),
+-- (10, 'Remera Deportiva', 32.99, 'Remera deportiva con tecnología avanzada de control de humedad. Tejido ultraliviano de microfibra con tratamiento antibacterial permanente.', 47, 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1', 'SportFlex', 'Performance Pro', 'DryTech Elite'),
+-- (11, 'Pantalón Chino', 54.99, 'Pantalón chino confeccionado en algodón stretch premium. Corte slim fit moderno con tiro medio.', 35, 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?ixlib=rb-1.2.1', 'Urban Style', 'Casual Premium', 'Slim Comfort');
+
+-- -- Insertar relaciones productos-categorias
+-- INSERT INTO `productos_categorias` (`producto_id`, `categoria_id`) VALUES
+-- -- Remera Clásica Blanca -> Remera (categoria_id: 1)
+-- (1, 1),
+-- -- Pantalón Jean Clásico -> Pantalón (categoria_id: 2)
+-- (2, 2),
+-- -- Campera de Cuero -> Campera (categoria_id: 3)
+-- (3, 3),
+-- -- Camisa Manga Larga -> Camisa (categoria_id: 6)
+-- (5, 6),
+-- -- Pantalón Jean -> Pantalón (categoria_id: 2)
+-- (6, 2),
+-- -- Remera Polo -> Remera (categoria_id: 1)
+-- (7, 1),
+-- -- Buzo con Capucha -> Buzo (categoria_id: 4)
+-- (8, 4),
+-- -- Shorts Deportivos -> Shorts (categoria_id: 5)
+-- (9, 5),
+-- -- Remera Deportiva -> Remera (categoria_id: 1)
+-- (10, 1),
+-- -- Pantalón Chino -> Pantalón (categoria_id: 2)
+-- (11, 2);

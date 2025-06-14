@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./Carrito.css";
+import "./carrito.css";
 import { useAuth } from '../context/AuthContext';
 
 // Componente principal del carrito de compras
@@ -33,7 +33,7 @@ function Carrito() {
       // Verificar stock actual para cada item
       try {
         const itemsWithStock = await Promise.all(items.map(async (item) => {
-          const response = await fetch(`http://localhost:3000/products/${item.id}`);
+          const response = await fetch(`http://localhost:8080/api/productos/${item.id}`);
           const product = await response.json();
           return {
             ...item,
@@ -67,20 +67,38 @@ function Carrito() {
   const handleQuantityChange = async (index, newQuantity) => {
     try {
       const item = cartItems[index];
-      const response = await fetch(`http://localhost:3000/products/${item.id}`);
+      const response = await fetch(`http://localhost:8080/api/productos/${item.id}`);
       const product = await response.json();
 
-      if (newQuantity > product.stock) {
-        setError(`Solo hay ${product.stock} unidades disponibles de ${item.name}`);
+      // Convertir newQuantity a número
+      const quantity = parseInt(newQuantity) || 1;
+
+      if (quantity > product.stock) {
+        const updatedItems = cartItems.map((item, i) => {
+          if (i === index) {
+            return {
+              ...item,
+              quantity: product.stock, // Ajustar a máximo stock disponible
+              currentStock: product.stock,
+              stockError: true
+            };
+          }
+          return item;
+        });
+        setCartItems(updatedItems);
+        localStorage.setItem('cart', JSON.stringify(updatedItems));
+        setError(`Solo hay ${product.stock} unidades disponibles de ${item.nombre || item.name}`);
         return;
       }
+
 
       const updatedItems = cartItems.map((item, i) => {
         if (i === index) {
           return { 
             ...item, 
-            quantity: parseInt(newQuantity) || 1,
-            stockError: false
+            quantity: quantity,
+            currentStock: product.stock, // Actualizar el stock actual
+            stockError: quantity > product.stock
           };
         }
         return item;
@@ -96,7 +114,9 @@ function Carrito() {
   // Función para calcular el subtotal del carrito
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => {
-      return total + (item.price * (item.quantity || 1));
+      const itemPrice = parseFloat(item.precio || item.price || 0);
+      const quantity = parseInt(item.quantity || 1);
+      return total + (itemPrice * quantity);
     }, 0);
   };
 
@@ -121,7 +141,7 @@ function Carrito() {
     // Validar stock una última vez antes de procesar el pago
     try {
       const stockValidation = await Promise.all(cartItems.map(async (item) => {
-        const response = await fetch(`http://localhost:3000/products/${item.id}`);
+        const response = await fetch(`http://localhost:8080/api/productos/${item.id}`);
         const product = await response.json();
         return {
           item,
@@ -157,10 +177,10 @@ function Carrito() {
 
       // Actualizar stock de productos
       await Promise.all(cartItems.map(async (item) => {
-        const response = await fetch(`http://localhost:3000/products/${item.id}`);
+        const response = await fetch(`http://localhost:8080/api/productos/${item.id}`);
         const product = await response.json();
         
-        await fetch(`http://localhost:3000/products/${item.id}`, {
+        await fetch(`http://localhost:8080/api/productos/${item.id}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

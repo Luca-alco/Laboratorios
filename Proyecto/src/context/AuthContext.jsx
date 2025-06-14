@@ -7,21 +7,31 @@ const AuthContext = createContext(null);
 // Proveedor del contexto de autenticación
 // Este componente maneja el estado global de autenticación y provee métodos para login/logout
 export const AuthProvider = ({ children }) => {
-  // Estados para manejar la autenticación y datos del usuario
+  // Estados para manejar la autenticación, datos del usuario y estado de carga
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Efecto para recuperar la sesión del usuario al cargar la aplicación
   useEffect(() => {
-    const user = localStorage.getItem('currentUser');
-    if (user) {
-      setCurrentUser(JSON.parse(user));
-      setIsAuthenticated(true);
+    try {
+      const user = localStorage.getItem('currentUser');
+      if (user) {
+        const userData = JSON.parse(user);
+        setCurrentUser(userData);
+        setIsAuthenticated(true);
+        console.log('Usuario restaurado del localStorage:', userData);
+      }
+    } catch (error) {
+      console.error('Error al restaurar la sesión:', error);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
   // Función para iniciar sesión
   const login = (userData) => {
+    console.log('Login ejecutado con:', userData);
     setCurrentUser(userData);
     setIsAuthenticated(true);
     localStorage.setItem('currentUser', JSON.stringify(userData));
@@ -29,6 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   // Función para cerrar sesión
   const logout = () => {
+    console.log('Logout ejecutado');
     setCurrentUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem('currentUser');
@@ -36,11 +47,23 @@ export const AuthProvider = ({ children }) => {
 
   // Proveedor que expone el estado y funciones de autenticación a toda la aplicación
   return (
-    <AuthContext.Provider value={{ isAuthenticated, currentUser, login, logout }}>
+    <AuthContext.Provider value={{ 
+      isAuthenticated, 
+      currentUser, 
+      loading,
+      login, 
+      logout 
+    }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 // Hook personalizado para acceder al contexto de autenticación
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth debe ser usado dentro de un AuthProvider');
+  }
+  return context;
+};

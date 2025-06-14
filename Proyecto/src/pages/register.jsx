@@ -1,7 +1,7 @@
 // Importación de dependencias necesarias
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Users.css';
+import './users.css';
 import { TextField, Button, Box } from '@mui/material';
 
 // Componente principal para el registro de usuarios
@@ -41,7 +41,7 @@ function Register() {
         }
 
         try {
-            const emailCheckResponse = await fetch(`http://localhost:3000/users?email=${formData.email}`);
+            const emailCheckResponse = await fetch(`http://localhost:8080/api/users?email=${formData.email}`);
             const existingUsers = await emailCheckResponse.json();
             
             if (existingUsers.length > 0) {
@@ -49,7 +49,7 @@ function Register() {
                 return;
             }
 
-            const response = await fetch('http://localhost:3000/users', {
+            const response = await fetch('http://localhost:8080/api/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

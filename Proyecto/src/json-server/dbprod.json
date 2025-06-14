@@ -137,7 +137,7 @@
       "categoria": "Campera",
       "marca": "Lacoste",
       "talle": "M",
-      "stock": 2,
+      "stock": 4,
       "estado": "nuevo",
       "imagen": "https://production.cdn.vaypol.com/variants/cel8no7n4i5v5qry2lz9a747uekz/e82c8d6171dd25bb538f2e7263b5bc7dfc6a79352d85923074be76df53fbc6f4",
       "descripcion": "Campera Lacoste Azul Unisex",
@@ -176,6 +176,25 @@
       "brand": "Adidas",
       "name": "Adidas Remera",
       "category": "Remera"
+    },
+    {
+      "id": "1747353931637",
+      "categoria": "Pantalón",
+      "marca": "elvis",
+      "talle": "S",
+      "stock": 3,
+      "estado": "nuevo",
+      "imagenes": [
+        "blob:http://localhost:5173/cc58eccd-4da6-4706-aa2f-ddb1dd35dd72",
+        "blob:http://localhost:5173/75d5d7a0-feb0-434b-8149-52b53e61bc39"
+      ],
+      "imagen": "blob:http://localhost:5173/cc58eccd-4da6-4706-aa2f-ddb1dd35dd72",
+      "descripcion": "saofjgsiojgotigj",
+      "userId": "1746715071241",
+      "price": 50,
+      "brand": "elvis",
+      "name": "elvis Pantalón",
+      "category": "Pantalón"
     }
   ],
   "users": [

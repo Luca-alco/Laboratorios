@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "./Products.css";
+import "./products.css";
 function Products() {
     const { id } = useParams();
     const navigate = useNavigate();
@@ -19,21 +19,27 @@ function Products() {
     useEffect(() => {
       const fetchProduct = async () => {
         try {
-          const response = await fetch(`http://localhost:3000/products/${id}`);
+          const response = await fetch(`http://localhost:8080/api/productos/${id}`);
           const productData = await response.json();
   
+       // Normalizar el precio primero
+          const normalizedPrice = productData.precio || productData.price || 0;
+
           if (PRODUCT_DISCOUNTS.hasOwnProperty(productData.id)) {
             const discount = PRODUCT_DISCOUNTS[productData.id];
-            const discountedPrice = productData.price * (1 - discount / 100);
+            const discountedPrice = normalizedPrice * (1 - discount / 100);
             setProduct({
               ...productData,
-              originalPrice: productData.price,
+              originalPrice: normalizedPrice,
               price: Number(discountedPrice.toFixed(2)),
               discount
-            }); 
-        } else {
-                setProduct(productData);
-            }
+            });
+       } else {
+         setProduct({
+           ...productData,
+           price: normalizedPrice // Asegurar que siempre haya un precio
+         });
+       }
         } catch (error) {
           console.error("Error fetching product:", error);
         }
@@ -115,7 +121,7 @@ function Products() {
         <div className="product-right">
           <div className="product-info-card">
             <div className="product-condition">Nuevo | +10mil vendidos</div>
-            <h1 className="product-title">{product.name}</h1>
+            <h1 className="product-title">{product.nombre || product.name}</h1>
             <div className="product-price-container">
               {product.originalPrice && (
                 <div className="original-price-row">
@@ -129,11 +135,11 @@ function Products() {
               )}
               <div className="price-row">
                 <span className="current-price">
-                  ${product.price.toLocaleString()}
+                  ${(product.price).toLocaleString()}
                 </span>
               </div>
               <div className="installments-info">
-                en 6 cuotas de ${(product.price / 6).toFixed(2)}
+                en 6 cuotas de ${(product.price | 0 / 6).toFixed(2)}
               </div>
               <div className="shipping-info">
                 <span className="shipping-icon">📦</span>

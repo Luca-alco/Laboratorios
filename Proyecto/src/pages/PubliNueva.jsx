@@ -1,8 +1,8 @@
 // Importación de dependencias necesarias
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./PubliNueva.css";
-import "./Users.css";
+import "./publinueva.css";
+import "./users.css";
 
 // Componente para crear una nueva publicación de producto
 function PubliNueva() {
@@ -85,7 +85,7 @@ function PubliNueva() {
       };
 
       // Enviar petición al servidor para crear el producto
-      const response = await fetch('http://localhost:3000/products', {
+      const response = await fetch('http://localhost:8080/api/productos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

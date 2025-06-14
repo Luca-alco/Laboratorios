@@ -10,7 +10,7 @@ import Products from "./pages/Products";
 import Gstprod2 from "./pages/Gstprod2";
 import PubliNueva from "./pages/PubliNueva";
 import Carrito from "./pages/Carrito";
-import UsersLogin from "./pages/UsersLogin";
+import UsersLogin from "./pages/usersLogin";
 import Register from "./pages/Register";
 import ListaCatalogo from "./pages/ListaCatalogo";
 import ResponsiveFooter from "./pages/ResponsiveFooter"; 
@@ -42,7 +42,7 @@ function App() {
             
             {/* Rutas públicas */}
             <Route path="/productos" element={<ListaCatalogo />} />
-            <Route path="/products/:id" element={<Products />} />
+            <Route path="/productos/:id" element={<Products />} />
             <Route path="/login" element={<UsersLogin />} />
             <Route path="/register" element={<Register />} />
             <Route path="/carrito" element={<Carrito />} />

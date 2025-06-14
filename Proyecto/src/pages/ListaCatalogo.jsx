@@ -15,28 +15,31 @@ function ListaCatalogo() {
 
   // Hook de efecto para cargar los productos al montar el componente
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/products');
-        const data = await response.json();
-        // Ordenar productos alfabéticamente por nombre
-        const sortedProducts = data.sort((a, b) => a.name.localeCompare(b.name));
+        // Fetch productos
+        const productsResponse = await fetch('http://localhost:8080/api/productos');
+        const productsData = await productsResponse.json();
+        const sortedProducts = productsData.sort((a, b) => 
+          a.nombre.localeCompare(b.nombre)
+        );
         setProducts(sortedProducts);
-        
-        // Extraer categorías únicas
-        const uniqueCategories = [...new Set(data.map(product => product.category))];
-        setCategories(uniqueCategories.sort());
+  
+        // Fetch categorías desde el endpoint específico
+        const categoriasResponse = await fetch('http://localhost:8080/api/categorias');
+        const categoriasData = await categoriasResponse.json();
+        setCategories(categoriasData);
       } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error('Error fetching data:', error);
       }
     };
-
-    fetchProducts();
+  
+    fetchData();
   }, []);
 
   // Función para manejar el clic en un producto
   const handleProductClick = (productId) => {
-    navigate(`/products/${productId}`);
+    navigate(`/productos/${productId}`);
   };
 
   // Función para manejar el cambio de categoría
@@ -51,10 +54,12 @@ function ListaCatalogo() {
 
   // Filtrar productos según la categoría seleccionada y el texto de búsqueda
   const filteredProducts = products.filter(product => {
-    const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
-    const matchesSearch = product.name.toLowerCase().includes(searchText.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+    const matchesCategory = selectedCategory 
+    ? product.categorias?.some(cat => cat.id === parseInt(selectedCategory))
+    : true;
+  const matchesSearch = product.nombre.toLowerCase().includes(searchText.toLowerCase());
+  return matchesCategory && matchesSearch;
+});
 
   // Renderizado del componente
   return (
@@ -78,9 +83,9 @@ function ListaCatalogo() {
               className={styles.selectCategoria}
             >
               <option value="">Todas las categorías</option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
+              {categories.map((categoria) => (
+                <option key={categoria.id} value={categoria.id}>
+                  {categoria.nombre}
                 </option>
               ))}
             </select>
@@ -97,10 +102,11 @@ function ListaCatalogo() {
                   )}
                 </div>
                 <div className={styles.descrpicion}>
-                  <h4>{product.name}</h4>
+                  <h4>{product.nombre}</h4>
                   <p className={styles.texto}>{product.descripcion || product.description}</p>
-                  <p className={styles.texto}>Categoría: {product.category}</p>
-                  <p className={styles.precio}>${product.price}</p>
+                  <p className={styles.texto}> Categorías: {product.categorias?.map(cat => cat.nombre).join(', ')}
+                </p>
+                <p className={styles.precio}>${product.precio}</p>
                 </div>
                 <div className={styles.comfirmar}>
                   <button className={styles.botonVer}>Ver</button>

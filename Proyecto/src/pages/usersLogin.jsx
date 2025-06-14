@@ -1,6 +1,6 @@
 // Importación de dependencias necesarias
 import React, { useState } from "react";
-import "./Users.css";
+import "./users.css";
 import { TextField, Button, Box } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from '../context/AuthContext';
@@ -33,7 +33,7 @@ function UsersLogin() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3000/users');
+      const response = await fetch('http://localhost:8080/api/users');
       const users = await response.json();
       
       const user = users.find(u => 

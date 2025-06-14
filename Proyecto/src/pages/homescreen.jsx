@@ -1,6 +1,6 @@
 // Importación de dependencias necesarias
 import React, { useState, useEffect } from "react";
-import "./Homescreen.css";
+import "./homescreen.css";
 import { useNavigate } from "react-router-dom";
 
 // Componente principal de la página de inicio
@@ -28,13 +28,21 @@ const HomeScreen = () => {
         // Función asíncrona para obtener los productos del servidor
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:3000/products');
+                const response = await fetch('http://localhost:8080/api/productos');
                 const data = await response.json();
-                setAllProducts(data);
-                
-                // Procesamiento de los primeros 6 productos para mostrarlos como destacados con descuentos
-                const productsWithDiscounts = data.slice(0, 5).map(product => {
-                    const discount = PRODUCT_DISCOUNTS[product.id];
+                 // Normalizar los datos antes de procesarlos
+                const normalizedData = data.map(product => ({
+                ...product,
+                price: parseFloat(product.precio) || product.price, // Manejar ambos nombres de propiedad
+                name: product.nombre || product.name     // Manejar ambos nombres de propiedad
+            }));
+            
+            setAllProducts(normalizedData);
+            
+            // Procesamiento de los primeros 6 productos para mostrarlos como destacados
+            const productsWithDiscounts = normalizedData.slice(0, 5).map(product => {
+                const discount = PRODUCT_DISCOUNTS[product.id];
+                if (discount) {
                     const discountedPrice = product.price * (1 - discount / 100);
                     return {
                         ...product,
@@ -42,7 +50,10 @@ const HomeScreen = () => {
                         price: Number(discountedPrice.toFixed(2)),
                         discount
                     };
-                });
+                }
+                return product;
+            });
+            
                 setFeaturedProducts(productsWithDiscounts);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -54,7 +65,7 @@ const HomeScreen = () => {
 
     // Función para manejar el click en un producto y navegar a su detalle
     const handleProductClick = (productId) => {
-        navigate(`/products/${productId}`);
+        navigate(`/productos/${productId}`);
     };
 
     // Función para manejar la búsqueda de productos
@@ -114,8 +125,12 @@ const HomeScreen = () => {
                                         )}
                                     </div>
                                     <div className="producto-info">
-                                        <h3>{product.name}</h3>
-                                        <p className="producto-precio">${product.price}</p>
+                                        <h3>{product.nombre || product.name}</h3>
+                                        <p className="producto-precio">
+                                            ${typeof product.price === 'number' ? 
+                                                product.price.toFixed(2) : 
+                                                (product.precio || 0).toFixed(2)}
+                                        </p>
                                         <button 
                                             className="btn-ver"
                                             onClick={() => handleProductClick(product.id)}
@@ -150,8 +165,15 @@ const HomeScreen = () => {
                                     )}
                                 </div>
                                 <div className="producto-info">
-                                    <h3>{product.name}</h3>
-                                    <p className="producto-precio">${product.price}</p>
+                                    <h3>{product.nombre || product.name}</h3>
+                                    <p className="producto-precio">
+                                        ${product.price ? product.price.toFixed(2) : '0.00'}
+                                    </p>
+                                    {product.discount && (
+                                        <p className="producto-precio-original">
+                                            Precio original: ${product.originalPrice.toFixed(2)}
+                                        </p>
+                                    )}
                                     <button 
                                         className="btn-ver"
                                         onClick={() => handleProductClick(product.id)}

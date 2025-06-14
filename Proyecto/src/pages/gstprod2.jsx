@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from "react-router-dom";
-import "./Gstprod2.css";
-import "./Users.css";
+import "./gstprod2.css";
+import "./users.css";
 
 // Componente para la gestión de productos del usuario
 const Gstprod2 = () => {
@@ -19,7 +19,7 @@ const Gstprod2 = () => {
     const loadProducts = async () => {
       try {
         // Obtiene todos los productos del backend
-        const response = await fetch('http://localhost:3000/products');
+        const response = await fetch('http://localhost:8080/api/productos');
         const allProducts = await response.json();
         
         // Obtiene el producto recientemente creado del almacenamiento local
@@ -28,7 +28,7 @@ const Gstprod2 = () => {
           const parsedProduct = JSON.parse(newProductData);
           
           // Crea un nuevo producto en el backend
-          const createResponse = await fetch('http://localhost:3000/products', {
+          const createResponse = await fetch('http://localhost:8080/api/productos', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ const Gstprod2 = () => {
         }
 
         // Recarga los productos para obtener la lista actualizada incluyendo el nuevo
-        const updatedResponse = await fetch('http://localhost:3000/products');
+        const updatedResponse = await fetch('http://localhost:8080/api/productos');
         const updatedProducts = await updatedResponse.json();
         
         // Filtra los productos por el usuario actual
@@ -70,7 +70,7 @@ const Gstprod2 = () => {
   // Función para actualizar el stock de un producto
   const updateStock = async (productId, newStock) => {
     try {
-      const response = await fetch(`http://localhost:3000/products/${productId}`, {
+      const response = await fetch(`http://localhost:8080/api/productos/${productId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ const Gstprod2 = () => {
   // Función para actualizar el precio de un producto
   const updatePrice = async (productId, newPrice) => {
     try {
-      const response = await fetch(`http://localhost:3000/products/${productId}`, {
+      const response = await fetch(`http://localhost:8080/api/productos/${productId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ const Gstprod2 = () => {
   const handleDeleteProduct = async (productId) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar esta publicación?')) {
       try {
-        const response = await fetch(`http://localhost:3000/products/${productId}`, {
+        const response = await fetch(`http://localhost:8080/api/productos/${productId}`, {
           method: 'DELETE'
         });
 
@@ -143,7 +143,7 @@ const Gstprod2 = () => {
   // Función para guardar la descripción editada
   const handleSaveDescription = async (productId) => {
     try {
-      const response = await fetch(`http://localhost:3000/products/${productId}`, {
+      const response = await fetch(`http://localhost:8080/api/productos/${productId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
