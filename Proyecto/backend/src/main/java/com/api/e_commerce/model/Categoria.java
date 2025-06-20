@@ -25,6 +25,7 @@ public class Categoria {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "categorias")
+    
     private List<Producto> productos =new ArrayList<>();
 
 

@@ -29,12 +29,16 @@ public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id;
+
     private String nombre;
     private String apellido;
     @Column(unique = true)
     private String email;
+    private String usuario;
     private String password;
+    private String telefono;
     @Enumerated(EnumType.STRING)
+    private Role role; // Enum para definir roles de usuario
     
     @OneToMany(mappedBy = "usuario",cascade= CascadeType.ALL)
     List<Pedido> pedidos; // Relación con la entidad Pedido
@@ -45,7 +49,7 @@ public class Usuario implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Example implementation, adjust as needed
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + (role != null ? role.name() : "USER")));
     }
 
     @Override
