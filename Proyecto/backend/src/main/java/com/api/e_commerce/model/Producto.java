@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +34,13 @@ public class Producto {
     private String line;
     private String model;
     
-    @JsonManagedReference
+    // Campos adicionales para compatibilidad con el frontend
+    private String categoria;
+    private String marca;
+    private String talle;
+    private String estado;
+    
+    @JsonIgnoreProperties({"productos"})
     @ManyToMany(fetch= FetchType.LAZY)
     @JoinTable(
         name = "productos_categorias",
@@ -43,6 +48,4 @@ public class Producto {
         inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
     private List<Categoria> categorias = new ArrayList<>(); // Relación con la entidad Categoria
-
-    
-}   
+}

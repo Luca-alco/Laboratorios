@@ -16,14 +16,20 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     try {
       const user = localStorage.getItem('currentUser');
-      if (user) {
+      const token = localStorage.getItem('authToken');
+      
+      if (user && token) {
         const userData = JSON.parse(user);
+        // Verificar que el token no haya expirado (opcional)
         setCurrentUser(userData);
         setIsAuthenticated(true);
         console.log('Usuario restaurado del localStorage:', userData);
       }
     } catch (error) {
       console.error('Error al restaurar la sesión:', error);
+      // Limpiar datos corruptos
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('authToken');
     } finally {
       setLoading(false);
     }
@@ -35,6 +41,11 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser(userData);
     setIsAuthenticated(true);
     localStorage.setItem('currentUser', JSON.stringify(userData));
+    
+    // Guardar el token por separado para facilitar el acceso
+    if (userData.token) {
+      localStorage.setItem('authToken', userData.token);
+    }
   };
 
   // Función para cerrar sesión
@@ -43,6 +54,17 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser(null);
     setIsAuthenticated(false);
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('authToken');
+  };
+
+  // Función para obtener el token de autenticación
+  const getAuthToken = () => {
+    return localStorage.getItem('authToken');
+  };
+
+  // Función para verificar si el usuario tiene un rol específico
+  const hasRole = (role) => {
+    return currentUser?.roles === role || currentUser?.role === role;
   };
 
   // Proveedor que expone el estado y funciones de autenticación a toda la aplicación
@@ -52,7 +74,9 @@ export const AuthProvider = ({ children }) => {
       currentUser, 
       loading,
       login, 
-      logout 
+      logout,
+      getAuthToken,
+      hasRole
     }}>
       {children}
     </AuthContext.Provider>

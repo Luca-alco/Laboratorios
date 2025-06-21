@@ -1,6 +1,7 @@
 // Importación de dependencias necesarias
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../context/AuthContext';
 import "./publinueva.css";
 import "./users.css";
 
@@ -8,6 +9,7 @@ import "./users.css";
 function PubliNueva() {
   // Hook de navegación
   const navigate = useNavigate();
+  const { currentUser, getAuthToken } = useAuth();
   
   // Estado inicial del formulario
   const [formData, setFormData] = useState({
@@ -21,6 +23,9 @@ function PubliNueva() {
     descripcion: ''
   });
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
   // Función para manejar cambios en los inputs del formulario
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +33,8 @@ function PubliNueva() {
       ...prev,
       [name]: value
     }));
+    // Limpiar error cuando el usuario empiece a escribir
+    if (error) setError('');
   };
 
   // Función para manejar la carga de imágenes
@@ -56,52 +63,74 @@ function PubliNueva() {
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setLoading(true);
     
     try {
       // Verificar si hay un usuario autenticado
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       if (!currentUser) {
-        alert('Debe iniciar sesión para publicar');
+        setError('Debe iniciar sesión para publicar');
         navigate('/login');
         return;
       }
 
-      // Preparar datos del nuevo producto
+      // Obtener el token de autenticación
+      const token = getAuthToken();
+      if (!token) {
+        setError('Token de autenticación no encontrado. Por favor, inicie sesión nuevamente.');
+        navigate('/login');
+        return;
+      }
+
+      // Preparar datos del nuevo producto con los campos correctos del backend
       const newProduct = {
-        id: Date.now().toString(),
-        categoria: formData.categoria,
-        marca: formData.marca,
-        talle: formData.talle,
-        stock: parseInt(formData.stock),
-        estado: formData.estado,
-        imagenes: formData.imagenes,
-        imagen: formData.imagenes[0], // La primera imagen será la principal
+        nombre: `${formData.marca} ${formData.categoria}`,
+        precio: parseFloat(formData.precio),
         descripcion: formData.descripcion,
-        userId: currentUser.id,
-        price: parseFloat(formData.precio),
+        stock: parseInt(formData.stock),
+        imagen: formData.imagenes[0] || '', // La primera imagen será la principal
         brand: formData.marca,
-        name: `${formData.marca} ${formData.categoria}`,
-        category: formData.categoria
+        marca: formData.marca,
+        categoria: formData.categoria,
+        talle: formData.talle,
+        estado: formData.estado
       };
+
+      console.log('Enviando producto:', newProduct);
 
       // Enviar petición al servidor para crear el producto
       const response = await fetch('http://localhost:8080/api/productos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(newProduct)
       });
 
-      if (!response.ok) {
-        throw new Error('Error al guardar el producto');
+      if (response.ok) {
+        const savedProduct = await response.json();
+        console.log('Producto creado:', savedProduct);
+        alert('Producto publicado exitosamente');
+        navigate('/productos');
+      } else {
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        
+        if (response.status === 401) {
+          setError('Su sesión ha expirado. Por favor, inicie sesión nuevamente.');
+          navigate('/login');
+        } else if (response.status === 403) {
+          setError('No tiene permisos para crear productos.');
+        } else {
+          setError(`Error al guardar el producto: ${errorText}`);
+        }
       }
-
-      alert('Producto publicado exitosamente');
-      navigate('/productos');
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al publicar el producto');
+      setError('Error de conexión. Verifique su conexión a internet.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -109,6 +138,19 @@ function PubliNueva() {
   return (
     <main style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <form onSubmit={handleSubmit} className="producto-form">
+        {error && (
+          <div style={{ 
+            color: 'red', 
+            marginBottom: '1rem', 
+            padding: '0.5rem', 
+            border: '1px solid red', 
+            borderRadius: '4px',
+            backgroundColor: '#ffebee'
+          }}>
+            {error}
+          </div>
+        )}
+
         {/* Sección de categoría */}
         <div className="form-section">
           <label>
@@ -118,6 +160,7 @@ function PubliNueva() {
               value={formData.categoria}
               onChange={handleInputChange}
               className="categoria-select"
+              disabled={loading}
               required
             >
               <option value="">Seleccione una categoría</option>
@@ -141,6 +184,7 @@ function PubliNueva() {
               name="marca"
               value={formData.marca}
               onChange={handleInputChange}
+              disabled={loading}
               required
               className="input-field-compact"
             />
@@ -155,6 +199,7 @@ function PubliNueva() {
               name="talle"
               value={formData.talle}
               onChange={handleInputChange}
+              disabled={loading}
               required
               className="input-field-compact"
             >
@@ -179,6 +224,7 @@ function PubliNueva() {
               min="1"
               value={formData.stock}
               onChange={handleInputChange}
+              disabled={loading}
               required
               className="input-field-compact"
             />
@@ -196,6 +242,7 @@ function PubliNueva() {
               step="0.01"
               value={formData.precio}
               onChange={handleInputChange}
+              disabled={loading}
               required
               className="input-field-compact"
               placeholder="0.00"
@@ -211,6 +258,7 @@ function PubliNueva() {
               name="estado"
               value={formData.estado}
               onChange={handleInputChange}
+              disabled={loading}
               required
               className="input-field-compact"
             >
@@ -232,6 +280,7 @@ function PubliNueva() {
               accept="image/*"
               required={formData.imagenes.length === 0}
               multiple
+              disabled={loading}
               className="input-field-compact"
             />
           </label>
@@ -248,6 +297,7 @@ function PubliNueva() {
                     type="button"
                     onClick={() => handleRemoveImage(index)}
                     className="remove-image-button"
+                    disabled={loading}
                   >
                     ×
                   </button>
@@ -266,14 +316,16 @@ function PubliNueva() {
               value={formData.descripcion}
               onChange={handleInputChange}
               className="input-descripcion"
+              disabled={loading}
               required
             />
           </label>
           <button 
             type="submit" 
             className="checkout-button"
+            disabled={loading}
           >
-            Publicar
+            {loading ? 'Publicando...' : 'Publicar'}
           </button>
         </div>
       </form>
@@ -282,6 +334,3 @@ function PubliNueva() {
 }
 
 export default PubliNueva;
-
-
-

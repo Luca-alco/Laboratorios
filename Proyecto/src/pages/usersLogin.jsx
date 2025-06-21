@@ -18,6 +18,7 @@ function UsersLogin() {
     password: ''
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // Función para manejar cambios en los inputs
   const handleChange = (e) => {
@@ -31,73 +32,101 @@ function UsersLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8080/api/users');
-      const users = await response.json();
-      
-      const user = users.find(u => 
-        u.email === formData.email && 
-        u.password === formData.password
-      );
+      const response = await fetch('http://localhost:8080/api/usuarios/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
 
-      if (user) {
-        login(user); // Usar la función login del contexto
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Guardar el token en localStorage
+        localStorage.setItem('authToken', data.token);
+        
+        // Crear objeto de usuario con la información recibida
+        const userData = {
+          ...data.user,
+          token: data.token,
+          roles: data.roles
+        };
+        
+        // Usar la función login del contexto
+        login(userData);
+        
+        console.log('Login exitoso:', userData);
         navigate('/');
       } else {
-        setError('Email o contraseña incorrectos');
+        const errorData = await response.text();
+        setError(errorData || 'Email o contraseña incorrectos');
       }
     } catch (error) {
       console.error('Error during login:', error);
-      setError('Error al intentar iniciar sesión');
+      setError('Error al intentar iniciar sesión. Verifique su conexión.');
+    } finally {
+      setLoading(false);
     }
   };
 
   // Renderizado del componente
   return (
-    <Box
-    className="login-container"
-  >
-  <form className="login-form" onSubmit={handleSubmit}>
-    <div className="form-group">
-      <label htmlFor="email" className="login-label">E-mail o teléfono</label>
-      <input
-        type="email"
-        id="email"
-        className="login-input"
-        placeholder="Ingresa tu e-mail o teléfono"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-    </div>
-    <div className="form-group">
-      <label htmlFor="password" className="login-label">Contraseña</label>
-      <input
-        type="password"
-        id="password"
-        className="login-input"
-        placeholder="Ingresa tu contraseña"
-        value={formData.password}
-        onChange={handleChange}
-        required
-      />
-    </div>
+    <Box className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="email" className="login-label">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            className="login-input"
+            placeholder="Ingresa tu e-mail"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            disabled={loading}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password" className="login-label">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            className="login-input"
+            placeholder="Ingresa tu contraseña"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            disabled={loading}
+          />
+        </div>
 
-    {error && (
-      <div className="error-message">
-        {error}
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
+
+        <button 
+          type="submit" 
+          className="login-button"
+          disabled={loading}
+        >
+          {loading ? 'Iniciando sesión...' : 'Continuar'}
+        </button>
+      </form>
+
+      <div className="register-link">
+        <p>¿No tiene un usuario creado?</p>
+        <Link to="/register">Crear cuenta</Link>
       </div>
-    )}
-
-    <button type="submit" className="login-button">Continuar</button>
-  </form>
-
-  <div className="register-link">
-    <p>¿No tiene un usuario creado?</p>
-    <Link to="/register">Crear cuenta</Link>
-  </div>
-</Box>
+    </Box>
   );
 }
 

@@ -289,7 +289,7 @@ function Carrito() {
                 <span>${calculateTotal().toFixed(2)}</span>
               </div>
 
-              <button 
+              <button
                 onClick={() => setShowPaymentForm(true)} 
                 className="checkout-button"
                 disabled={hasStockErrors}

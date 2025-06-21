@@ -17,6 +17,8 @@ function Register() {
         password: '',
         telefono: ''
     });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     // Función para manejar cambios en los inputs
     const handleChange = (e) => {
@@ -24,52 +26,56 @@ function Register() {
             ...formData,
             [e.target.id]: e.target.value
         });
+        // Limpiar error cuando el usuario empiece a escribir
+        if (error) setError('');
     };
 
     // Función para manejar el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
+        setLoading(true);
         
+        // Validaciones del lado del cliente
         if (!formData.email.includes('@')) {
-            alert('Por favor ingrese un email válido');
+            setError('Por favor ingrese un email válido');
+            setLoading(false);
             return;
         }
         
         if (formData.password.length < 6) {
-            alert('La contraseña debe tener al menos 6 caracteres');
+            setError('La contraseña debe tener al menos 6 caracteres');
+            setLoading(false);
             return;
         }
 
         try {
-            const emailCheckResponse = await fetch(`http://localhost:8080/api/users?email=${formData.email}`);
-            const existingUsers = await emailCheckResponse.json();
-            
-            if (existingUsers.length > 0) {
-                alert('Ya existe un usuario registrado con este email');
-                return;
-            }
-
-            const response = await fetch('http://localhost:8080/api/users', {
+            const response = await fetch('http://localhost:8080/api/usuarios/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    ...formData,
-                    id: Date.now() 
-                })
+                body: JSON.stringify(formData)
             });
 
             if (response.ok) {
+                const userData = await response.json();
                 alert('Usuario registrado exitosamente');
+                console.log('Usuario registrado:', userData);
                 navigate('/login');
             } else {
-                const error = await response.text();
-                alert('Error al registrar: ' + error);
+                const errorText = await response.text();
+                if (response.status === 409) {
+                    setError('Ya existe un usuario registrado con este email');
+                } else {
+                    setError(errorText || 'Error al registrar usuario');
+                }
             }
         } catch (error) {
             console.error('Error al registrar:', error);
-            alert('Error al registrar usuario');
+            setError('Error de conexión. Verifique su conexión a internet.');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -96,6 +102,19 @@ function Register() {
                 }}  
             >
                 <form onSubmit={handleSubmit} style={{ maxWidth: '500px', margin: '0 auto', padding: '1rem', width: '100%' }}>
+                    {error && (
+                        <div style={{ 
+                            color: 'red', 
+                            marginBottom: '1rem', 
+                            padding: '0.5rem', 
+                            border: '1px solid red', 
+                            borderRadius: '4px',
+                            backgroundColor: '#ffebee'
+                        }}>
+                            {error}
+                        </div>
+                    )}
+
                     <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                         <label htmlFor="nombre" style={{ marginRight: '1rem', width: '100px' }}>Nombre:</label>
                         <TextField 
@@ -104,6 +123,7 @@ function Register() {
                             fullWidth 
                             value={formData.nombre}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -116,6 +136,7 @@ function Register() {
                             fullWidth 
                             value={formData.apellido}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -129,6 +150,7 @@ function Register() {
                             fullWidth 
                             value={formData.email}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -141,6 +163,7 @@ function Register() {
                             fullWidth 
                             value={formData.telefono}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -153,6 +176,7 @@ function Register() {
                             fullWidth 
                             value={formData.usuario}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -166,6 +190,7 @@ function Register() {
                             fullWidth 
                             value={formData.password}
                             onChange={handleChange}
+                            disabled={loading}
                             required
                         />
                     </div>
@@ -174,6 +199,7 @@ function Register() {
                         type="submit" 
                         variant="outlined" 
                         fullWidth 
+                        disabled={loading}
                         sx={{ 
                             mt: 2, 
                             color: 'black', 
@@ -181,7 +207,7 @@ function Register() {
                             backgroundColor: 'white'
                         }}
                     >
-                        Confirmar
+                        {loading ? 'Registrando...' : 'Confirmar'}
                     </Button>
                 </form>
             </Box>

@@ -166,14 +166,7 @@ const HomeScreen = () => {
                                 </div>
                                 <div className="producto-info">
                                     <h3>{product.nombre || product.name}</h3>
-                                    <p className="producto-precio">
-                                        ${product.price ? product.price.toFixed(2) : '0.00'}
-                                    </p>
-                                    {product.discount && (
-                                        <p className="producto-precio-original">
-                                            Precio original: ${product.originalPrice.toFixed(2)}
-                                        </p>
-                                    )}
+                                    <p className="producto-precio">${product.price}</p>
                                     <button 
                                         className="btn-ver"
                                         onClick={() => handleProductClick(product.id)}
