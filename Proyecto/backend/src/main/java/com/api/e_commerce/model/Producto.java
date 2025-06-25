@@ -3,6 +3,7 @@ package com.api.e_commerce.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -53,7 +54,8 @@ public class Producto {
     )
     private List<Categoria> categorias = new ArrayList<>(); // Relación con la entidad Categoria
 
-        @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
+    @JsonIgnore
     private Usuario usuario; // Relación con la entidad Usuario, barios productos tienen un usuario
 }
