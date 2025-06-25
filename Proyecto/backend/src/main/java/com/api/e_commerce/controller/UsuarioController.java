@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.api.e_commerce.dto.LoginRequest;
 import com.api.e_commerce.model.Role;
 import com.api.e_commerce.model.Usuario;
 import com.api.e_commerce.repository.UsuarioRepository;
@@ -44,7 +45,7 @@ public class UsuarioController {
 
     // Login endpoint (devuelve un JWT real)
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Usuario loginUser) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginUser) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(loginUser.getEmail());
         
         if (usuarioOpt.isPresent()) {

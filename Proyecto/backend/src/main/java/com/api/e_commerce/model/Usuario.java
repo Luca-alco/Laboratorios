@@ -43,6 +43,9 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario",cascade= CascadeType.ALL)
     List<Pedido> pedidos; // Relación con la entidad Pedido
 
+    @OneToMany(mappedBy = "usuario",cascade= CascadeType.ALL)
+    List<Producto> productos; // Relación con la entidad Producto, un usuario tiene varios productos a su nombre
+
     // Constructor, getters y setters pueden ser generados por Lombok
     // o puedes definirlos manualmente si lo prefieres.
 

@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -40,6 +41,9 @@ public class Producto {
     private String talle;
     private String estado;
     
+
+    //NOTA IMPORTANTE: PARA QUE SE GENERE LA RELACION ES NECESARIO MANDAR EN EL POST LA VARIABLE
+    //CATEGORIAS ASI: "categorias": [{ "id": 1 }, { "id": 3 }] con los id de las categorias a las que sera asociado
     @JsonIgnoreProperties({"productos"})
     @ManyToMany(fetch= FetchType.LAZY)
     @JoinTable(
@@ -48,4 +52,8 @@ public class Producto {
         inverseJoinColumns = @JoinColumn(name = "categoria_id")
     )
     private List<Categoria> categorias = new ArrayList<>(); // Relación con la entidad Categoria
+
+        @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario; // Relación con la entidad Usuario, barios productos tienen un usuario
 }

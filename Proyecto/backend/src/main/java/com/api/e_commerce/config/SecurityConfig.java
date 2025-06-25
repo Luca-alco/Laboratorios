@@ -92,7 +92,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/usuarios/register", "/api/usuarios/public", "/api/usuarios/login").permitAll()
                         // Rutas públicas que no requieren autenticación
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/productos/**", "/api/categorias/**").permitAll()
+                        .requestMatchers( "/api/categorias/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/productos/**", "/api/productos").permitAll()
                         // Rutas que requieren autenticación para modificar productos
                         .requestMatchers(HttpMethod.POST, "/api/productos").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/productos/**").authenticated()
