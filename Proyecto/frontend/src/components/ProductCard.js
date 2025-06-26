@@ -11,6 +11,12 @@ const addToCart = async (product, quantity = 1) => {
     // Actualizar stock en el backend
     await updateProductStock(product.id, quantity, 1);
 
+    // Calcular el precio final (con descuento si corresponde)
+    let finalPrice = product.precio;
+    if (product.price !== undefined) {
+      finalPrice = product.price; // Usar el precio con descuento si existe
+    }
+
     // Agregar al carrito local
     const currentCart = JSON.parse(localStorage.getItem('cart') || '[]');
     const existingItem = currentCart.find(item => item.id === product.id);
@@ -21,7 +27,7 @@ const addToCart = async (product, quantity = 1) => {
       currentCart.push({
         id: product.id,
         name: product.nombre,
-        price: product.precio,
+        price: finalPrice,
         quantity: quantity
       });
     }

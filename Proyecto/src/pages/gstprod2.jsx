@@ -279,13 +279,13 @@ const Gstprod2 = () => {
               <h1 className="product-title">{product.name}</h1>
               
               <div className="price-info-section">
-                <h3>Precio Actual: ${product.price}</h3>
+                <h3>Precio Actual: ${product.precio}</h3>
                 <div className="price-input-section">
                   <input
                     type="number"
                     min="0"
                     step="0.01"
-                    value={product.price}
+                    value={product.precio}
                     onChange={(e) => updatePrice(product.id, e.target.value)}
                     className="price-input"
                   />

@@ -114,22 +114,16 @@ function Carrito() {
   // Función para calcular el subtotal del carrito
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => {
-      const itemPrice = parseFloat(item.precio || item.price || 0);
+      // Usar siempre el campo 'price' guardado en el carrito
+      const itemPrice = parseFloat(item.price || 0);
       const quantity = parseInt(item.quantity || 1);
       return total + (itemPrice * quantity);
     }, 0);
   };
 
-  // Función para calcular el IVA del carrito
-  const calculateIVA = (subtotal) => {
-    return subtotal * 0.21;
-  };
-
-  // Función para calcular el total del carrito
+  // Función para calcular el total del carrito (sin IVA)
   const calculateTotal = () => {
-    const subtotal = calculateSubtotal();
-    const iva = calculateIVA(subtotal);
-    return subtotal + iva;
+    return calculateSubtotal();
   };
 
   // Función para procesar el pago
@@ -247,7 +241,14 @@ function Carrito() {
                 </div>
                 <div className="item-details">
                   <h3>{item.name}</h3>
-                  <p>Precio: ${item.price}</p>
+                  <p>
+                    Precio: ${item.price}
+                    {item.originalPrice && item.price < item.originalPrice && (
+                      <span style={{ textDecoration: 'line-through', color: 'gray', marginLeft: 8 }}>
+                        ${item.originalPrice}
+                      </span>
+                    )}
+                  </p>
                   <div className="quantity-control">
                     <label>Cantidad: </label>
                     <input 
@@ -282,11 +283,11 @@ function Carrito() {
             <div className="summary-details">
               <div className="summary-row">
                 <span>{cartItems.length} productos</span>
-                <span>${calculateTotal().toFixed(2)}</span>
+                <span>${calculateSubtotal().toFixed(2)}</span>
               </div>
               <div className="summary-row total">
                 <span>Total</span>
-                <span>${calculateTotal().toFixed(2)}</span>
+                <span>${calculateSubtotal().toFixed(2)}</span>
               </div>
 
               <button

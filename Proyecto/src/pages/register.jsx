@@ -82,9 +82,6 @@ function Register() {
     // Renderizado del componente
     return (
         <>
-            <div className="TituloRegister">
-                <h2>Registro de Usuario</h2>
-            </div>
 
             <p style={{ textAlign: 'center', marginTop: '1rem' }}>
                 Complete los datos solicitados
