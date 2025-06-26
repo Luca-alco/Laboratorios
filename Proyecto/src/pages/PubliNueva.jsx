@@ -1,7 +1,7 @@
 // Importación de dependencias necesarias
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from "../context/AuthContext";
 import "./publinueva.css";
 import "./users.css";
 
@@ -10,125 +10,145 @@ function PubliNueva() {
   // Hook de navegación
   const navigate = useNavigate();
   const { currentUser, getAuthToken } = useAuth();
-  
+
   // Estado inicial del formulario
   const [formData, setFormData] = useState({
-    categoria: '',
-    marca: '',
-    talle: '',
-    stock: '',
-    precio: '',
-    estado: '',
+    categoria: "",
+    marca: "",
+    talle: "",
+    stock: "",
+    precio: "",
+    estado: "",
     imagenes: [],
-    descripcion: ''
+    descripcion: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // Función para manejar cambios en los inputs del formulario
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Limpiar error cuando el usuario empiece a escribir
-    if (error) setError('');
+    if (error) setError("");
   };
 
   // Función para manejar la carga de imágenes
   const handleImageChange = (e) => {
     if (e.target.files) {
-      const newImages = Array.from(e.target.files).map(file => URL.createObjectURL(file));
-      setFormData(prev => ({
+      const newImages = Array.from(e.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setFormData((prev) => ({
         ...prev,
         imagenes: [...(prev.imagenes || []), ...newImages], // Mantener imágenes existentes y agregar nuevas
-        imagen: prev.imagen || newImages[0] // Mantener la imagen principal si existe, sino usar la primera nueva
+        imagen: prev.imagen || newImages[0], // Mantener la imagen principal si existe, sino usar la primera nueva
       }));
     }
   };
 
   // Función para eliminar una imagen
   const handleRemoveImage = (indexToRemove) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       imagenes: prev.imagenes.filter((_, index) => index !== indexToRemove),
-      imagen: indexToRemove === 0 && prev.imagenes.length > 1 ? 
-        prev.imagenes[1] : // Si se elimina la primera imagen y hay más, usar la segunda
-        prev.imagen // Si no, mantener la imagen actual
+      imagen:
+        indexToRemove === 0 && prev.imagenes.length > 1
+          ? prev.imagenes[1] // Si se elimina la primera imagen y hay más, usar la segunda
+          : prev.imagen, // Si no, mantener la imagen actual
     }));
   };
 
   // Función para manejar el envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
-    
+
     try {
       // Verificar si hay un usuario autenticado
       if (!currentUser) {
-        setError('Debe iniciar sesión para publicar');
-        navigate('/login');
+        setError("Debe iniciar sesión para publicar");
+        navigate("/login");
         return;
       }
 
       // Obtener el token de autenticación
       const token = getAuthToken();
       if (!token) {
-        setError('Token de autenticación no encontrado. Por favor, inicie sesión nuevamente.');
-        navigate('/login');
+        setError(
+          "Token de autenticación no encontrado. Por favor, inicie sesión nuevamente."
+        );
+        navigate("/login");
         return;
       }
 
       // Preparar datos del nuevo producto con los campos correctos del backend
       const newProduct = {
-        nombre: `${formData.marca} ${formData.categoria}`,
+        nombre: `${formData.marca}`,
         precio: parseFloat(formData.precio),
         descripcion: formData.descripcion,
         stock: parseInt(formData.stock),
-        imagen: formData.imagenes[0] || '', // La primera imagen será la principal
+        imagen: formData.imagenes[0] || "", // La primera imagen será la principal
         brand: formData.marca,
         marca: formData.marca,
         categoria: formData.categoria,
         talle: formData.talle,
-        estado: formData.estado
+        estado: formData.estado,
+        categorias: [{ id: formData.categoria }],
+        usuario: { id: obtenerId() },
       };
 
-      console.log('Enviando producto:', newProduct);
+      function obtenerId() {
+        let usuarioCrudo = localStorage.getItem("currentUser");
+        if (usuarioCrudo) {
+          let usuario = JSON.parse(usuarioCrudo);
+          let userId = usuario.id;
+          userId = userId;
+          return userId;
+        }
+        return "";
+      }
+
+      console.log("Enviando producto:", newProduct);
 
       // Enviar petición al servidor para crear el producto
-      const response = await fetch('http://localhost:8080/api/productos', {
-        method: 'POST',
+      const response = await fetch("http://localhost:8080/api/productos", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(newProduct)
+        body: JSON.stringify(newProduct),
       });
 
       if (response.ok) {
         const savedProduct = await response.json();
-        console.log('Producto creado:', savedProduct);
-        alert('Producto publicado exitosamente');
-        navigate('/productos');
+        console.log("Producto creado:", savedProduct);
+        alert("Producto publicado exitosamente");
+        navigate("/productos");
       } else {
         const errorText = await response.text();
-        console.error('Error response:', errorText);
-        
+        console.error("Error response:", errorText);
+
         if (response.status === 401) {
-          setError('Su sesión ha expirado. Por favor, inicie sesión nuevamente.');
-          navigate('/login');
+          setError(
+            "Su sesión ha expirado. Por favor, inicie sesión nuevamente."
+          );
+          navigate("/login");
         } else if (response.status === 403) {
-          setError('No tiene permisos para crear productos.');
+          setError("No tiene permisos para crear productos.");
         } else {
           setError(`Error al guardar el producto: ${errorText}`);
         }
       }
     } catch (error) {
-      console.error('Error:', error);
-      setError('Error de conexión. Verifique su conexión a internet.');
+      console.error("Error:", error);
+      setError("Error de conexión. Verifique su conexión a internet.");
     } finally {
       setLoading(false);
     }
@@ -136,17 +156,21 @@ function PubliNueva() {
 
   // Renderizado del componente
   return (
-    <main style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <main
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <form onSubmit={handleSubmit} className="producto-form">
         {error && (
-          <div style={{ 
-            color: 'red', 
-            marginBottom: '1rem', 
-            padding: '0.5rem', 
-            border: '1px solid red', 
-            borderRadius: '4px',
-            backgroundColor: '#ffebee'
-          }}>
+          <div
+            style={{
+              color: "red",
+              marginBottom: "1rem",
+              padding: "0.5rem",
+              border: "1px solid red",
+              borderRadius: "4px",
+              backgroundColor: "#ffebee",
+            }}
+          >
             {error}
           </div>
         )}
@@ -155,8 +179,8 @@ function PubliNueva() {
         <div className="form-section">
           <label>
             Categoría del producto:
-            <select 
-              name="categoria" 
+            <select
+              name="categoria"
               value={formData.categoria}
               onChange={handleInputChange}
               className="categoria-select"
@@ -164,13 +188,12 @@ function PubliNueva() {
               required
             >
               <option value="">Seleccione una categoría</option>
-              <option value="Remera">Remera</option>
-              <option value="Pantalón">Pantalón</option>
-              <option value="Campera">Campera</option>
-              <option value="Bermuda">Bermuda</option>
-              <option value="Camisa">Camisa</option>
-              <option value="Buzo">Buzo</option>
-              <option value="Shorts">Shorts</option>
+              <option value="1">Remera</option>
+              <option value="2">Pantalón</option>
+              <option value="3">Campera</option>
+              <option value="4">Buzo</option>
+              <option value="5">Shorts</option>
+              <option value="6">Camisa</option>
             </select>
           </label>
         </div>
@@ -178,7 +201,7 @@ function PubliNueva() {
         {/* Sección de marca */}
         <div className="form-section">
           <label>
-            Marca:
+            Nombre:
             <input
               type="text"
               name="marca"
@@ -288,10 +311,15 @@ function PubliNueva() {
             <div className="preview-images">
               {formData.imagenes.map((url, index) => (
                 <div key={index} className="image-preview-container">
-                  <img 
-                    src={url} 
-                    alt={`Vista previa ${index + 1}`} 
-                    style={{width: '100px', height: '100px', objectFit: 'cover', margin: '5px'}}
+                  <img
+                    src={url}
+                    alt={`Vista previa ${index + 1}`}
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                      margin: "5px",
+                    }}
                   />
                   <button
                     type="button"
@@ -320,12 +348,8 @@ function PubliNueva() {
               required
             />
           </label>
-          <button 
-            type="submit" 
-            className="checkout-button"
-            disabled={loading}
-          >
-            {loading ? 'Publicando...' : 'Publicar'}
+          <button type="submit" className="checkout-button" disabled={loading}>
+            {loading ? "Publicando..." : "Publicar"}
           </button>
         </div>
       </form>

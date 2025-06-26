@@ -3,7 +3,6 @@ package com.api.e_commerce.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -56,6 +55,7 @@ public class Producto {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
-    @JsonIgnore
+    @JsonIgnoreProperties({"productos"}) //ESTO ES NECESARIO PARA PODER BUSCAR EL USUARIO
     private Usuario usuario; // Relación con la entidad Usuario, barios productos tienen un usuario
+    //si se usa solo JsonIgnore solamente esta propiedad se desconoce INCLUSO EN LOS FORMULARIOS DE ENVIO!!!!!!!!
 }
