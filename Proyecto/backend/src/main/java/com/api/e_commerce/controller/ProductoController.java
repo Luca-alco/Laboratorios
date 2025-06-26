@@ -22,6 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.api.e_commerce.model.Producto;
 import com.api.e_commerce.repository.ProductoRepository;
 import com.api.e_commerce.service.ProductoService;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 @RequestMapping("/api/productos") //localhost:8080/api/productos del locahost:8080/api/productos/id
@@ -119,5 +120,11 @@ public ResponseEntity<Producto> getProductById(@PathVariable Long id) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(Map.of("error", "Error al actualizar stock: " + e.getMessage()));
         }
+    }
+
+    @GetMapping("/mis-publicaciones")
+    public List<Producto> getMisPublicaciones() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return productoService.obtenerProductosPorUsuario(email);
     }
 }

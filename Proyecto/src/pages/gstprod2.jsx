@@ -54,8 +54,8 @@ const Gstprod2 = () => {
         const updatedResponse = await fetch('http://localhost:8080/api/productos');
         const updatedProducts = await updatedResponse.json();
         
-        // Filtra los productos por el usuario actual
-        const userProducts = updatedProducts.filter(product => product.userId === currentUser.id);
+        // Filtra los productos por el usuario actual (usando el objeto usuario.id)
+        const userProducts = updatedProducts.filter(product => product.usuario && product.usuario.id === currentUser.id);
         setProducts(userProducts);
       } catch (error) {
         console.error('Error al cargar productos:', error);

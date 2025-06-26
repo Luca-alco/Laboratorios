@@ -100,19 +100,8 @@ function PubliNueva() {
         talle: formData.talle,
         estado: formData.estado,
         categorias: [{ id: formData.categoria }],
-        usuario: { id: obtenerId() },
+        // usuario: { id: obtenerId() }, // <-- ELIMINADO, el backend lo asocia automáticamente
       };
-
-      function obtenerId() {
-        let usuarioCrudo = localStorage.getItem("currentUser");
-        if (usuarioCrudo) {
-          let usuario = JSON.parse(usuarioCrudo);
-          let userId = usuario.id;
-          userId = userId;
-          return userId;
-        }
-        return "";
-      }
 
       console.log("Enviando producto:", newProduct);
 
