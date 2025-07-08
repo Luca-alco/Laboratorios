@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.api.e_commerce.exception.PrecioNegativoException;
+import com.api.e_commerce.exception.ProductoNotFoundException;
 import com.api.e_commerce.model.Producto;
 import com.api.e_commerce.model.Usuario;
 import com.api.e_commerce.repository.ProductoRepository;
@@ -35,7 +37,7 @@ public class ProductoService {
     @Transactional(readOnly = true)
     public Producto obtenerProductoPorId(Long id) {
     Producto producto = productoRepository.findById(id)
-        .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        .orElseThrow(() -> new ProductoNotFoundException(id));
     Hibernate.initialize(producto.getCategorias());
     return producto;
 }
@@ -53,7 +55,7 @@ public class ProductoService {
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         producto.setUsuario(usuario);
         if (producto.getPrecio() <= 0) {
-            throw new IllegalArgumentException("El precio debe ser mayor que cero.");
+            throw new PrecioNegativoException();
         }
         if (producto.getNombre() == null || producto.getNombre().isEmpty()) {
             throw new IllegalArgumentException("El nombre del producto es requerido.");
