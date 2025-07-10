@@ -73,8 +73,35 @@ public class ProductoService {
         productoExistente.setPrecio(productoActualizado.getPrecio());
         return this.productoRepository.save(productoExistente);
     }
+    
     public void eliminarProducto(Long id) {
         productoRepository.deleteById(id);
+    }
+    public Producto actualizarDescripcion(Long id, String descripcion) {
+        Producto producto = this.obtenerProductoPorId(id);
+        if (descripcion == null || descripcion.trim().isEmpty()) {
+            throw new IllegalArgumentException("La descripción no puede estar vacía");
+        }
+        producto.setDescripcion(descripcion);
+        return this.productoRepository.save(producto);
+    }
+
+    public Producto actualizarPrecio(Long id,double newPrecio){
+        Producto producto = this.obtenerProductoPorId(id);
+        if (newPrecio <= 0) {
+            throw new IllegalArgumentException("El precio debe ser mayor a 0");
+        }
+        producto.setPrecio(newPrecio);
+        return this.productoRepository.save(producto);
+    }
+
+    public Producto actualizarStock(Long id, int stock){
+        Producto producto = this.obtenerProductoPorId(id);
+        if (stock <= 0) {
+            throw new IllegalArgumentException("La cantidad no puede ser 0");
+        }
+        producto.setStock(stock);
+        return this.productoRepository.save(producto);
     }
 
 }

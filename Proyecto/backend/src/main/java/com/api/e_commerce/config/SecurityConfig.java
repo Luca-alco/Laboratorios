@@ -98,6 +98,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/productos").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/productos/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/productos/**").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/api/productos/**", "/api/productos/**/precio").authenticated() 
 
                         // Rutas exclusivas para administradores
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
@@ -115,7 +116,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping; 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.api.e_commerce.dto.ActualizarDescripcionRequest;
+import com.api.e_commerce.dto.ActualizarPrecio;
+import com.api.e_commerce.dto.ActualizarStock;
 import com.api.e_commerce.model.Producto;
 import com.api.e_commerce.repository.ProductoRepository;
 import com.api.e_commerce.service.ProductoService;
@@ -83,42 +87,15 @@ public ResponseEntity<Producto> getProductById(@PathVariable Long id) {
         }
     }
 
-    @PutMapping("/{id}/stock")
-    public ResponseEntity<?> updateStock(@PathVariable Long id, @RequestBody Map<String, Integer> request) {
+    @PatchMapping("/{id}/stock")
+    public ResponseEntity<?> updateStock(@PathVariable Long id, @RequestBody ActualizarStock request) {
         try {
-            Optional<Producto> productoOpt = productoRepository.findById(id);
-            if (!productoOpt.isPresent()) {
-                return ResponseEntity.notFound().build();
-            }
-            
-            Producto producto = productoOpt.get();
-            Integer nuevaCantidad = request.get("cantidad");
-            Integer operacion = request.get("operacion"); // 1 para incrementar, -1 para decrementar
-            
-            int stockActual = producto.getStock();
-            int nuevoStock;
-            
-            if (operacion == 1) { // Agregar al carrito (decrementar stock)
-                nuevoStock = stockActual - nuevaCantidad;
-                if (nuevoStock < 0) {
-                    return ResponseEntity.badRequest()
-                        .body(Map.of("error", "Stock insuficiente"));
-                }
-            } else { // Quitar del carrito (incrementar stock)
-                nuevoStock = stockActual + nuevaCantidad;
-            }
-            
-            producto.setStock(nuevoStock);
-            productoRepository.save(producto);
-            
-            return ResponseEntity.ok(Map.of(
-                "message", "Stock actualizado correctamente",
-                "nuevoStock", nuevoStock
-            ));
-            
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Error al actualizar stock: " + e.getMessage()));
+            Producto actualizado = productoService.actualizarStock(id, request.getStock());
+            return ResponseEntity.ok(actualizado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
         }
     }
 
@@ -126,5 +103,29 @@ public ResponseEntity<Producto> getProductById(@PathVariable Long id) {
     public List<Producto> getMisPublicaciones() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return productoService.obtenerProductosPorUsuario(email);
+    }
+
+    @PatchMapping("/{id}/descripcion")
+    public ResponseEntity<?> actualizarDescripcion(@PathVariable Long id, @RequestBody ActualizarDescripcionRequest request) {
+        try {
+            Producto actualizado = productoService.actualizarDescripcion(id, request.getDescripcion());
+            return ResponseEntity.ok(actualizado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    @PatchMapping("/{id}/precio")
+    public ResponseEntity<?> actualizarPrecio(@PathVariable Long id, @RequestBody ActualizarPrecio request) {
+        try {
+            Producto actualizado = productoService.actualizarPrecio(id, request.getPrecio());
+            return ResponseEntity.ok(actualizado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", e.getMessage()));
+        }
     }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./gstprod2.css";
 import "./users.css";
@@ -7,58 +7,70 @@ import "./users.css";
 // Componente para la gestión de productos del usuario
 const Gstprod2 = () => {
   // Obtiene el usuario actual del contexto de autenticación
-  const { currentUser } = useAuth();
+  const { currentUser, getAuthToken } = useAuth();
   const navigate = useNavigate();
   // Estados para manejar los productos, carga, edición de descripción
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingDescription, setEditingDescription] = useState(null);
-  const [newDescription, setNewDescription] = useState('');
+  const [newDescription, setNewDescription] = useState("");
+  //Token para eliminar producto
+  const token = getAuthToken();
+  //variable para guardar el precioy el id auxiliar
+  const [newPrecio, setNewPrecio] = useState("");
+  //TODO
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
         // Obtiene todos los productos del backend
-        const response = await fetch('http://localhost:8080/api/productos');
+        const response = await fetch("http://localhost:8080/api/productos");
         const allProducts = await response.json();
-        
+
         // Obtiene el producto recientemente creado del almacenamiento local
-        const newProductData = localStorage.getItem('productData');
+        const newProductData = localStorage.getItem("productData");
         if (newProductData) {
           const parsedProduct = JSON.parse(newProductData);
-          
+
           // Crea un nuevo producto en el backend
-          const createResponse = await fetch('http://localhost:8080/api/productos', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              ...parsedProduct,
-              id: Date.now().toString(),
-              userId: currentUser.id,
-              price: 0,
-              brand: parsedProduct.marca,
-              name: `${parsedProduct.marca} ${parsedProduct.categoria}`,
-              category: parsedProduct.categoria
-            })
-          });
+          const createResponse = await fetch(
+            "http://localhost:8080/api/productos",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                ...parsedProduct,
+                id: Date.now().toString(),
+                userId: currentUser.id,
+                price: 0,
+                brand: parsedProduct.marca,
+                name: `${parsedProduct.marca} ${parsedProduct.categoria}`,
+                category: parsedProduct.categoria,
+              }),
+            }
+          );
 
           if (createResponse.ok) {
             // Limpia el almacenamiento local después de una creación exitosa
-            localStorage.removeItem('productData');
+            localStorage.removeItem("productData");
           }
         }
 
         // Recarga los productos para obtener la lista actualizada incluyendo el nuevo
-        const updatedResponse = await fetch('http://localhost:8080/api/productos');
+        const updatedResponse = await fetch(
+          "http://localhost:8080/api/productos"
+        );
         const updatedProducts = await updatedResponse.json();
-        
+
         // Filtra los productos por el usuario actual (usando el objeto usuario.id)
-        const userProducts = updatedProducts.filter(product => product.usuario && product.usuario.id === currentUser.id);
+        const userProducts = updatedProducts.filter(
+          (product) => product.usuario && product.usuario.id === currentUser.id
+        );
         setProducts(userProducts);
       } catch (error) {
-        console.error('Error al cargar productos:', error);
+        console.error("Error al cargar productos:", error);
       } finally {
         setLoading(false);
       }
@@ -70,100 +82,132 @@ const Gstprod2 = () => {
   // Función para actualizar el stock de un producto
   const updateStock = async (productId, newStock) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/productos/${productId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          stock: newStock
-        })
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/productos/${productId}/stock`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            stock: newStock,
+          }),
+        }
+      );
 
       if (response.ok) {
         // Actualiza el estado local con el nuevo stock
-        setProducts(products.map(product => 
-          product.id === productId ? { ...product, stock: newStock } : product
-        ));
+        setProducts(
+          products.map((product) =>
+            product.id === productId ? { ...product, stock: newStock } : product
+          )
+        );
       }
     } catch (error) {
-      console.error('Error al actualizar el stock:', error);
+      console.error("Error al actualizar el stock:", error);
     }
+  };
+
+  const cambiarLocal = (productId, newPrice) => {
+    setProducts(
+      products.map((producto) =>
+        producto.id === productId
+          ? { ...producto, precio: parseInt(newPrice) || 0 }
+          : producto
+      )
+    );
   };
 
   // Función para actualizar el precio de un producto
   const updatePrice = async (productId, newPrice) => {
+    console.log(`http://localhost:8080/api/productos/${productId}/precio`);
     try {
-      const response = await fetch(`http://localhost:8080/api/productos/${productId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          price: parseFloat(newPrice)
-        })
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/productos/${productId}/precio`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            precio: newPrice,
+          }),
+        }
+      );
 
       if (response.ok) {
-        // Actualiza el estado local con el nuevo precio
-        setProducts(products.map(product => 
-          product.id === productId ? { ...product, price: parseFloat(newPrice) } : product
-        ));
+        console.log("Precio cambiado");
       }
     } catch (error) {
-      console.error('Error al actualizar el precio:', error);
+      console.error("Error al actualizar el precio:", error);
     }
   };
 
   // Función para eliminar un producto
   const handleDeleteProduct = async (productId) => {
-    if (window.confirm('¿Estás seguro de que deseas eliminar esta publicación?')) {
+    if (
+      window.confirm("¿Estás seguro de que deseas eliminar esta publicación?")
+    ) {
       try {
-        const response = await fetch(`http://localhost:8080/api/productos/${productId}`, {
-          method: 'DELETE'
-        });
+        const response = await fetch(
+          `http://localhost:8080/api/productos/${productId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (response.ok) {
           // Elimina el producto del estado local
-          setProducts(products.filter(product => product.id !== productId));
+          setProducts(products.filter((product) => product.id !== productId));
         }
       } catch (error) {
-        console.error('Error al eliminar el producto:', error);
+        console.error("Error al eliminar el producto:", error);
       }
     }
   };
 
   // Funciones para manejar la edición de la descripción
   const handleEditDescription = (productId) => {
-    const product = products.find(p => p.id === productId);
+    const product = products.find((p) => p.id === productId);
     setEditingDescription(productId);
-    setNewDescription(product.descripcion || product.description || '');
+    setNewDescription(product.descripcion || product.description || "");
   };
 
   // Función para guardar la descripción editada
   const handleSaveDescription = async (productId) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/productos/${productId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          descripcion: newDescription
-        })
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/productos/${productId}/descripcion`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            descripcion: newDescription,
+          }),
+        }
+      );
 
       if (response.ok) {
         // Actualiza el estado local con la nueva descripción
-        setProducts(products.map(product => 
-          product.id === productId 
-            ? { ...product, descripcion: newDescription } 
-            : product
-        ));
+        setProducts(
+          products.map((product) =>
+            product.id === productId
+              ? { ...product, descripcion: newDescription }
+              : product
+          )
+        );
         setEditingDescription(null);
       }
     } catch (error) {
-      console.error('Error al actualizar la descripción:', error);
+      console.error("Error al actualizar la descripción:", error);
     }
   };
 
@@ -179,9 +223,9 @@ const Gstprod2 = () => {
         <div className="no-products-message">
           <h2>No tienes publicaciones aún</h2>
           <p>¡Comienza a vender tus productos!</p>
-          <button 
+          <button
             className="create-product-button"
-            onClick={() => navigate('/nueva-publicacion')}
+            onClick={() => navigate("/nueva-publicacion")}
           >
             Crear Nueva Publicación
           </button>
@@ -191,9 +235,10 @@ const Gstprod2 = () => {
   }
 
   // Renderiza la lista de productos con sus detalles y opciones de gestión
+  // e agrega la posicion
   return (
     <div className="product-grid">
-      {products.map((product) => (
+      {products.map((product, index) => (
         <div key={product.id} className="product-card">
           <div className="product-left">
             <div className="product-gallery">
@@ -206,7 +251,7 @@ const Gstprod2 = () => {
                 />
               )}
             </div>
-            
+
             <div className="product-description">
               <h2>Descripción</h2>
               {editingDescription === product.id ? (
@@ -277,7 +322,7 @@ const Gstprod2 = () => {
             <div className="product-info-card">
               <div className="product-condition">Gestión de Producto</div>
               <h1 className="product-title">{product.name}</h1>
-              
+              {/* TODO */}
               <div className="price-info-section">
                 <h3>Precio Actual: ${product.precio}</h3>
                 <div className="price-input-section">
@@ -285,25 +330,42 @@ const Gstprod2 = () => {
                     type="number"
                     min="0"
                     step="0.01"
-                    value={product.precio}
-                    onChange={(e) => updatePrice(product.id, e.target.value)}
+                    placeholder={product.precio}
+                    onChange={(e) => cambiarLocal(product.id, e.target.value)}
                     className="price-input"
                   />
                 </div>
+                <button
+                  className="add-stock-button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    console.log(product.id, product.precio);
+                    updatePrice(product.id, product.precio);
+                  }}
+                >
+                  Confirmar Precio
+                </button>
               </div>
 
               <div className="stock-info-section">
                 <h3>Stock Actual: {product.stock} unidades</h3>
-                
+
                 <div className="stock-actions">
                   <button
-                    onClick={() => updateStock(product.id, Number(product.stock) + 1)}
+                    onClick={() =>
+                      updateStock(product.id, Number(product.stock) + 1)
+                    }
                     className="add-stock-button"
                   >
                     Aumentar Stock (+1)
                   </button>
                   <button
-                    onClick={() => updateStock(product.id, Math.max(0, Number(product.stock) - 1))}
+                    onClick={() =>
+                      updateStock(
+                        product.id,
+                        Math.max(0, Number(product.stock) - 1)
+                      )
+                    }
                     className="remove-stock-button"
                     disabled={product.stock <= 0}
                   >
