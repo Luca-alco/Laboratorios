@@ -90,22 +90,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Rutas públicas que no requieren autenticación
                         .requestMatchers("/api/usuarios/register", "/api/usuarios/public", "/api/usuarios/login").permitAll()
-                        // Rutas públicas que no requieren autenticación
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers( "/api/categorias/**").permitAll()
+                        .requestMatchers("/api/categorias/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/productos/**", "/api/productos").permitAll()
+                        // Todos los métodos de marcas son públicos
+                        .requestMatchers("/api/marcas/**").permitAll()
                         // Rutas que requieren autenticación para modificar productos
                         .requestMatchers(HttpMethod.POST, "/api/productos").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/api/productos/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/api/productos/**").authenticated()
-                        .requestMatchers(HttpMethod.PATCH, "/api/productos/**", "/api/productos/**/precio").authenticated() 
-
+                        .requestMatchers(HttpMethod.PATCH, "/api/productos/**", "/api/productos/**/precio").authenticated()
                         // Rutas exclusivas para administradores
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
-
                         // Rutas de pedidos solo para usuarios autenticados
                         .requestMatchers("/api/pedidos/**").authenticated()
-
                         // Cualquier otra ruta requiere autenticación
                         .anyRequest().authenticated()
                     )
